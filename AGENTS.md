@@ -109,3 +109,58 @@ If validation cannot be run, report the exact command and the blocker.
   meaningful scope.
 - Before pushing authored commits, verify the latest commit signature with
   `git log --show-signature -1`.
+
+<!-- project-kit:start -->
+
+> Merged from `dccrvz/project-kit` on 2026-11-13. Where a kit rule and a SoroJá rule
+> above disagree, the SoroJá rule wins (e.g. the repo stays public, PRs stay narrow, and
+> `CLAUDE.md` stays local-only because it holds private operational IDs).
+
+## This folder is the one home of SoroJá
+
+- Repo: https://github.com/educrvz/sos-antiveneno · Notion: SoroJá hub (URL in the local `CLAUDE.md` and the project-kit registry; kept out of this public repo) · Secrets vault: DC Cruz — SoroJá
+- Registry entry: `soroja` in `dccrvz/project-kit` → `projects.json`
+
+## Before you change anything
+
+1. Confirm this is the live copy: `.project-home.json` is here and its `repo` matches
+   `git remote get-url origin`. If you find `STALE_COPY.md`, stop and go to the path it names.
+2. Run `git pull`. Other people and other AI sessions also work here.
+3. Read `docs/CONTEXT.md`, `docs/RUNBOOK.md` and the latest entries at the top of
+   `PROGRESS.md`. Skim the titles in `docs/decisions/`.
+4. Before you build something, search `PROGRESS.md` and the code. It may already exist.
+
+## Rules
+
+- **Never commit secrets.** Real values live only in the vault (DC Cruz — SoroJá) and in the local,
+  git-ignored `.env`. If you need a new secret: add the key (no value) to `.env.example`,
+  add a row to the secrets table in `docs/RUNBOOK.md`, and ask the human to store the value.
+- Never put real client or personal data in git, tests, fixtures, logs, screenshots or issues.
+- **Check before every deploy:** `./scripts/check.sh` must pass. Never deploy a red check.
+- **Deploy and roll back only as `docs/RUNBOOK.md` describes.** Take a backup first when a
+  change touches production data or the database schema.
+- **Log every change.** Add a new entry to the top of `PROGRESS.md` (format below) in the
+  same commit as the change, then push.
+- **Keep the docs true.** When reality changes, update them in the same commit:
+  `docs/CONTEXT.md` (what, who, architecture, data, integrations), `docs/RUNBOOK.md`
+  (run, test, deploy, rollback, logs, secrets, common issues), and a new ADR in
+  `docs/decisions/` for any lasting choice. Never rewrite an old ADR; supersede it.
+- If the docs and the code disagree, trust the code, fix the docs and note it in PROGRESS.
+- Ask the human first before anything irreversible or outward-facing: deleting data,
+  production schema changes, messaging real customers, spending money, changing access.
+- If the expected product behavior is unclear, ask. Do not invent it.
+- Keep changes small. Commit messages say why. Code and commits in English; user-facing
+  copy in the client's language.
+- Notion: when the Notion connector works, copy the PROGRESS entry into the project's
+  Notion maintenance log. If it does not, write `Notion: pending` in the entry.
+
+## PROGRESS.md entry format (newest first)
+
+```
+## YYYY-MM-DD — short title (name + AI tool)
+What changed and why. Checks run and their results.
+Deployed: yes/no (commit, where). Rollback: how, if not the standard one.
+Open items, risks, Notion: done/pending.
+```
+
+<!-- project-kit:end -->

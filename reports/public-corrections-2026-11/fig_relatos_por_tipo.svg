@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="330" viewBox="0 0 640 330" font-family="Helvetica, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="16" y="26" font-size="15" font-weight="bold" fill="#1d1d1d">Relatos novos do público, por tipo (n=43)</text>
+<text x="282" y="59" font-size="12" text-anchor="end" fill="#333">Localização/pin no mapa errado</text>
+<rect x="290" y="44" width="300.0" height="22" rx="3" fill="#2f6f5e"/>
+<text x="596.0" y="59" font-size="12" fill="#1d1d1d">11</text>
+<text x="282" y="89" font-size="12" text-anchor="end" fill="#333">Telefone errado ou sem resposta</text>
+<rect x="290" y="74" width="300.0" height="22" rx="3" fill="#2f6f5e"/>
+<text x="596.0" y="89" font-size="12" fill="#1d1d1d">11</text>
+<text x="282" y="119" font-size="12" text-anchor="end" fill="#333">Atendimento feito em outra unidade</text>
+<rect x="290" y="104" width="163.6" height="22" rx="3" fill="#2f6f5e"/>
+<text x="459.6" y="119" font-size="12" fill="#1d1d1d">6</text>
+<text x="282" y="149" font-size="12" text-anchor="end" fill="#333">Unidade fechada ou desativada</text>
+<rect x="290" y="134" width="136.4" height="22" rx="3" fill="#2f6f5e"/>
+<text x="432.4" y="149" font-size="12" fill="#1d1d1d">5</text>
+<text x="282" y="179" font-size="12" text-anchor="end" fill="#333">Unidade ausente da lista</text>
+<rect x="290" y="164" width="109.1" height="22" rx="3" fill="#2f6f5e"/>
+<text x="405.1" y="179" font-size="12" fill="#1d1d1d">4</text>
+<text x="282" y="209" font-size="12" text-anchor="end" fill="#333">Dados trocados/misturados na fonte</text>
+<rect x="290" y="194" width="54.5" height="22" rx="3" fill="#2f6f5e"/>
+<text x="350.5" y="209" font-size="12" fill="#1d1d1d">2</text>
+<text x="282" y="239" font-size="12" text-anchor="end" fill="#333">Sugestão de conteúdo/UX</text>
+<rect x="290" y="224" width="54.5" height="22" rx="3" fill="#2f6f5e"/>
+<text x="350.5" y="239" font-size="12" fill="#1d1d1d">2</text>
+<text x="282" y="269" font-size="12" text-anchor="end" fill="#333">Sem soro em estoque</text>
+<rect x="290" y="254" width="27.3" height="22" rx="3" fill="#2f6f5e"/>
+<text x="323.3" y="269" font-size="12" fill="#1d1d1d">1</text>
+<text x="282" y="299" font-size="12" text-anchor="end" fill="#333">Bug do site (cartão duplicado)</text>
+<rect x="290" y="284" width="27.3" height="22" rx="3" fill="#2f6f5e"/>
+<text x="323.3" y="299" font-size="12" fill="#1d1d1d">1</text>
+</svg>

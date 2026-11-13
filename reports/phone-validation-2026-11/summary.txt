@@ -1,0 +1,5 @@
+units n=50: valid=26, suspect=18, invalid=1, missing=5
+failure strict (missing+invalid): 6/50 = 12% (Wilson 95% CI 6%-24%)
+failure broad (not confirmed: missing+invalid+suspect): 24/50 = 48% (Wilson 95% CI 35%-61%)
+phones n=49: valid=26, suspect=22, invalid=1
+phone-level not confirmed: 23/49 = 47% (CI 34%-61%)

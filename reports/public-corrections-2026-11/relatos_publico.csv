@@ -1,0 +1,52 @@
+linha_planilha,cnes,uf,municipio,data,fonte,registro,tipo,desfecho,publicada_no_soroja,tipo_pt,desfecho_pt
+pre,9164,SP,São José dos Campos,2026-04-20,publico,relato,localizacao_mapa,confirmado_corrigido,sim,Localização/pin no mapa errado,Confirmado e corrigido pelo SoroJá
+pre,2082187,SP,Ribeirão Preto,2026-04-20,publico,relato,atendimento_em_outra_unidade,confirmado_corrigido,sim,Atendimento feito em outra unidade,Confirmado e corrigido pelo SoroJá
+350,,PI,Teresina,2026-04-20,publico,relato,unidade_ausente,pendente,sim,Unidade ausente da lista,Pendente
+2,2080346,SP,São Paulo,2026-04-22,publico,relato,telefone,publicado_como_relato,sim,Telefone errado ou sem resposta,Publicado como relato não verificado
+3,2080583,SP,São Paulo,2026-04-22,publico,relato,telefone,publicado_como_relato,sim,Telefone errado ou sem resposta,Publicado como relato não verificado
+4,3626245,RS,Canoas,2026-04-23,publico,relato,fechada_desativada,confirmado_fonte_oficial,sim,Unidade fechada ou desativada,Confirmado por órgão de saúde
+5,2063018,SP,Orindiúva,2026-04-23,publico,relato,telefone,publicado_como_relato,sim,Telefone errado ou sem resposta,Publicado como relato não verificado
+6,2086271,SP,Itapecerica da Serra,2026-04-24,publico,relato,localizacao_mapa,confirmado_corrigido,sim,Localização/pin no mapa errado,Confirmado e corrigido pelo SoroJá
+7,9491252,SP,São José dos Campos,2026-04-25,publico,relato,erro_identidade_fonte,confirmado_corrigido,não,Dados trocados/misturados na fonte,Confirmado e corrigido pelo SoroJá
+8,2086255,SP,Tatuí,2026-04-25,publico,relato,atendimento_em_outra_unidade,publicado_como_relato,sim,Atendimento feito em outra unidade,Publicado como relato não verificado
+9,2801566,BA,Condeúba,2026-04-25,publico,relato,telefone,publicado_como_relato,sim,Telefone errado ou sem resposta,Publicado como relato não verificado
+10,2122634,MG,Recreio,2026-04-25,publico,relato,telefone,publicado_como_relato,sim,Telefone errado ou sem resposta,Publicado como relato não verificado
+11,2585367,PR,Marmeleiro,2026-04-26,publico,relato,fechada_desativada,publicado_como_relato,sim,Unidade fechada ou desativada,Publicado como relato não verificado
+12,2738252,PR,Cascavel,2026-04-27,publico,relato,fechada_desativada,publicado_como_relato,sim,Unidade fechada ou desativada,Publicado como relato não verificado
+13,2034441,SP,Rio Claro,2026-04-27,publico,relato,localizacao_mapa,confirmado_corrigido,sim,Localização/pin no mapa errado,Confirmado e corrigido pelo SoroJá
+14,2403331,ES,Venda Nova do Imigrante,2026-04-28,publico,relato,sugestao_produto,produto,sim,Sugestão de conteúdo/UX,Sugestão de produto
+15,8000956,MG,Conselheiro Lafaiete,2026-04-29,publico,relato,atendimento_em_outra_unidade,confirmado_fonte_oficial,sim,Atendimento feito em outra unidade,Confirmado por órgão de saúde
+16,2569701,GO,São Domingos,2026-04-29,publico,relato,fechada_desativada,nao_confirmado,sim,Unidade fechada ou desativada,Verificado e não confirmado
+17,6483089,MA,Presidente Dutra,2026-04-29,publico,relato,telefone,publicado_como_relato,sim,Telefone errado ou sem resposta,Publicado como relato não verificado
+18,2738252,PR,Cascavel,2026-05-01,publico,corroboracao,fechada_desativada,publicado_como_relato,sim,Unidade fechada ou desativada,Publicado como relato não verificado
+19,8000956,MG,Conselheiro Lafaiete,2026-05-03,publico,corroboracao,atendimento_em_outra_unidade,confirmado_fonte_oficial,sim,Atendimento feito em outra unidade,Confirmado por órgão de saúde
+20,2683202,PR,Ponta Grossa,2026-05-03,publico,relato,atendimento_em_outra_unidade,publicado_como_relato,sim,Atendimento feito em outra unidade,Publicado como relato não verificado
+21,,,Geral,2026-05-05,publico,relato,sugestao_produto,produto,sim,Sugestão de conteúdo/UX,Sugestão de produto
+22,7964145,BA,Teixeira de Freitas,2026-05-05,publico,relato,fechada_desativada,confirmado_corrigido,sim,Unidade fechada ou desativada,Confirmado e corrigido pelo SoroJá
+23,4047184,SP,Araraquara,2026-05-06,publico,relato,atendimento_em_outra_unidade,publicado_como_relato,sim,Atendimento feito em outra unidade,Publicado como relato não verificado
+24,2535556,GO,Jataí,2026-05-09,publico,relato,localizacao_mapa,confirmado_corrigido,sim,Localização/pin no mapa errado,Confirmado e corrigido pelo SoroJá
+25,2219564,MG,Montes Claros,2026-05-10,publico,relato,telefone,publicado_como_relato,sim,Telefone errado ou sem resposta,Publicado como relato não verificado
+26,2708078,RJ,Volta Redonda,2026-05-12,publico,relato,localizacao_mapa,confirmado_corrigido,sim,Localização/pin no mapa errado,Confirmado e corrigido pelo SoroJá
+27,2134071,MG,Conceição do Mato Dentro,2026-05-13,secretaria_municipal,relato,unidade_ausente,confirmado_fonte_oficial,sim,Unidade ausente da lista,Confirmado por órgão de saúde
+28,,PE,(cobertura estadual),2026-05-13,publico,relato,unidade_ausente,nao_acionavel,sim,Unidade ausente da lista,Fora do escopo (ausente da lista do MS)
+29,2775999,MG,Passos,2026-05-13,publico,relato,erro_identidade_fonte,confirmado_corrigido,sim,Dados trocados/misturados na fonte,Confirmado e corrigido pelo SoroJá
+30,2738252,PR,Cascavel,2026-05-21,publico,corroboracao,fechada_desativada,publicado_como_relato,sim,Unidade fechada ou desativada,Publicado como relato não verificado
+31,7802951,MG,Carmo do Paranaíba,2026-05-30,publico,relato,localizacao_mapa,confirmado_corrigido,sim,Localização/pin no mapa errado,Confirmado e corrigido pelo SoroJá
+32,2082519,SP,Paraguaçu Paulista,2026-06-09,publico,relato,telefone,publicado_como_relato,sim,Telefone errado ou sem resposta,Publicado como relato não verificado
+33,3626245,RS,Canoas,2026-06-15,publico,corroboracao,fechada_desativada,confirmado_fonte_oficial,sim,Unidade fechada ou desativada,Confirmado por órgão de saúde
+34,7889046,MT,Bom Jesus do Araguaia,2026-06-18,publico,relato,telefone,publicado_como_relato,sim,Telefone errado ou sem resposta,Publicado como relato não verificado
+35,2342073,GO,Alto Paraíso de Goiás,2026-07-15,publico,relato,sem_estoque,publicado_como_relato,sim,Sem soro em estoque,Publicado como relato não verificado
+36,3626245,RS,Canoas,2026-07-18,publico,corroboracao,fechada_desativada,confirmado_fonte_oficial,sim,Unidade fechada ou desativada,Confirmado por órgão de saúde
+37,2738252,PR,Cascavel,2026-07-21,publico,corroboracao,fechada_desativada,publicado_como_relato,sim,Unidade fechada ou desativada,Publicado como relato não verificado
+38,3626245,RS,Canoas,2026-07-23,publico,corroboracao,fechada_desativada,confirmado_fonte_oficial,sim,Unidade fechada ou desativada,Confirmado por órgão de saúde
+39,6053858,SP,Campinas,2026-07-30,publico,relato,localizacao_mapa,confirmado_corrigido,sim,Localização/pin no mapa errado,Confirmado e corrigido pelo SoroJá
+42,2569701,GO,São Domingos,2026-08-12,publico,relato,localizacao_mapa,confirmado_corrigido,sim,Localização/pin no mapa errado,Confirmado e corrigido pelo SoroJá
+43,2241021,RS,Bento Gonçalves,2026-08-12,publico,relato,unidade_ausente,nao_confirmado,não,Unidade ausente da lista,Verificado e não confirmado
+50,4156714,AL,Maceió,2026-08-17,publico,relato,localizacao_mapa,confirmado_corrigido,sim,Localização/pin no mapa errado,Confirmado e corrigido pelo SoroJá
+341,2692101,MG,Belo Horizonte,2026-08-23,publico,relato,telefone,pendente,sim,Telefone errado ou sem resposta,Pendente
+351,3626245,RS,Canoas,2026-10-03,publico,corroboracao,fechada_desativada,confirmado_fonte_oficial,sim,Unidade fechada ou desativada,Confirmado por órgão de saúde
+352,2687038,PR,Jaguariaíva,2026-10-06,publico,relato,telefone,confirmado_fonte_oficial,sim,Telefone errado ou sem resposta,Confirmado por órgão de saúde
+355,2285150,RJ,Araruama,2026-10-13,publico,relato,localizacao_mapa,confirmado_corrigido,sim,Localização/pin no mapa errado,Confirmado e corrigido pelo SoroJá
+363,8000956,MG,Conselheiro Lafaiete,2026-10-14,publico,relato,localizacao_mapa,pendente,sim,Localização/pin no mapa errado,Pendente
+364,2184680,MG,Rio Paranaíba,2026-10-16,publico,relato,atendimento_em_outra_unidade,publicado_como_relato,sim,Atendimento feito em outra unidade,Publicado como relato não verificado
+365,2417456,BA,Itarantim,2026-10-22,publico,relato,bug_site,pendente,sim,Bug do site (cartão duplicado),Pendente

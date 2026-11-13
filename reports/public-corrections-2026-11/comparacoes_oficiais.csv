@@ -1,0 +1,7 @@
+uf,fonte_estadual,data,linhas_planilha,unidades_federais_publicadas_no_estado,federais_com_divergencia_ou_ausentes_na_lista_estadual,pct_federais_divergentes,so_na_lista_estadual,so_na_lista_federal,divergencias_por_campo,situacao
+PR,SESA-PR (planilha 01/07/2026),2026-08-25,207,204,150,73.5,56,55,antivenenos: 65; telefone: 24; nome: 14; endereço: 8; município: 1; colisão de CNES na planilha estadual: 5,1 telefone publicado (Jaguariaíva); restante aguarda esclarecimento da SESA-PR
+ES,"SESA-ES (painel Vacina e Confia, 25/08/2026)",2026-08-25,65,61,61,100.0,4,3,endereço: 58; telefone: 57; nome/identidade: 46; antivenenos: 21,aguardando confirmação de CNES/escopo com a SESA-ES
+PE,SES-PE (planilha 08/2026 + Ouve.PE 2026108606),2026-08-20,24,15,15,100.0,1,0,telefone: 13; endereço (material): 2; antivenenos: 2; classificação PEACA/identidade: 12; unidade estadual distinta sob CNES compartilhado: 1,"5 mudanças publicadas, 1 resolvida a favor do MS, 12 contatos pendentes"
+RN,"SESAP/RN (Ofício 2662/2026, 16/10/2026)",2026-10-16,7,5,5,100.0,2,1,antivenenos/classificação: 4; unidade ausente na lista federal: 2; unidade federal omitida na lista estadual: 1,aguardando aprovação
+AL,SESAU-AL (resposta 13/08/2026),2026-08-13,6,16,2,12.5,1,0,CNES errado (pertence a UBS): 1; unidade ausente na lista federal: 1; endereço/telefone desativado: 1,3 correções publicadas (PR #46) e pin corrigido (PR #48)
+MG,CNES/DATASUS + MS + SES-MG,2026-08-25,1,295,3,1.0,0,0,mesmo CNES atribuído a unidades em 4 municípios: 1,aguardando mapeamento correto da SES-MG

@@ -1,0 +1,77 @@
+{
+  "gerado_em": "2026-11-13",
+  "fonte": "Control Sheet 'Error Reports Summary V2' (364 linhas, 22/04–22/10/2026) + 2 correções anteriores ao formulário em data/location_overrides.json",
+  "periodo_relatos_publico": [
+    "2026-04-20",
+    "2026-10-22"
+  ],
+  "unidades_publicadas_soroja": 2279,
+  "linhas_planilha_total": 364,
+  "linhas_relatos_publico_total": 51,
+  "relatos_novos": 43,
+  "corroboracoes": 8,
+  "relatos_novos_sobre_dados": 40,
+  "relatos_por_tipo": {
+    "Localização/pin no mapa errado": 11,
+    "Atendimento feito em outra unidade": 6,
+    "Unidade ausente da lista": 4,
+    "Telefone errado ou sem resposta": 11,
+    "Unidade fechada ou desativada": 5,
+    "Dados trocados/misturados na fonte": 2,
+    "Sugestão de conteúdo/UX": 2,
+    "Sem soro em estoque": 1,
+    "Bug do site (cartão duplicado)": 1
+  },
+  "relatos_por_desfecho": {
+    "Confirmado e corrigido pelo SoroJá": 14,
+    "Pendente": 4,
+    "Publicado como relato não verificado": 16,
+    "Confirmado por órgão de saúde": 4,
+    "Sugestão de produto": 2,
+    "Verificado e não confirmado": 2,
+    "Fora do escopo (ausente da lista do MS)": 1
+  },
+  "relatos_por_uf": {
+    "SP": 12,
+    "PI": 1,
+    "RS": 2,
+    "BA": 3,
+    "MG": 9,
+    "PR": 4,
+    "ES": 1,
+    "GO": 4,
+    "MA": 1,
+    "geral": 1,
+    "RJ": 2,
+    "PE": 1,
+    "MT": 1,
+    "AL": 1
+  },
+  "relatos_por_mes": {
+    "2026-04": 19,
+    "2026-05": 11,
+    "2026-06": 2,
+    "2026-07": 2,
+    "2026-08": 4,
+    "2026-10": 5
+  },
+  "unidades_publicadas_com_relato_de_erro": 35,
+  "pct_unidades_publicadas_com_relato": 1.54,
+  "unidades_com_erro_confirmado": 17,
+  "unidades_relato_nao_verificado": 16,
+  "unidades_pendentes": 2,
+  "unidades_nao_confirmadas": 0,
+  "relatos_verificados": 20,
+  "relatos_verificados_confirmados": 18,
+  "taxa_confirmacao_relatos_verificados": 90.0,
+  "comparacoes_oficiais_linhas": 310,
+  "ufs_auditadas_contra_lista_estadual": [
+    "PR",
+    "ES",
+    "PE",
+    "RN"
+  ],
+  "unidades_federais_nas_ufs_auditadas": 285,
+  "unidades_federais_divergentes_nas_ufs_auditadas": 231,
+  "pct_divergentes_ufs_auditadas": 81.1
+}

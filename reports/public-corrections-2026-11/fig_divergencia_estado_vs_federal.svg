@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="180" viewBox="0 0 640 180" font-family="Helvetica, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="16" y="26" font-size="15" font-weight="bold" fill="#1d1d1d">Unidades da lista federal (MS) que divergem da lista estadual (%)</text>
+<text x="282" y="59" font-size="12" text-anchor="end" fill="#333">PR (150/204)</text>
+<rect x="290" y="44" width="220.5" height="22" rx="3" fill="#a33b3b"/>
+<text x="516.5" y="59" font-size="12" fill="#1d1d1d">73.5</text>
+<text x="282" y="89" font-size="12" text-anchor="end" fill="#333">ES (61/61)</text>
+<rect x="290" y="74" width="300.0" height="22" rx="3" fill="#a33b3b"/>
+<text x="596.0" y="89" font-size="12" fill="#1d1d1d">100.0</text>
+<text x="282" y="119" font-size="12" text-anchor="end" fill="#333">PE (15/15)</text>
+<rect x="290" y="104" width="300.0" height="22" rx="3" fill="#a33b3b"/>
+<text x="596.0" y="119" font-size="12" fill="#1d1d1d">100.0</text>
+<text x="282" y="149" font-size="12" text-anchor="end" fill="#333">RN (5/5)</text>
+<rect x="290" y="134" width="300.0" height="22" rx="3" fill="#a33b3b"/>
+<text x="596.0" y="149" font-size="12" fill="#1d1d1d">100.0</text>
+</svg>

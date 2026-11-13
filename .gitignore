@@ -29,3 +29,27 @@ Thumbs.db
 # Local-only Claude context (workflow prefs, internal CNES notes, Sheet IDs, Abracit thread)
 CLAUDE.md
 CLAUDE.local.md
+
+# project-kit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+credentials*.json
+service-account*.json
+.vscode/*
+!.vscode/extensions.json
+node_modules/
+dist/
+# build/ is NOT ignored here: the pipeline commits build/publish_ready_v1.csv and friends.
+.next/
+coverage/
+.wrangler/
+.vercel/
+*.log
+data/private/
+
+# CNES raw API dumps include staff e-mail addresses (personal data); regenerate with fetch_cnes.py
+reports/**/cnes_raw.json

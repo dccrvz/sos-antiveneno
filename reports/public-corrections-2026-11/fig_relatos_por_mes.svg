@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="254" viewBox="0 0 640 254" font-family="Helvetica, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="16" y="26" font-size="15" font-weight="bold" fill="#1d1d1d">Relatos novos do público por mês (2026)</text>
+<line x1="40" y1="204" x2="624" y2="204" stroke="#bbb"/>
+<rect x="50" y="44.0" width="52" height="160.0" rx="3" fill="#2f6f5e"/>
+<text x="76.0" y="38.0" font-size="12" text-anchor="middle">19</text>
+<text x="76.0" y="222" font-size="12" text-anchor="middle" fill="#333">04/26</text>
+<rect x="120" y="111.4" width="52" height="92.6" rx="3" fill="#2f6f5e"/>
+<text x="146.0" y="105.4" font-size="12" text-anchor="middle">11</text>
+<text x="146.0" y="222" font-size="12" text-anchor="middle" fill="#333">05/26</text>
+<rect x="190" y="187.2" width="52" height="16.8" rx="3" fill="#2f6f5e"/>
+<text x="216.0" y="181.2" font-size="12" text-anchor="middle">2</text>
+<text x="216.0" y="222" font-size="12" text-anchor="middle" fill="#333">06/26</text>
+<rect x="260" y="187.2" width="52" height="16.8" rx="3" fill="#2f6f5e"/>
+<text x="286.0" y="181.2" font-size="12" text-anchor="middle">2</text>
+<text x="286.0" y="222" font-size="12" text-anchor="middle" fill="#333">07/26</text>
+<rect x="330" y="170.3" width="52" height="33.7" rx="3" fill="#2f6f5e"/>
+<text x="356.0" y="164.3" font-size="12" text-anchor="middle">4</text>
+<text x="356.0" y="222" font-size="12" text-anchor="middle" fill="#333">08/26</text>
+<rect x="400" y="204.0" width="52" height="0.0" rx="3" fill="#2f6f5e"/>
+<text x="426.0" y="198.0" font-size="12" text-anchor="middle">0</text>
+<text x="426.0" y="222" font-size="12" text-anchor="middle" fill="#333">09/26</text>
+<rect x="470" y="161.9" width="52" height="42.1" rx="3" fill="#2f6f5e"/>
+<text x="496.0" y="155.9" font-size="12" text-anchor="middle">5</text>
+<text x="496.0" y="222" font-size="12" text-anchor="middle" fill="#333">10/26</text>
+</svg>

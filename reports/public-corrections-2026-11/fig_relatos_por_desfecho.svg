@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="270" viewBox="0 0 640 270" font-family="Helvetica, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="16" y="26" font-size="15" font-weight="bold" fill="#1d1d1d">Relatos novos do público, por desfecho (n=43)</text>
+<text x="282" y="59" font-size="12" text-anchor="end" fill="#333">Publicado como relato não verificado</text>
+<rect x="290" y="44" width="300.0" height="22" rx="3" fill="#8a5a2b"/>
+<text x="596.0" y="59" font-size="12" fill="#1d1d1d">16</text>
+<text x="282" y="89" font-size="12" text-anchor="end" fill="#333">Confirmado e corrigido pelo SoroJá</text>
+<rect x="290" y="74" width="262.5" height="22" rx="3" fill="#8a5a2b"/>
+<text x="558.5" y="89" font-size="12" fill="#1d1d1d">14</text>
+<text x="282" y="119" font-size="12" text-anchor="end" fill="#333">Pendente</text>
+<rect x="290" y="104" width="75.0" height="22" rx="3" fill="#8a5a2b"/>
+<text x="371.0" y="119" font-size="12" fill="#1d1d1d">4</text>
+<text x="282" y="149" font-size="12" text-anchor="end" fill="#333">Confirmado por órgão de saúde</text>
+<rect x="290" y="134" width="75.0" height="22" rx="3" fill="#8a5a2b"/>
+<text x="371.0" y="149" font-size="12" fill="#1d1d1d">4</text>
+<text x="282" y="179" font-size="12" text-anchor="end" fill="#333">Sugestão de produto</text>
+<rect x="290" y="164" width="37.5" height="22" rx="3" fill="#8a5a2b"/>
+<text x="333.5" y="179" font-size="12" fill="#1d1d1d">2</text>
+<text x="282" y="209" font-size="12" text-anchor="end" fill="#333">Verificado e não confirmado</text>
+<rect x="290" y="194" width="37.5" height="22" rx="3" fill="#8a5a2b"/>
+<text x="333.5" y="209" font-size="12" fill="#1d1d1d">2</text>
+<text x="282" y="239" font-size="12" text-anchor="end" fill="#333">Fora do escopo (ausente da lista do MS)</text>
+<rect x="290" y="224" width="18.8" height="22" rx="3" fill="#8a5a2b"/>
+<text x="314.8" y="239" font-size="12" fill="#1d1d1d">1</text>
+</svg>

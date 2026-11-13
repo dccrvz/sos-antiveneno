@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480" font-family="Helvetica, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="16" y="26" font-size="15" font-weight="bold" fill="#1d1d1d">Relatos novos do público, por UF (n=43)</text>
+<text x="282" y="59" font-size="12" text-anchor="end" fill="#333">SP</text>
+<rect x="290" y="44" width="300.0" height="22" rx="3" fill="#3b5b8c"/>
+<text x="596.0" y="59" font-size="12" fill="#1d1d1d">12</text>
+<text x="282" y="89" font-size="12" text-anchor="end" fill="#333">MG</text>
+<rect x="290" y="74" width="225.0" height="22" rx="3" fill="#3b5b8c"/>
+<text x="521.0" y="89" font-size="12" fill="#1d1d1d">9</text>
+<text x="282" y="119" font-size="12" text-anchor="end" fill="#333">PR</text>
+<rect x="290" y="104" width="100.0" height="22" rx="3" fill="#3b5b8c"/>
+<text x="396.0" y="119" font-size="12" fill="#1d1d1d">4</text>
+<text x="282" y="149" font-size="12" text-anchor="end" fill="#333">GO</text>
+<rect x="290" y="134" width="100.0" height="22" rx="3" fill="#3b5b8c"/>
+<text x="396.0" y="149" font-size="12" fill="#1d1d1d">4</text>
+<text x="282" y="179" font-size="12" text-anchor="end" fill="#333">BA</text>
+<rect x="290" y="164" width="75.0" height="22" rx="3" fill="#3b5b8c"/>
+<text x="371.0" y="179" font-size="12" fill="#1d1d1d">3</text>
+<text x="282" y="209" font-size="12" text-anchor="end" fill="#333">RS</text>
+<rect x="290" y="194" width="50.0" height="22" rx="3" fill="#3b5b8c"/>
+<text x="346.0" y="209" font-size="12" fill="#1d1d1d">2</text>
+<text x="282" y="239" font-size="12" text-anchor="end" fill="#333">RJ</text>
+<rect x="290" y="224" width="50.0" height="22" rx="3" fill="#3b5b8c"/>
+<text x="346.0" y="239" font-size="12" fill="#1d1d1d">2</text>
+<text x="282" y="269" font-size="12" text-anchor="end" fill="#333">PI</text>
+<rect x="290" y="254" width="25.0" height="22" rx="3" fill="#3b5b8c"/>
+<text x="321.0" y="269" font-size="12" fill="#1d1d1d">1</text>
+<text x="282" y="299" font-size="12" text-anchor="end" fill="#333">ES</text>
+<rect x="290" y="284" width="25.0" height="22" rx="3" fill="#3b5b8c"/>
+<text x="321.0" y="299" font-size="12" fill="#1d1d1d">1</text>
+<text x="282" y="329" font-size="12" text-anchor="end" fill="#333">MA</text>
+<rect x="290" y="314" width="25.0" height="22" rx="3" fill="#3b5b8c"/>
+<text x="321.0" y="329" font-size="12" fill="#1d1d1d">1</text>
+<text x="282" y="359" font-size="12" text-anchor="end" fill="#333">Geral</text>
+<rect x="290" y="344" width="25.0" height="22" rx="3" fill="#3b5b8c"/>
+<text x="321.0" y="359" font-size="12" fill="#1d1d1d">1</text>
+<text x="282" y="389" font-size="12" text-anchor="end" fill="#333">PE</text>
+<rect x="290" y="374" width="25.0" height="22" rx="3" fill="#3b5b8c"/>
+<text x="321.0" y="389" font-size="12" fill="#1d1d1d">1</text>
+<text x="282" y="419" font-size="12" text-anchor="end" fill="#333">MT</text>
+<rect x="290" y="404" width="25.0" height="22" rx="3" fill="#3b5b8c"/>
+<text x="321.0" y="419" font-size="12" fill="#1d1d1d">1</text>
+<text x="282" y="449" font-size="12" text-anchor="end" fill="#333">AL</text>
+<rect x="290" y="434" width="25.0" height="22" rx="3" fill="#3b5b8c"/>
+<text x="321.0" y="449" font-size="12" fill="#1d1d1d">1</text>
+</svg>
