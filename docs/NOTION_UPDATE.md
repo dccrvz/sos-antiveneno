@@ -36,8 +36,6 @@ into the SoroJá hub page (link in the local `CLAUDE.md`), following the kit tem
 
 ## Open issues
 
-- [ ] Decide whether the repo moves to `dccrvz` (must stay public; Vercel and the Apps
-      Script PAT must be rewired).
 - [ ] Create the "DC Cruz — SoroJá" vault and move the secrets listed in RUNBOOK into it.
 - [ ] Call the 24 units in `reports/phone-validation-2026-11/call_list.csv`.
 - [ ] The two task-level Notion updates in `reports/*-2026-11/NOTION_UPDATE.md` are also

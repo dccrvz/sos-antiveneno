@@ -30,7 +30,7 @@ Also in this change (Claude Code, project-home adoption session):
   `educrvz/soroja-phone-verification` + Codex outputs), `~/Downloads/soroja_auditoria_para_edu (1)`
   (external audit letter, April 2026), `03 Software & AI/AI/Gemini/SoroJa` (early notes),
   LinkedIn copy folders, `Codex/2026-10-22/soroja-phone-validation` (QR images only).
-- Repo stays at `educrvz/sos-antiveneno` until Edu decides on a move to `dccrvz`.
+- Repo stays at `educrvz/sos-antiveneno`: Edu decided not to move it to `dccrvz` (ADR 0004).
   Deployed: no app change (docs, check script, reports only). Notion: pending (connector down; see docs/NOTION_UPDATE.md).
 
 ## 2026-11-13 — Phone validation sample and public-corrections finding (Claude Code)

@@ -6,6 +6,7 @@ Never rewrite an old decision. Write a new one that supersedes it and mark the o
 
 | #    | Decision                                                                                    | Date       | Status   |
 | ---- | ------------------------------------------------------------------------------------------- | ---------- | -------- |
+| 0004 | [Repo stays under educrvz](0004-repo-stays-under-educrvz.md)                                | 2026-11-13 | Accepted |
 | 0003 | [Official data first, corrections as traceable layers](0003-layered-data-official-first.md) | 2026-05-14 | Accepted |
 | 0002 | [Public, open-source repository](0002-public-open-source-repo.md)                           | 2026-08-03 | Accepted |
 | 0001 | [One project home](0001-one-project-home.md)                                                | 2026-11-13 | Accepted |
