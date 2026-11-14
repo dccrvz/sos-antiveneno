@@ -1,6 +1,6 @@
 # 0004 — Repo stays under educrvz
 
-- Date: 2026-11-13 · Status: Accepted · Decided by: Edu
+- Date: 2026-11-13 · Status: Superseded by 0005 · Decided by: Edu
 
 ## Context
 

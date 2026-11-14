@@ -7,9 +7,9 @@
 // One-time setup:
 //   1) Open the sheet → Extensions → Apps Script → paste this file.
 //   2) Project Settings → Script properties → add two entries:
-//        GITHUB_TOKEN   — fine-grained PAT for educrvz/sos-antiveneno,
+//        GITHUB_TOKEN   — fine-grained PAT (resource owner dccrvz) for dccrvz/sos-antiveneno,
 //                         Contents: Read and write. Expires in 1 year.
-//        GITHUB_REPO    — educrvz/sos-antiveneno
+//        GITHUB_REPO    — dccrvz/sos-antiveneno
 //   3) Run setupSheet once (menu: SoroJá → Setup sheet) — creates the
 //      Hospitals + Overrides tabs with headers and validation.
 //   4) Run refreshHospitals (menu: SoroJá → Refresh hospitals list) — pulls
@@ -30,7 +30,7 @@ const COMMUNITY_NOTES_SHEET = 'Community Notes';
 const OVERRIDES_PATH = 'data/location_overrides.json';
 const COMMUNITY_NOTES_PATH = 'data/community_notes.json';
 const RAW_HOSPITALS_URL =
-  'https://raw.githubusercontent.com/educrvz/sos-antiveneno/main/hospitals.json';
+  'https://raw.githubusercontent.com/dccrvz/sos-antiveneno/main/hospitals.json';
 
 const HOSPITAL_HEADERS = [
   'cnes', 'hospital_name', 'state', 'city', 'address',

@@ -9,7 +9,7 @@ O SoroJá é uma ferramenta gratuita, de código aberto e sem fins lucrativos qu
 O SoroJá é mantido de forma voluntária por Eduardo Cruz ("Edu Cruz"), pessoa física. Contato para qualquer dúvida sobre esta Política ou para exercer direitos da LGPD:
 
 - E-mail: contato.soroja@gmail.com
-- GitHub: https://github.com/educrvz/sos-antiveneno
+- GitHub: https://github.com/dccrvz/sos-antiveneno
 
 ## 2. Que dados a gente usa
 
@@ -64,7 +64,7 @@ Podemos atualizar esta Política quando a ferramenta mudar. A versão mais recen
 
 ## 8. Segurança
 
-O site é servido exclusivamente via HTTPS. O código-fonte é aberto e auditável em https://github.com/educrvz/sos-antiveneno — qualquer pessoa pode verificar o que o SoroJá faz (e não faz) com seus dados.
+O site é servido exclusivamente via HTTPS. O código-fonte é aberto e auditável em https://github.com/dccrvz/sos-antiveneno — qualquer pessoa pode verificar o que o SoroJá faz (e não faz) com seus dados.
 
 ---
 

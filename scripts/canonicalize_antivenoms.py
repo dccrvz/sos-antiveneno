@@ -49,7 +49,7 @@ Integração sugerida:
     hospital. Manter `source_antivenoms_raw` com a lista original para
     auditoria, e preencher `antivenoms` com o canônico.
 
-Autor: Preparado para PR ao projeto educrvz/sos-antiveneno (soroja.com.br).
+Autor: Preparado para PR ao projeto dccrvz/sos-antiveneno (soroja.com.br).
 Licença: mesma do projeto hospedeiro (MIT esperado).
 """
 

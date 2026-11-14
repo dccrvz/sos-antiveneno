@@ -6,7 +6,7 @@
 ## First-time setup
 
 ```bash
-git clone https://github.com/educrvz/sos-antiveneno.git
+git clone https://github.com/dccrvz/sos-antiveneno.git
 cd sos-antiveneno
 npm ci                       # prettier only
 python3 -m pip install pytest pdfplumber
@@ -93,7 +93,7 @@ Real values live only in the vault **DC Cruz — SoroJá** (to be created) and i
 | ----------------------------- | --------------------------------------------------- | ---------------------------------------------------- | ---------------------- |
 | `GOOGLE_MAPS_API_KEY`         | Geocoding + Places for dataset refreshes            | `.env` or Keychain service `google_maps_api_key`     | Google Maps API key    |
 | `GITHUB_TOKEN` (Apps Script)  | Fine-grained PAT that commits overrides to the repo | Apps Script → Script properties (with `GITHUB_REPO`) | Apps Script GitHub PAT |
-| GitHub account `educrvz`      | Repo admin                                          | github.com                                           | GitHub login           |
+| GitHub org `dccrvz`           | Repo owner (Edu = org owner, account `educrvz`)     | github.com                                           | GitHub login           |
 | Vercel account                | Hosting, domains, rollback                          | vercel.com                                           | Vercel login           |
 | Domain registrar              | `soroja.com.br` DNS                                 | registrar                                            | Registrar login        |
 | Google account (Sheets/Drive) | Overrides Sheet, Control Sheet, Apps Script         | google.com                                           | Google login           |

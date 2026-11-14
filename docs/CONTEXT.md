@@ -87,19 +87,19 @@ user to call SAMU 192 / Bombeiros 193 and to confirm with the hospital or CIATox
 
 ## Integrations and accounts
 
-| Service                          | Used for                                | Account / project                 | Login lives in         |
-| -------------------------------- | --------------------------------------- | --------------------------------- | ---------------------- |
-| GitHub                           | Code, CI, issues                        | `educrvz/sos-antiveneno` (public) | vault DC Cruz — SoroJá |
-| Vercel                           | Hosting and deploys                     | project `soroja`                  | vault DC Cruz — SoroJá |
-| Domain registrar (soroja.com.br) | DNS                                     | TODO: confirm registrar           | vault DC Cruz — SoroJá |
-| Google Maps Platform             | Geocoding/Places during refreshes       | TODO: GCP project name            | vault DC Cruz — SoroJá |
-| Google Sheets + Apps Script      | Overrides and error-report intake       | Edu's Google account              | vault DC Cruz — SoroJá |
-| GoatCounter                      | Cookieless page counts (see PRIVACY.md) | TODO: site code                   | vault DC Cruz — SoroJá |
-| Gmail `contato.soroja@gmail.com` | Public contact                          |                                   | vault DC Cruz — SoroJá |
+| Service                          | Used for                                | Account / project                | Login lives in         |
+| -------------------------------- | --------------------------------------- | -------------------------------- | ---------------------- |
+| GitHub                           | Code, CI, issues                        | `dccrvz/sos-antiveneno` (public) | vault DC Cruz — SoroJá |
+| Vercel                           | Hosting and deploys                     | project `soroja`                 | vault DC Cruz — SoroJá |
+| Domain registrar (soroja.com.br) | DNS                                     | TODO: confirm registrar          | vault DC Cruz — SoroJá |
+| Google Maps Platform             | Geocoding/Places during refreshes       | TODO: GCP project name           | vault DC Cruz — SoroJá |
+| Google Sheets + Apps Script      | Overrides and error-report intake       | Edu's Google account             | vault DC Cruz — SoroJá |
+| GoatCounter                      | Cookieless page counts (see PRIVACY.md) | TODO: site code                  | vault DC Cruz — SoroJá |
+| Gmail `contato.soroja@gmail.com` | Public contact                          |                                  | vault DC Cruz — SoroJá |
 
 ## Where everything is
 
-- Code: this repo (<https://github.com/educrvz/sos-antiveneno>); local folder
+- Code: this repo (<https://github.com/dccrvz/sos-antiveneno>); local folder
   `~/Documents/03 Software & AI/SoroJá`
 - Docs and history: SoroJá Notion hub (link in local `CLAUDE.md` and the project-kit
   registry)

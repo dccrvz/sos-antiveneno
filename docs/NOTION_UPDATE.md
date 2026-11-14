@@ -6,24 +6,24 @@ into the SoroJá hub page (link in the local `CLAUDE.md`), following the kit tem
 
 ## Properties
 
-| Property      | Value                                              |
-| ------------- | -------------------------------------------------- |
-| Slug          | `soroja`                                           |
-| Type          | own                                                |
-| Status        | active                                             |
-| Repo          | https://github.com/educrvz/sos-antiveneno (public) |
-| Production    | https://soroja.com.br                              |
-| Deploy target | Vercel project `soroja`, auto-deploy from `main`   |
-| Vault         | DC Cruz — SoroJá (to be created)                   |
-| Owner         | Edu                                                |
-| Last change   | 2026-11-13                                         |
+| Property      | Value                                             |
+| ------------- | ------------------------------------------------- |
+| Slug          | `soroja`                                          |
+| Type          | own                                               |
+| Status        | active                                            |
+| Repo          | https://github.com/dccrvz/sos-antiveneno (public) |
+| Production    | https://soroja.com.br                             |
+| Deploy target | Vercel project `soroja`, auto-deploy from `main`  |
+| Vault         | DC Cruz — SoroJá (to be created)                  |
+| Owner         | Edu                                               |
+| Last change   | 2026-11-13                                        |
 
 ## Links
 
-- Runbook: https://github.com/educrvz/sos-antiveneno/blob/main/docs/RUNBOOK.md
-- Context: https://github.com/educrvz/sos-antiveneno/blob/main/docs/CONTEXT.md
-- Change log: https://github.com/educrvz/sos-antiveneno/blob/main/PROGRESS.md
-- Decisions: https://github.com/educrvz/sos-antiveneno/tree/main/docs/decisions
+- Runbook: https://github.com/dccrvz/sos-antiveneno/blob/main/docs/RUNBOOK.md
+- Context: https://github.com/dccrvz/sos-antiveneno/blob/main/docs/CONTEXT.md
+- Change log: https://github.com/dccrvz/sos-antiveneno/blob/main/PROGRESS.md
+- Decisions: https://github.com/dccrvz/sos-antiveneno/tree/main/docs/decisions
 - Local folder: `~/Documents/03 Software & AI/SoroJá`
 
 ## Maintenance log rows (newest first)

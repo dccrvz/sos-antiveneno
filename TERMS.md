@@ -41,7 +41,7 @@ Você pode usar o SoroJá para:
 
 - Localizar o hospital de referência mais próximo;
 - Compartilhar o site em redes sociais, grupos de saúde e com familiares;
-- Reutilizar o código-fonte, conforme a licença do projeto em https://github.com/educrvz/sos-antiveneno.
+- Reutilizar o código-fonte, conforme a licença do projeto em https://github.com/dccrvz/sos-antiveneno.
 
 Você **não** deve:
 
@@ -51,7 +51,7 @@ Você **não** deve:
 
 ## 7. Propriedade intelectual
 
-Os dados dos hospitais são de domínio público, provenientes do Ministério da Saúde. O código-fonte do SoroJá é publicado em https://github.com/educrvz/sos-antiveneno sob a licença indicada no próprio repositório. O nome "SoroJá" e o domínio `soroja.com.br` são mantidos pelo autor do projeto.
+Os dados dos hospitais são de domínio público, provenientes do Ministério da Saúde. O código-fonte do SoroJá é publicado em https://github.com/dccrvz/sos-antiveneno sob a licença indicada no próprio repositório. O nome "SoroJá" e o domínio `soroja.com.br` são mantidos pelo autor do projeto.
 
 ## 8. Privacidade
 
@@ -67,4 +67,4 @@ Para eventuais questões judiciais, fica eleito o foro da Comarca de São Paulo,
 
 ---
 
-_Dúvidas ou problemas? Abra uma issue em https://github.com/educrvz/sos-antiveneno/issues._
+_Dúvidas ou problemas? Abra uma issue em https://github.com/dccrvz/sos-antiveneno/issues._

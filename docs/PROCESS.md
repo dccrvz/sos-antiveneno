@@ -528,7 +528,7 @@ click Publish again. The commit history has the prior state.
 [`scripts/sheet/Code.gs`](../scripts/sheet/Code.gs) holds the Apps Script
 paste-in plus setup instructions (required script properties:
 `GITHUB_TOKEN` fine-grained PAT with `Contents: read/write`, `GITHUB_REPO`
-`educrvz/sos-antiveneno`).
+`dccrvz/sos-antiveneno`).
 
 ---
 

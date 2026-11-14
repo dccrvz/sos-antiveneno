@@ -118,7 +118,7 @@ If validation cannot be run, report the exact command and the blocker.
 
 ## This folder is the one home of SoroJá
 
-- Repo: https://github.com/educrvz/sos-antiveneno · Notion: SoroJá hub (URL in the local `CLAUDE.md` and the project-kit registry; kept out of this public repo) · Secrets vault: DC Cruz — SoroJá
+- Repo: https://github.com/dccrvz/sos-antiveneno · Notion: SoroJá hub (URL in the local `CLAUDE.md` and the project-kit registry; kept out of this public repo) · Secrets vault: DC Cruz — SoroJá
 - Registry entry: `soroja` in `dccrvz/project-kit` → `projects.json`
 
 ## Before you change anything

@@ -3,6 +3,25 @@
 Dated log of every change, newest first. Each entry says what changed, why, which checks
 ran, whether it was deployed, and what is still open. Format: see `AGENTS.md`.
 
+## 2026-11-14 — Repo transferred to dccrvz/sos-antiveneno (Edu + Claude Code)
+
+Edu decided to move SoroJá under the D.C. Cruz org for funding (FAPESP PIPE opens
+2026-11-16). On his yes, the repo was transferred with `gh api POST .../transfer`:
+`dccrvz/sos-antiveneno`, still public, same repo ID 76060342; `educrvz/sos-antiveneno`
+301-redirects there. Pre-checks: dccrvz is an org with Edu as owner; no name clash;
+no Actions secrets, variables, webhooks or deploy keys; Vercel project `soroja` has no
+env vars or deploy hooks. Local remote now `git@github.com:dccrvz/sos-antiveneno.git`.
+Repo links updated in the site footer, privacy and terms pages (CACHE_NAME → v35),
+PRIVACY/TERMS, AGENTS, docs and Apps Script comments. ADR 0005 supersedes ADR 0004.
+project-kit registry updated (dccrvz/project-kit 572c55c).
+Checks: prettier on changed files, `git diff --check`.
+Deployed: pending. The Vercel Git link was disconnected from educrvz and can only be
+reconnected once the Vercel GitHub app is installed on the dccrvz org (Edu, browser).
+Open items: install the Vercel app on dccrvz, then `vercel git connect`; mint a new
+fine-grained PAT (resource owner dccrvz) for the Apps Script and set script properties
+`GITHUB_TOKEN` + `GITHUB_REPO=dccrvz/sos-antiveneno`. Never create a repo named
+`sos-antiveneno` on educrvz. Notion: done (task page log, Projects row).
+
 ## 2026-11-13 — Adopted into the project-kit standard (project-kit adopt-project)
 
 Canonical folder: `~/Documents/03 Software & AI/SoroJá` → repo https://github.com/educrvz/sos-antiveneno.
