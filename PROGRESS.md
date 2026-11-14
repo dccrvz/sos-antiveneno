@@ -15,9 +15,10 @@ Repo links updated in the site footer, privacy and terms pages (CACHE_NAME → v
 PRIVACY/TERMS, AGENTS, docs and Apps Script comments. ADR 0005 supersedes ADR 0004.
 project-kit registry updated (dccrvz/project-kit 572c55c).
 Checks: prettier on changed files, `git diff --check`.
-Deployed: pending. The Vercel Git link was disconnected from educrvz and can only be
-reconnected once the Vercel GitHub app is installed on the dccrvz org (Edu, browser).
-Open items: install the Vercel app on dccrvz, then `vercel git connect`; mint a new
+Deployed: yes. The Vercel GitHub app was installed on dccrvz (only `sos-antiveneno`) and
+`vercel git connect` linked project `soroja` to `dccrvz/sos-antiveneno` (prod branch
+`main`); this commit was pushed to confirm auto-deploy to soroja.com.br.
+Open items: mint a new
 fine-grained PAT (resource owner dccrvz) for the Apps Script and set script properties
 `GITHUB_TOKEN` + `GITHUB_REPO=dccrvz/sos-antiveneno`. Never create a repo named
 `sos-antiveneno` on educrvz. Notion: done (task page log, Projects row).
