@@ -23,6 +23,35 @@ Open items:
 - The two deep-research files disagree on whether NT 127/2026 uses the terms PEACA/PEASA.
 - Notion: pending.
 
+## 2026-11-15 — Number hunt run loaded on the Samsung; source scoring (Edu + Claude Code)
+
+On Edu's request the Android dialer (separate pilot, not in this repo) now calls number-hunt
+candidates first: 1,602 never-dialled numbers added to its queue, retries of rejected numbers
+turned off (≈1% answered), and a one-time window reset so 16/11 is day 1 of 17 (last day 02/12,
+99/day). Installed over the 09/11 build with the same key; read back on the phone: window
+2026-11-16→2026-12-02, goal enabled, alarm 16/11 09:00. Parser fixes before loading: trunk zeros,
+Receita's padded area codes and impossible area codes (all 1,602 dial-shape checked). New
+`score_sources.py` rates sources and repair tricks by human-answer rate, crediting every source of a
+number from the frozen `loaded-queue-2026-11-15.json` (what the phone actually got). Google Places approved
+but blocked: billing is disabled on the Maps project (`fetch_places.py` ready, resumable).
+Checks: app Java tests (RunWindow 28, Schedule 7, PhoneRules, RandomOrder, Recovery, Dual,
+AudioHealth) pass; unchanged rebuild byte-identical to the installed APK before editing; scorer
+tested on synthetic results. Deployed: phone only, no site change. Notion: done.
+
+## 2026-11-15 — Number hunt: candidates for units with no working phone (Edu + Claude Code)
+
+Analysis only; no app or data change. New `reports/number-hunt-2026-11/`. Joined `app/hospitals.json`
+with the call dashboard (15/11 17:33): 1,543 of 2,279 units have no working number (176 with none
+published, 923 where the carrier says every number doesn't exist, 431 other failures, 13 not
+dialled). Sourced candidates from CNES (incl. old 7-digit landlines + leading 3, missing area
+codes), Receita Federal CNPJ via BrasilAPI, earlier SoroJá versions in git (matched on CNES + name, so shared CNES codes never mix units), OpenStreetMap and
+rule-based repair of dead numbers: 1,139 units now have a candidate; 1,588 never-dialled numbers in
+`queue-candidates.json` (dialer queue format). 139 candidates are shared office numbers, marked.
+Raw API dumps gitignored. Map: private artifact "SoroJá Number Hunt". Checks: script syntax,
+`git diff --check`. Deployed: no. Open: load the queue on the Samsung; Google Places (≈US$ 50);
+SAMU/state outreach; how confirmed numbers show on the site. Notion: done (page "Number Hunt —
+finding numbers for units with none that work" under the SoroJá hub).
+
 ## 2026-11-14 — Repo transferred to dccrvz/sos-antiveneno (Edu + Claude Code)
 
 Edu decided to move SoroJá under the D.C. Cruz org for funding (FAPESP PIPE opens

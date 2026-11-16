@@ -1,0 +1,262 @@
+<title>SoroJá Number Hunt</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap">
+<style>
+/* Layout: one working column; summary strip, then map + filters beside the hospital list, then the methods board. */
+:root {
+  --bg: #f5f7f6; --surface: #ffffff; --fg: #17201d; --muted: #5b6b66; --line: #d8e0dd;
+  --accent: #0f6b5c; --accent-soft: #dcefe9;
+  --dead: #c2362b; --failed: #c98500; --nophone: #5a3fb0; --notdialed: #7f8c88; --land: #e6ece9; --land-line: #c3cdc9;
+  --font-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111816; --surface: #18211e; --fg: #e3ebe8; --muted: #93a39e; --line: #2b3733;
+  --accent: #4cc2a8; --accent-soft: #173a33;
+  --dead: #ff7a6b; --failed: #f0b43c; --nophone: #a993ff; --notdialed: #7f8c88; --land: #1f2a27; --land-line: #34423e; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #111816; --surface: #18211e; --fg: #e3ebe8; --muted: #93a39e; --line: #2b3733;
+  --accent: #4cc2a8; --accent-soft: #173a33;
+  --dead: #ff7a6b; --failed: #f0b43c; --nophone: #a993ff; --notdialed: #7f8c88; --land: #1f2a27; --land-line: #34423e; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font: 15px/1.5 var(--font-body); }
+.wrap { max-width: 1240px; margin: 0 auto; padding-block: 28px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 28px; }
+h1, h2 { font-family: var(--font-display); text-wrap: balance; margin: 0; letter-spacing: .01em; }
+h1 { font-size: 2.1rem; line-height: 1.1; }
+h2 { font-size: 1.35rem; }
+p { margin: 0; max-width: 68ch; }
+.eyebrow { font: 600 .72rem/1 var(--font-body); text-transform: uppercase; letter-spacing: .09em; color: var(--accent); }
+header { display: grid; gap: 10px; }
+.lede { color: var(--muted); }
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.stat { background: var(--surface); padding: 14px 16px; display: grid; gap: 2px; }
+.stat b { font: 500 1.6rem/1.1 var(--font-mono); font-variant-numeric: tabular-nums; }
+.stat span { color: var(--muted); font-size: .85rem; }
+.stat i { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: 1px; }
+.work { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .work { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 12px; min-width: 0; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chip { font: 500 .82rem var(--font-body); border: 1px solid var(--line); background: var(--bg); color: var(--fg); border-radius: 999px; padding: 5px 11px; cursor: pointer; display: inline-flex; gap: 6px; align-items: center; }
+.chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); }
+.chip i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.chip:focus-visible, select:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+select, input[type="search"] { font: inherit; font-size: .88rem; padding: 6px 9px; border: 1px solid var(--line); border-radius: 7px; background: var(--bg); color: var(--fg); min-width: 0; }
+input[type="search"] { flex: 1 1 180px; }
+svg.map { width: 100%; height: auto; display: block; }
+.map path { fill: var(--land); stroke: var(--land-line); stroke-width: 1; }
+.map path.sel { fill: var(--accent-soft); }
+.map circle { stroke-width: 1.6; cursor: pointer; }
+.map circle:hover, .map circle.hot { stroke-width: 3; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: .8rem; color: var(--muted); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.list { max-height: 720px; overflow: auto; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.row { padding: 10px 2px; border-bottom: 1px solid var(--line); display: grid; gap: 4px; min-width: 0; }
+.row.hot { background: var(--accent-soft); }
+.row h3 { font: 600 .95rem/1.3 var(--font-body); margin: 0; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.row h3 small { font-weight: 400; color: var(--muted); font-size: .82rem; }
+.pill { font: 600 .68rem/1 var(--font-body); text-transform: uppercase; letter-spacing: .06em; padding: 3px 7px; border-radius: 999px; color: var(--surface); white-space: nowrap; }
+.meta { font-size: .82rem; color: var(--muted); overflow-wrap: anywhere; }
+.cands { display: grid; gap: 3px; }
+.cand { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; font-size: .86rem; }
+.cand .num { font-weight: 500; }
+.src { font: 500 .7rem/1 var(--font-mono); border: 1px solid var(--line); border-radius: 4px; padding: 2px 5px; color: var(--muted); }
+.cand .why { color: var(--muted); font-size: .8rem; overflow-wrap: anywhere; }
+.count { font-size: .82rem; color: var(--muted); }
+.methods { display: grid; gap: 14px; }
+.mgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.m { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 6px; align-content: start; }
+.m h3 { margin: 0; font: 600 1rem/1.3 var(--font-body); display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.m p { font-size: .88rem; color: var(--muted); }
+.m .yield { font: 500 .8rem var(--font-mono); color: var(--fg); }
+.state { font: 600 .66rem/1 var(--font-body); text-transform: uppercase; letter-spacing: .07em; padding: 3px 7px; border-radius: 4px; white-space: nowrap; }
+.state.done { background: var(--accent-soft); color: var(--accent); }
+.state.ask { background: color-mix(in srgb, var(--failed) 18%, transparent); color: var(--fg); }
+.state.idea { background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+ol.loop { margin: 0; padding-left: 1.3em; display: grid; gap: 6px; max-width: 75ch; }
+.foot { font-size: .8rem; color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) { .row, .map circle { transition: background .15s, stroke-width .15s; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">SoroJá · phone verification · snapshot 15 Nov 2026</div>
+    <h1>Number Hunt</h1>
+    <p class="lede">Every antivenom unit on SoroJá that has no number, or whose numbers all failed when the Android dialer called them, with candidate numbers from other sources. Candidates are unverified until the dialer reaches a person who confirms the unit.</p>
+  </header>
+
+  <section class="strip" id="strip" aria-label="Summary"></section>
+
+  <section class="work">
+    <div class="panel">
+      <div class="filters" id="kindChips" role="group" aria-label="Filter by situation"></div>
+      <div class="filters">
+        <select id="uf" aria-label="State"><option value="">All states</option></select>
+        <select id="cand" aria-label="Candidates">
+          <option value="">With or without candidates</option>
+          <option value="yes">Has a candidate</option>
+          <option value="no">No candidate yet</option>
+        </select>
+        <input type="search" id="q" placeholder="Hospital, city or CNES" aria-label="Search">
+      </div>
+      <svg class="map" id="map" role="img" aria-label="Map of Brazil with the hospitals in the current filter"></svg>
+      <div class="legend">
+        <span><svg width="12" height="12"><circle cx="6" cy="6" r="4.5" fill="var(--fg)" stroke="var(--fg)"/></svg>Has a candidate</span>
+        <span><svg width="12" height="12"><circle cx="6" cy="6" r="4.5" fill="none" stroke="var(--fg)" stroke-width="1.6"/></svg>No candidate yet</span>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="count" id="count"></div>
+      <div class="list" id="list"></div>
+    </div>
+  </section>
+
+  <section class="methods">
+    <div class="eyebrow">Where else to find a number</div>
+    <h2>Methods</h2>
+    <p class="lede">Run means it is already in the candidate list above. Needs a yes means it costs money or reaches out to people. Idea means not built yet.</p>
+    <div class="mgrid" id="methods"></div>
+  </section>
+
+  <section class="methods">
+    <div class="eyebrow">Validation loop</div>
+    <h2>From candidate to published number</h2>
+    <ol class="loop">
+      <li>All candidates never dialled before are loaded on the Samsung (installed 15/11) and go ahead of anything else. Retries of rejected numbers are off.</li>
+      <li>The run starts 16/11 as day 1 of 17 and ends 02/12: Vivo, 99 a day, 4-minute spacing, 09–12h and 14–18h. 17 × 99 = 1,683 slots for the queue.</li>
+      <li>Import the export ZIP with <span class="num">import_calls.py</span>; the dashboard picks the new attempts up.</li>
+      <li>A number counts as found only when a person answers and confirms the unit name. Carrier messages and voicemail do not count.</li>
+      <li><span class="num">score_sources.py</span> rates each source and each repair trick by the share of numbers a person answered, against the first run's 11.6% and the retries' 1%.</li>
+      <li>Confirmed numbers go into SoroJá as a traceable correction on top of the Ministry data, with the call as evidence. Dead official numbers are reported back to the state.</li>
+    </ol>
+  </section>
+
+  <p class="foot" id="foot"></p>
+</div>
+
+<script src="page-data.js"></script>
+<script>
+(() => {
+  const H = window.HUNT, U = H.units, M = H.meta;
+  const KINDS = {
+    no_phone: { label: "No number published", color: "var(--nophone)" },
+    dead: { label: "Number doesn't exist", color: "var(--dead)" },
+    failed: { label: "Failed (network, blocked)", color: "var(--failed)" },
+    not_dialed: { label: "Not dialled yet", color: "var(--notdialed)" },
+  };
+  const SRC = { cnes: "CNES", cnpj: "CNPJ", history: "Old SoroJá", osm: "OSM", repair: "Repair" };
+  const fmt = n => n.toLocaleString("en-US");
+  const k = M.kinds;
+  const total = (k.no_phone||0) + (k.dead||0) + (k.failed||0) + (k.not_dialed||0);
+  const stat = (b, s, dot) => `<div class="stat"><b>${b}</b><span>${dot ? `<i style="background:${dot}"></i>` : ""}${s}</span></div>`;
+  document.getElementById("strip").innerHTML =
+    stat(fmt(total), `of ${fmt(M.total_units)} units without a working number`) +
+    stat(fmt(k.no_phone||0), KINDS.no_phone.label, KINDS.no_phone.color) +
+    stat(fmt(k.dead||0), KINDS.dead.label + " (carrier said so)", KINDS.dead.color) +
+    stat(fmt(k.failed||0), KINDS.failed.label, KINDS.failed.color) +
+    stat(fmt(M.with_cand), "units now have a candidate") +
+    stat(fmt(M.new_numbers), "new numbers ready to dial");
+
+  const state = { kinds: new Set(Object.keys(KINDS)), uf: "", cand: "", q: "" };
+  try { const s = JSON.parse(localStorage.getItem("hunt-filters") || "null"); if (s) { state.kinds = new Set(s.kinds); state.uf = s.uf; state.cand = s.cand; } } catch (e) {}
+  const save = () => { try { localStorage.setItem("hunt-filters", JSON.stringify({ kinds: [...state.kinds], uf: state.uf, cand: state.cand })); } catch (e) {} };
+
+  const chips = document.getElementById("kindChips");
+  for (const [key, v] of Object.entries(KINDS)) {
+    const b = document.createElement("button");
+    b.className = "chip"; b.type = "button"; b.id = "chip-" + key;
+    b.innerHTML = `<i style="background:${v.color}"></i>${v.label} <span class="num">${fmt(k[key]||0)}</span>`;
+    b.setAttribute("aria-pressed", state.kinds.has(key));
+    b.onclick = () => { state.kinds.has(key) ? state.kinds.delete(key) : state.kinds.add(key); b.setAttribute("aria-pressed", state.kinds.has(key)); save(); render(); };
+    chips.appendChild(b);
+  }
+  const ufSel = document.getElementById("uf");
+  [...new Set(U.map(u => u.uf))].sort().forEach(uf => {
+    const n = U.filter(u => u.uf === uf).length;
+    ufSel.insertAdjacentHTML("beforeend", `<option value="${uf}">${uf} · ${n}</option>`);
+  });
+  ufSel.value = state.uf; document.getElementById("cand").value = state.cand;
+  ufSel.onchange = e => { state.uf = e.target.value; save(); render(); };
+  document.getElementById("cand").onchange = e => { state.cand = e.target.value; save(); render(); };
+  document.getElementById("q").oninput = e => { state.q = e.target.value.trim().toLowerCase(); render(); };
+
+  const svg = document.getElementById("map"), NS = "http://www.w3.org/2000/svg", P = H.map.proj;
+  const proj = (lat, lng) => [(lng - P.minx) * P.sc, (P.maxy - lat) * P.sc];
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  function setView() {
+    if (!state.uf) { svg.setAttribute("viewBox", H.map.viewBox); return; }
+    const pts = U.filter(u => u.uf === state.uf && u.lat != null).map(u => proj(u.lat, u.lng));
+    const p = svg.querySelector(`path[data-uf="${state.uf}"]`);
+    let b = p ? p.getBBox() : null;
+    if (!b && pts.length) { const xs = pts.map(q => q[0]), ys = pts.map(q => q[1]); b = { x: Math.min(...xs), y: Math.min(...ys), width: Math.max(...xs) - Math.min(...xs), height: Math.max(...ys) - Math.min(...ys) }; }
+    if (!b) { svg.setAttribute("viewBox", H.map.viewBox); return; }
+    const pad = Math.max(b.width, b.height) * 0.08 + 8;
+    svg.setAttribute("viewBox", `${b.x - pad} ${b.y - pad} ${b.width + 2 * pad} ${b.height + 2 * pad}`);
+  }
+  for (const [uf, d] of Object.entries(H.map.paths)) {
+    const p = document.createElementNS(NS, "path"); p.setAttribute("d", d); p.dataset.uf = uf;
+    p.addEventListener("click", () => { state.uf = state.uf === uf ? "" : uf; ufSel.value = state.uf; save(); render(); });
+    svg.appendChild(p);
+  }
+  const dots = document.createElementNS(NS, "g"); svg.appendChild(dots);
+
+  function rowHtml(u, i) {
+    const v = KINDS[u.kind];
+    const res = u.res ? u.res.split("; ").map(x => { const [n, c] = x.split(":"); return `${n.replace(/^(\d\d)(\d+)(\d{4})$/, "($1) $2-$3")} → ${c.replace(/_/g, " ")}`; }).join(" · ") : "nothing published";
+    const cands = u.c.length ? `<div class="cands">${u.c.map(c => `<div class="cand"><span class="num">${esc(c[0])}</span><span class="src">${SRC[c[1]] || c[1]}</span><span class="why">${esc(c[2])}${c[3] ? ` · already dialled: ${esc(c[3])}` : ""}</span></div>`).join("")}</div>` : `<div class="meta">No candidate yet</div>`;
+    return `<div class="row" id="r${i}" data-i="${i}"><h3>${esc(u.name)} <small>${esc(u.city)}/${u.uf}${u.cnes ? ` · CNES ${u.cnes}` : ""}</small><span class="pill" style="background:${v.color}">${v.label}</span></h3><div class="meta">Published: ${esc(res)}</div>${cands}</div>`;
+  }
+
+  function render() {
+    const vis = U.map((u, i) => [u, i]).filter(([u]) =>
+      state.kinds.has(u.kind) && (!state.uf || u.uf === state.uf) &&
+      (!state.cand || (state.cand === "yes") === (u.c.length > 0)) &&
+      (!state.q || (u.name + " " + u.city + " " + u.cnes).toLowerCase().includes(state.q)));
+    svg.querySelectorAll("path").forEach(p => p.classList.toggle("sel", p.dataset.uf === state.uf));
+    setView();
+    const r = state.uf ? 3.2 : 3;
+    dots.innerHTML = vis.filter(([u]) => u.lat != null).map(([u, i]) => {
+      const [x, y] = proj(u.lat, u.lng), col = KINDS[u.kind].color;
+      return `<circle data-i="${i}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="${u.c.length ? col : "var(--surface)"}" stroke="${col}"><title>${esc(u.name)} — ${esc(u.city)}/${u.uf}</title></circle>`;
+    }).join("");
+    const withC = vis.filter(([u]) => u.c.length).length;
+    document.getElementById("count").textContent = `${fmt(vis.length)} units shown · ${fmt(withC)} with a candidate`;
+    const shown = vis.slice(0, 400);
+    document.getElementById("list").innerHTML = shown.map(([u, i]) => rowHtml(u, i)).join("") +
+      (vis.length > shown.length ? `<div class="row meta">Showing the first 400. Pick a state or search to narrow the list.</div>` : "");
+  }
+  dots.addEventListener("click", e => {
+    const c = e.target.closest("circle"); if (!c) return;
+    const i = c.dataset.i; let row = document.getElementById("r" + i);
+    if (!row) { state.q = ""; document.getElementById("q").value = ""; state.uf = U[i].uf; ufSel.value = state.uf; render(); row = document.getElementById("r" + i); }
+    document.querySelectorAll(".row.hot,circle.hot").forEach(x => x.classList.remove("hot"));
+    if (row) { row.classList.add("hot"); row.scrollIntoView({ block: "nearest", behavior: "smooth" }); }
+    const cc = dots.querySelector(`circle[data-i="${i}"]`); if (cc) cc.classList.add("hot");
+  });
+
+  const S = M.sources;
+  const METHODS = [
+    ["CNES registry phone", "done", `${fmt(S.cnes||0)} candidates`, "The unit's own record in the Ministry's CNES open-data API. Different from the PESA list in most failed units. CNES also ages, so it still needs a call."],
+    ["Old 7-digit numbers, fixed", "done", "inside the CNES count", "Many North and Northeast CNES records still carry pre-2000s numbers like (98) 454-1094. Landlines gained a leading 3, so the page tries (98) 3454-1094. Numbers without an area code get the town's code."],
+    ["Earlier SoroJá versions", "done", `${fmt(S.history||0)} candidates`, "Every number SoroJá published for the unit across 66 versions in git, from earlier Ministry PDFs. Catches numbers the Ministry replaced or dropped."],
+    ["OpenStreetMap", "done", `${fmt(S.osm||0)} candidates`, "Health facilities with a phone tag within 1 km of the pin and a shared name word. Free; strongest in state capitals and big regional hospitals."],
+    ["Repair of dead numbers", "done", `${fmt(S.repair||0)} candidates`, "When the carrier said a number doesn't exist: add the missing mobile 9, or swap in the town's area code when the published one belongs elsewhere (UPA Jequié 71 → 73)."],
+    ["Receita Federal CNPJ", S.cnpj ? "done" : "idea", S.cnpj ? `${fmt(S.cnpj)} candidates` : "download running", "Phones on the CNPJ that CNES lists for the unit, via BrasilAPI. Often the town's health fund or the state health department, so it reaches an office that can give the direct line. Numbers shared by 3+ units are marked; in RR one Ministry indigenous-health office covers 17 posts."],
+    ["Google Places", "ask", "blocked: billing is off", "Approved 15/11, but the Maps project has billing disabled, so Google refuses every request. fetch_places.py is ready: about US$ 50 for all 1,543 units, resumes where it stops. Edu turns billing on, then it runs."],
+    ["Town hall and health department", "idea", "", "Most town websites run on a few portal templates with a contact page. Scrape the switchboard of the Prefeitura or Secretaria de Saúde for each failed town. Ask them for the hospital's direct line."],
+    ["Regional SAMU / regulation centres", "ask", "≈ 200 calls, many units each", "The regulation centre that sends ambulances knows every receiving hospital's line. One call can unlock a whole region. A person has to call, not the dialer."],
+    ["State lists and CIATox", "ask", "", "States own the PESA list (NT 127/2026). E-mail each state antivenom coordinator or CIATox with the dead and missing units, or file a LAI request. Slow, but official."],
+    ["Web and social search agent", "idea", "", "A search agent per unit across news, Facebook and Instagram pages of the hospital or town hall, and directories (Apontador, TodosNegócios, CEBES). Worked for a few units in the October retry batch."],
+    ["Anatel prefix check", "idea", "a filter, not a source", "Before dialling, check in Anatel's numbering open data that the prefix is assigned to that town. Drops impossible candidates and saves dialer slots."],
+    ["Switchboard neighbours", "idea", "use with care", "When a dead number looks like an extension, try the same prefix ending in 00 or 000, the usual switchboard. Only after the Anatel check, to avoid calling private lines."],
+    ["Ask the public", "ask", "", "A post or in-app note per town: does anyone know the hospital's number? Answers go through the existing error-report intake, never straight to the site."],
+  ];
+  document.getElementById("methods").innerHTML = METHODS.map(([t, s, y, d]) =>
+    `<div class="m"><h3>${t}<span class="state ${s}">${{ done: "Run", ask: "Needs a yes", idea: "Idea" }[s]}</span></h3>${y ? `<div class="yield">${y}</div>` : ""}<p>${d}</p></div>`).join("");
+
+  document.getElementById("foot").textContent = `Data: SoroJá app/hospitals.json (2,279 units, Ministry PESA 03/07/2026) and the call dashboard snapshot of ${M.calls_snapshot}. Status per unit uses the latest call on each published number. Built ${M.generated} from reports/number-hunt-2026-11.`;
+  render();
+})();
+</script>
