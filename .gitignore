@@ -53,3 +53,7 @@ data/private/
 
 # CNES raw API dumps include staff e-mail addresses (personal data); regenerate with fetch_cnes.py
 reports/**/cnes_raw.json
+# number hunt raw API dumps (CNES/CNPJ records carry staff e-mails)
+reports/number-hunt-*/cnpj_raw.json
+reports/number-hunt-*/osm_raw.json
+reports/number-hunt-*/places_raw.json
