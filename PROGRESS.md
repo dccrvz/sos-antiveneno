@@ -3,6 +3,26 @@
 Dated log of every change, newest first. Each entry says what changed, why, which checks
 ran, whether it was deployed, and what is still open. Format: see `AGENTS.md`.
 
+## 2026-11-15 — FAPESP PIPE Phase 1 outline and gaps (Claude Code)
+
+Added `docs/funding/fapesp-pipe/OUTLINE.md` and `GAPS.md`. The outline gives the deadline and
+checklist, the call rules with source URLs, a proposed research question (a per-unit reliability
+score plus accessibility by antivenom type), pre-proposal drafts within the SAGe character limits,
+and an outline with a draft paragraph for each of the 12 Anexo 1 sections. GAPS lists the company,
+team, letters, budget, research question and IP items, each marked blocking or nice-to-have.
+Main finding: the date 2026-11-16 is the launch of the **PIPE Jornada 8th call ("Geral")**, whose
+text is not published yet. Regular PIPE Phase 1 is continuous flow (9 months, ≤R$ 300k). The
+previous Jornada general call allowed 12 months and ≤R$ 500k.
+Sources: fapesp.br/pipe, /pipe/normas, /pipejornada, /pipe/jornada-tecnologica-2026-fase-1 and the
+Anexo 1 template. Gemini was not used: the inputs were small enough to read here.
+Checks: `git diff --check`, prettier on the new files.
+Deployed: no (docs only). Nothing was submitted and no one was contacted.
+Open items:
+
+- `reports/hospital-value-2026-11/` (cited) is still uncommitted in the main checkout.
+- The two deep-research files disagree on whether NT 127/2026 uses the terms PEACA/PEASA.
+- Notion: pending.
+
 ## 2026-11-14 — Repo transferred to dccrvz/sos-antiveneno (Edu + Claude Code)
 
 Edu decided to move SoroJá under the D.C. Cruz org for funding (FAPESP PIPE opens
