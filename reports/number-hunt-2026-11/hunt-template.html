@@ -1,0 +1,655 @@
+<title>SoroJá Number Hunt</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<style>
+/* Same layout and tokens as the call dashboard (outputs/dashboard/template.html), light only. */
+:root{
+ --ink:#0c2127;--ink2:#17323a;--bg:#eef1f2;--panel:#fff;--line:#d5dde0;--line2:#e8edee;--mute:#5e7076;
+ --answer:#0e6e5e;--reach:#b5801a;--cand:#2a62b8;--fail:#b2453b;--nophone:#7a5aa6;--none:#c7d1d4;--noneink:#71848a;--focus:#1a6fa3;
+ --pad:22px;--r:3px;--gutter:max(20px,calc((100vw - 1500px)/2));
+ --sans:"Helvetica Neue",Helvetica,"Segoe UI",system-ui,Arial,sans-serif;
+ color-scheme:light;
+}
+*{box-sizing:border-box;min-width:0}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans);font-variant-numeric:tabular-nums}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- hero ---------- */
+.hero{background:var(--ink);color:#eef4f5;padding:24px var(--gutter) 26px}
+.brand{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;font-size:13px;color:#9db6bd}
+.brand b{color:#eef4f5;font-weight:600;letter-spacing:.01em}
+.tally{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin:14px 0 16px}
+.tally .lead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.tally .big{font-size:68px;font-weight:700;letter-spacing:-.035em;line-height:.9}
+.tally .of{font-size:17px;color:#9db6bd;max-width:34ch}
+.tally .of b{color:#eef4f5;font-weight:600}
+.tally .pct{font-size:40px;font-weight:600;letter-spacing:-.03em;line-height:1;text-align:right}
+.tally .pct small{font-size:22px;color:#9db6bd;font-weight:500}
+.tally .pctnote{font-size:13px;color:#9db6bd;text-align:right}
+.mlabel{font-size:11.5px;color:#9db6bd;margin:10px 0 4px;display:flex;justify-content:space-between;gap:10px}
+.mlabel b{color:#eef4f5;font-weight:600}
+.meter{display:flex;height:18px;background:#1d3b44;overflow:hidden;border-radius:2px}
+.meter span{display:block;min-width:0;transition:width .35s ease}
+.meter .s-answer{background:#1aa088}.meter .s-reach{background:#d8a33c}.meter .s-cand{background:#4f8fe8}.meter .s-fail{background:#cf5e52}.meter .s-nophone{background:#9a7cc6}.meter .s-none{background:transparent}
+.key{display:flex;flex-wrap:wrap;gap:4px 22px;margin:12px 0 0;padding:0;list-style:none;font-size:13.5px;color:#c3d6db}
+.key li{display:flex;align-items:center;gap:7px}
+.key b{color:#fff;font-weight:600}
+.dot{width:11px;height:11px;flex:none;border-radius:50%;display:inline-block}
+.dot.s-answer{background:#1aa088}.dot.s-reach{background:#d8a33c}.dot.s-cand{background:#4f8fe8}.dot.s-fail{background:#cf5e52}.dot.s-nophone{background:#9a7cc6}.dot.s-none{background:none;box-shadow:inset 0 0 0 2px #7d969d}
+.facts{margin-top:16px;padding-top:14px;border-top:1px solid #1f4049;display:flex;flex-wrap:wrap;gap:10px 38px;font-size:13px;color:#9db6bd}
+.facts b{color:#eef4f5;font-weight:600;font-size:15px}
+
+/* ---------- layout ---------- */
+main{padding:20px var(--gutter) 40px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:var(--pad)}
+h2{font-size:17px;font-weight:600;letter-spacing:-.01em;margin:0;text-wrap:balance}
+h3{font-size:13px;font-weight:600;margin:0}
+p{margin:0 0 10px}
+.sub{color:var(--mute);font-size:13px;line-height:1.5}
+.split{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;margin:16px 0}
+.split.even{grid-template-columns:1fr 1fr}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+
+/* ---------- controls ---------- */
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:end;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.controls label{display:grid;gap:5px;font-size:11.5px;font-weight:600;color:var(--mute)}
+select,input[type=search],input[type=text]{padding:8px 10px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);min-width:150px}
+.btn{padding:9px 13px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel);font-size:13.5px;font-weight:500}
+.btn:hover{border-color:var(--ink)}
+.scope{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:12px 2px;font-size:13px;color:var(--mute)}
+
+/* ---------- map ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:6px 11px;border:1px solid var(--line);border-radius:999px;font-size:12.5px;font-weight:500;color:var(--mute);white-space:nowrap}
+.chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.mapbox{position:relative;overflow:hidden}
+svg.br{display:block;width:100%;height:auto;max-height:min(68vh,620px)}
+svg.br path.uf{stroke:var(--panel);stroke-width:2.2;cursor:pointer;transition:fill .25s ease}
+svg.br path.uf:hover{stroke:var(--ink);stroke-width:2.6}
+svg.br path.uf.sel{stroke:var(--ink);stroke-width:4.5;paint-order:stroke}
+svg.br path.uf:focus-visible{outline:none;stroke:var(--focus);stroke-width:3.4}
+svg.br text{font-family:var(--sans);font-size:22px;font-weight:600;fill:var(--ink);pointer-events:none;paint-order:stroke;stroke:var(--panel);stroke-width:3.5px;stroke-linejoin:round}
+svg.br polyline{fill:none;stroke:var(--mute);stroke-width:1.8}
+svg.br path.uf.ctx{cursor:pointer;opacity:.55}
+svg.br circle.pin{cursor:pointer}
+svg.br circle.pin:hover{stroke:var(--ink)}
+svg.br circle.pin:focus-visible{outline:none;stroke:var(--focus)}
+#inset{position:absolute;top:var(--pad);right:var(--pad);width:118px;padding:8px 8px 6px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);display:flex;flex-direction:column;gap:5px;align-items:center;z-index:4}
+#inset[hidden]{display:none}
+#inset:hover{border-color:var(--ink)}
+#inset svg{width:100%;height:auto;display:block}
+#inset span{font-size:11px;font-weight:600;color:var(--mute);line-height:1.2;text-align:center}
+#inset:hover span{color:var(--ink)}
+#tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);padding:9px 11px;border-radius:var(--r);font-size:12.5px;line-height:1.45;white-space:nowrap;opacity:0;transition:opacity .12s;z-index:5;box-shadow:0 2px 10px rgba(0,0,0,.18)}
+#tip b{font-size:13.5px}
+.ramp{display:flex;align-items:center;gap:9px;margin-top:12px;font-size:12px;color:var(--mute);flex-wrap:wrap}
+.ramp .sw{display:flex}
+.ramp .sw i{width:30px;height:11px;display:block}
+
+/* ---------- state panel ---------- */
+.ufname{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.mrow{display:grid;grid-template-columns:118px 1fr 52px;gap:10px;align-items:center;font-size:12px;color:var(--mute);margin:8px 0}
+.mrow b{color:var(--ink);font-weight:600;text-align:right}
+.minimeter{display:flex;height:12px;background:var(--line2);border-radius:2px;overflow:hidden}
+.minimeter span{display:block}
+.m-answer{background:var(--answer)}.m-reach{background:var(--reach)}.m-cand{background:var(--cand)}.m-fail{background:var(--fail)}.m-nophone{background:var(--nophone)}.m-none{background:transparent}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:14px 0}
+.tile{background:var(--panel);padding:11px 12px;text-align:left}
+.tile .v{font-size:23px;font-weight:700;letter-spacing:-.02em;line-height:1.15;color:var(--ink)}
+.tile .l{font-size:11.5px;color:var(--mute);display:flex;align-items:center;gap:6px;margin-top:3px}
+.tile[aria-pressed=true]{background:var(--line2)}
+.tile:focus-visible{outline-offset:-2px}
+.hlist{max-height:430px;overflow:auto;margin:0 calc(var(--pad)*-1) calc(var(--pad)*-1);border-top:1px solid var(--line)}
+.hrow{display:grid;grid-template-columns:16px 1fr auto;gap:11px;width:100%;text-align:left;padding:11px var(--pad);border-bottom:1px solid var(--line2);align-items:start}
+.hrow:hover{background:var(--line2)}
+.hrow .nm{display:block;font-weight:600;font-size:13.5px;line-height:1.35}
+.hrow .ct{display:block;font-size:12px;color:var(--mute);margin-top:3px}
+.hrow .rt{font-size:12px;color:var(--mute);text-align:right;white-space:nowrap}
+.glyph{font-size:13px;line-height:1.5;font-weight:700}
+.g-answer{color:var(--answer)}.g-reach{color:var(--reach)}.g-cand{color:var(--cand)}.g-fail{color:var(--fail)}.g-nophone{color:var(--nophone)}.g-none{color:var(--noneink)}
+
+/* ---------- bars / tables ---------- */
+.bar{display:grid;grid-template-columns:1fr 150px;gap:12px;align-items:center;padding:7px 0;font-size:13px}
+.bar .t{height:9px;background:var(--line2);border-radius:2px;overflow:hidden;margin-top:5px;display:flex}
+.bar .f{height:100%}
+.bar .v{text-align:right;color:var(--mute);font-size:12.5px}
+.tablewrap{overflow:auto;max-height:560px;margin:0 calc(var(--pad)*-1);border-top:1px solid var(--line)}
+.tablewrap:last-child{margin-bottom:calc(var(--pad)*-1)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:11px;font-weight:600;color:var(--mute);background:var(--panel);position:sticky;top:0;z-index:1;border-bottom:1px solid var(--line)}
+th button{font-weight:600;color:inherit;padding:0;text-align:inherit}
+th button:hover{color:var(--ink)}
+th[aria-sort] button{color:var(--ink)}
+th,td{padding:10px var(--pad);border-bottom:1px solid var(--line2);vertical-align:top}
+td.r,th.r{text-align:right;white-space:nowrap}
+tbody tr:hover{background:var(--line2)}
+tr.selrow{background:var(--line2)}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;white-space:nowrap}
+.empty{padding:34px var(--pad);text-align:center;color:var(--mute);font-size:13.5px}
+.note{border-left:2px solid var(--reach);padding:11px 14px;background:var(--line2);font-size:12.5px;line-height:1.55;color:var(--ink2);margin:16px 0}
+.rowbtn{font:inherit;text-align:left;font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;text-decoration-color:var(--line)}
+.rowbtn:hover{text-decoration-color:currentColor}
+.pp{font-size:11.5px;color:var(--mute)}
+.pp.up{color:var(--cand);font-weight:600}
+/* before → with candidates, on one 0–100% track */
+.db{position:relative;height:16px;min-width:150px}
+.db .tr{position:absolute;left:0;right:0;top:7px;height:2px;background:var(--line2)}
+.db .gn{position:absolute;top:6px;height:4px;background:var(--cand);opacity:.35;border-radius:2px}
+.db .a,.db .b{position:absolute;top:3px;width:10px;height:10px;border-radius:50%;margin-left:-5px}
+.db .a{background:var(--panel);box-shadow:inset 0 0 0 2.5px var(--answer)}
+.db .b{background:var(--cand)}
+.legendrow{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--mute);margin-top:-4px}
+.legendrow i{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:-1px;margin-right:6px}
+ol.loop{margin:0;padding-left:20px;font-size:13px;line-height:1.6;color:var(--ink2)}
+ol.loop li{margin:0 0 8px}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:0 calc(var(--pad)*-1) calc(var(--pad)*-1);border-left:0;border-right:0;border-bottom:0}
+.m{background:var(--panel);padding:14px var(--pad)}
+.m h3{display:flex;justify-content:space-between;gap:10px;align-items:baseline;font-size:13.5px}
+.m .st{font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.st.done{background:#dcefe9;color:var(--answer)}.st.ask{background:#f6ead2;color:#8a5f0f}.st.idea{background:var(--line2);color:var(--mute)}
+.m .y{font-size:12px;color:var(--cand);font-weight:600;margin:4px 0}
+.m p{font-size:12.5px;color:var(--ink2);line-height:1.55;margin:6px 0 0}
+
+/* ---------- drawer ---------- */
+#scrim{position:fixed;inset:0;background:rgba(10,24,28,.42);opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+#scrim.on{opacity:1;pointer-events:auto}
+#drawer{position:fixed;top:0;right:0;bottom:0;width:min(560px,100%);background:var(--panel);border-left:1px solid var(--line);z-index:41;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column}
+#drawer.on{transform:none}
+.dhead{padding:20px var(--pad);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;align-items:flex-start}
+.dhead h2{font-size:19px;line-height:1.3}
+.dbody{overflow:auto;padding:0 var(--pad) 28px;flex:1}
+.att{border-bottom:1px solid var(--line2);padding:16px 0}
+.att:last-child{border:0}
+.att h3{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.crow{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;padding:8px 0;border-top:1px solid var(--line2);font-size:13px}
+.crow:first-of-type{border-top:0}
+.crow .n{font-weight:600;white-space:nowrap}
+.crow .d{color:var(--mute);font-size:12px}
+.closex{font-size:22px;line-height:1;padding:4px 8px;color:var(--mute)}
+.closex:hover{color:var(--ink)}
+
+details{border-top:1px solid var(--line);margin-top:18px;padding-top:14px}
+summary{cursor:pointer;font-size:13.5px;font-weight:600}
+details p{font-size:13px;color:var(--ink2);line-height:1.6;margin:10px 0}
+code{font-size:12px;background:var(--line2);padding:1px 5px;border-radius:2px;overflow-wrap:anywhere}
+footer{color:var(--mute);font-size:12px;line-height:1.7;padding-top:18px}
+
+@media(max-width:1080px){.split,.split.even{grid-template-columns:1fr}svg.br{max-height:none}.tally .big{font-size:54px}}
+@media(max-width:620px){
+ main{padding:14px}.hero{padding:18px 14px 22px}.tally .big{font-size:44px}.tally .pct{font-size:30px}
+ .tiles{grid-template-columns:1fr 1fr}.controls label{flex:1 1 140px}select,input[type=search]{min-width:0;width:100%}
+ .key{display:grid;gap:7px}.mrow{grid-template-columns:96px 1fr 44px}
+ svg.br text{font-size:33px}svg.br path.uf{stroke-width:3.2}svg.br polyline{stroke-width:2.6}
+ #inset{width:86px;padding:6px 6px 5px}#inset span{font-size:10px}
+ th,td,.hrow,.m{padding-left:14px;padding-right:14px}.hlist,.tablewrap,.mgrid{margin-left:-14px;margin-right:-14px}
+ :root{--pad:14px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="hero">
+ <div class="brand"><span><b>SoroJá</b> · number hunt for units without a working phone</span><span id="updated"></span></div>
+ <div class="tally">
+  <div class="lead"><div class="big num" id="done">—</div><div class="of" id="ofLine"></div></div>
+  <div><div class="pct num" id="pct">—</div><div class="pctnote" id="pctNote"></div></div>
+ </div>
+ <div class="mlabel"><span>Official numbers only · first dialer run</span><b id="mBefore"></b></div>
+ <div class="meter" id="meterBefore" role="img"></div>
+ <div class="mlabel"><span>With the candidate numbers, if they work</span><b id="mAfter"></b></div>
+ <div class="meter" id="meterAfter" role="img"></div>
+ <ul class="key" id="key"></ul>
+ <div class="facts" id="facts"></div>
+</header>
+
+<main>
+ <div class="controls">
+  <label>State<select id="state"><option value="">Brazil · all states</option></select></label>
+  <label>Candidate source<select id="source"><option value="">All sources</option></select></label>
+  <label>Situation<select id="situ"><option value="">All units</option></select></label>
+  <button class="btn" id="reset">Clear filters</button>
+ </div>
+ <div class="scope"><span id="scopeTxt"></span><span>Units, not numbers: one unit counts once however many numbers it has.</span></div>
+
+ <section class="split">
+  <div class="panel mapbox">
+   <div class="head">
+    <div><h2>Where units have a number</h2><p class="sub" id="mapSub">Click a state to zoom in. Use the small Brazil in the corner to zoom out.</p></div>
+    <div class="chips" id="metrics" role="group" aria-label="Map measure"></div>
+   </div>
+   <div id="mapHolder"></div>
+   <button id="inset" hidden></button>
+   <div id="tip" role="status"></div>
+   <div class="ramp" id="ramp"></div>
+  </div>
+
+  <div class="panel">
+   <div class="head"><div><div class="ufname" id="ufName">Brazil</div><p class="sub" id="ufSub"></p></div></div>
+   <div class="mrow"><span>Official only</span><div class="minimeter" id="ufBefore"></div><b id="ufBeforePct"></b></div>
+   <div class="mrow"><span>With candidates</span><div class="minimeter" id="ufAfter"></div><b id="ufAfterPct"></b></div>
+   <div class="tiles" id="ufTiles"></div>
+   <label class="sub" style="display:block"><input type="search" id="hsearch" placeholder="Search unit, city, CNES or number" style="width:100%" aria-label="Search units"></label>
+   <p class="sub" id="hlistNote" style="margin:10px 0"></p>
+   <div class="hlist" id="hlist"></div>
+  </div>
+ </section>
+
+ <div class="note" id="caveat"></div>
+
+ <section class="panel">
+  <div class="head">
+   <div><h2>Official list against the list with candidates, by state</h2>
+    <p class="sub">Share of the state's units in the Ministry list. Click a state to focus the page; click a column to sort.</p></div>
+   <div class="legendrow"><span><i style="box-shadow:inset 0 0 0 2.5px var(--answer)"></i>answered on an official number</span><span><i style="background:var(--cand)"></i>with candidates, if they work</span></div>
+  </div>
+  <div class="tablewrap"><table><thead><tr id="cmpHead"></tr></thead><tbody id="cmp"></tbody></table></div>
+ </section>
+
+ <section class="split even">
+  <div class="panel"><div class="head"><div><h2>Where the candidates come from</h2><p class="sub" id="srcNote"></p></div></div><div id="sources"></div></div>
+  <div class="panel"><div class="head"><div><h2>From candidate to published number</h2><p class="sub">Nothing on this page changes the public site.</p></div></div>
+   <ol class="loop" id="loop"></ol>
+  </div>
+ </section>
+
+ <section class="panel">
+  <div class="head">
+   <div><h2>Candidate book</h2><p class="sub">One row per candidate number. Open a unit to compare its official numbers with its candidates.</p></div>
+   <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <input type="search" id="search" placeholder="Unit, city or number" aria-label="Search candidates">
+    <select id="dialled" aria-label="Filter by earlier call"><option value="">Dialled before or not</option><option value="new">Never dialled (on the phone now)</option><option value="old">Dialled before</option></select>
+   </div>
+  </div>
+  <div class="tablewrap"><table><thead><tr><th>Unit</th><th>Candidate</th><th>Source</th><th>Note</th></tr></thead><tbody id="book"></tbody></table></div>
+  <p class="sub" id="rowCount" style="margin:16px 0 0"></p>
+ </section>
+
+ <section class="panel" style="margin-top:16px">
+  <div class="head"><div><h2>Where else to find a number</h2><p class="sub">Run: already in the candidates above. Needs a yes: costs money or reaches out to people. Idea: not built yet.</p></div></div>
+  <div class="mgrid" id="methods"></div>
+ </section>
+
+ <details>
+  <summary>How to read this page</summary>
+  <p><strong>Official numbers only</strong> is the result of the first dialer run on the numbers in the Ministry's PESA list (03/07/2026). A unit counts as having a working number when at least one of its numbers was answered by a person, or reached a menu, voicemail or an unclear connection. Everything else either failed (carrier message, network, blocked) or had no number in the list.</p>
+  <p><strong>With candidates</strong> adds every unit that has at least one candidate number from another source. It is the ceiling if every candidate works, not a result: the dialer starts calling them on 16/11, and a candidate only counts as found when a person answers and confirms the unit.</p>
+  <p>Picking a <strong>source</strong> counts only that source's candidates, so the page shows how much each source alone would add. Some candidates are shared office lines (the town's or the state's health department), marked in the note.</p>
+  <p>To update after the run: import the phone export, rebuild the call dashboard, run <code>build_targets.py</code>, <code>build_candidates.py</code> and <code>build_page.py</code> in <code>reports/number-hunt-2026-11</code>, and republish. Nothing here writes to <code>app/hospitals.json</code>.</p>
+ </details>
+ <footer id="footer"></footer>
+</main>
+
+<div id="scrim"></div>
+<aside id="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle" hidden>
+ <div class="dhead"><div><h2 id="dTitle"></h2><p class="sub" id="dSub" style="margin:6px 0 0"></p></div><button class="closex" id="dClose" aria-label="Close">×</button></div>
+ <div class="dbody" id="dBody"></div>
+</aside>
+
+<script id="mapdata" type="application/json">__MAP__</script>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+"use strict";
+const MAP=JSON.parse(document.getElementById('mapdata').textContent);
+const DATA=JSON.parse(document.getElementById('data').textContent);
+const $=id=>document.getElementById(id);
+const fmt=n=>new Intl.NumberFormat('en-US').format(n);
+const pctv=(n,d)=>d?100*n/d:null;
+const pct=(n,d)=>d?(100*n/d).toLocaleString('en-US',{maximumFractionDigits:1})+'%':'—';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const br=d=>d?d.slice(0,10).split('-').reverse().slice(0,2).join('/'):'';
+const tel=n=>{const d=String(n??'').replace(/\D/g,'');return d.length===10||d.length===11?`(${d.slice(0,2)}) ${d.slice(2,-4)}-${d.slice(-4)}`:String(n??'')};
+function find(q,fields,nums){
+ const qd=/^[\d()\s.+-]+$/.test(q)?q.replace(/\D/g,''):'';
+ if(qd.length>2&&nums.some(n=>String(n).includes(qd)))return true;
+ return fields.join(' ').toLowerCase().includes(q);
+}
+const UF={AC:'Acre',AL:'Alagoas',AM:'Amazonas',AP:'Amapá',BA:'Bahia',CE:'Ceará',DF:'Distrito Federal',ES:'Espírito Santo',GO:'Goiás',MA:'Maranhão',MG:'Minas Gerais',MS:'Mato Grosso do Sul',MT:'Mato Grosso',PA:'Pará',PB:'Paraíba',PE:'Pernambuco',PI:'Piauí',PR:'Paraná',RJ:'Rio de Janeiro',RN:'Rio Grande do Norte',RO:'Rondônia',RR:'Roraima',RS:'Rio Grande do Sul',SC:'Santa Catarina',SE:'Sergipe',SP:'São Paulo',TO:'Tocantins'};
+
+/* unit situation. before = first dialer run on the official numbers; after = with candidates */
+const STATUS={
+ answer :{g:'●',label:'Answered by a person',short:'Answered'},
+ reach  :{g:'◐',label:'Reached, not confirmed',short:'Reached'},
+ cand   :{g:'◆',label:'Candidate number to dial',short:'Candidate'},
+ fail   :{g:'✕',label:'Official numbers failed',short:'Failed'},
+ nophone:{g:'▢',label:'No number in the list',short:'No number'},
+ none   :{g:'○',label:'Not dialled yet',short:'Not dialled'}
+};
+const ORDER_B=['answer','reach','fail','nophone','none'];
+const ORDER_A=['answer','reach','cand','fail','nophone','none'];
+const RANK={answer:0,reach:1,cand:2,fail:3,nophone:4,none:5};
+const SRC={cnes:'CNES registry',cnpj:'Receita Federal CNPJ',osm:'OpenStreetMap',history:'Earlier SoroJá versions',repair:'Repair of dead numbers'};
+const CAT={human:'person answered',ivr:'menu / queue',voicemail:'voicemail',unclear:'connected, unclear',incorrect:'carrier: number does not exist',cannot_complete:'carrier: cannot complete',blocked:'carrier: blocked',changed:'carrier: number changed',unavailable:'carrier: unavailable',carrier_restriction:'carrier: restricted',congestion:'network congestion',network:'network failure',technical:'app failure',incomplete:'incomplete attempt',not_dialed:'not dialled yet'};
+
+const U=DATA.units.map((r,i)=>{const o={i};DATA.fields.forEach((f,j)=>o[f]=r[j]);o.c=o.c.map(c=>({n:c[0],src:c[1],note:c[2],old:c[3]}));return o});
+
+/* ---------- filters ---------- */
+function F(){return{st:$('state').value,src:$('source').value,situ:$('situ').value}}
+const candsOf=(u,src)=>src?u.c.filter(c=>c.src===src):u.c;
+function afterOf(u,src){return (u.before==='answer'||u.before==='reach')?u.before:(candsOf(u,src).length?'cand':u.before)}
+function inScope(st){return st?U.filter(u=>u.uf===st):U}
+function stats(list,src){
+ const s={n:list.length,phone:0,answer:0,reach:0,fail:0,nophone:0,none:0,cand:0,candNums:0};
+ list.forEach(u=>{if(u.phones)s.phone++;s[u.before]++;if(afterOf(u,src)==='cand'){s.cand++;}s.candNums+=(u.before==='answer'||u.before==='reach')?0:candsOf(u,src).length});
+ s.work=s.answer+s.reach;s.withc=s.work+s.cand;s.nothing=s.n-s.withc;
+ return s;
+}
+const byUF=src=>{const m={};Object.keys(MAP.paths).forEach(uf=>m[uf]=stats(U.filter(u=>u.uf===uf),src));return m};
+
+/* =======================================================================
+   MAP (same frame, zoom and inset as the call dashboard)
+   ======================================================================= */
+const METRICS=[
+ {k:'pdf',   label:'Number in the list', ramp:'left', val:s=>pctv(s.phone,s.n),  fmt:s=>pct(s.phone,s.n),  legend:'% of units with any number in the Ministry list'},
+ {k:'before',label:'Official only',      ramp:'ans',  val:s=>pctv(s.work,s.n),   fmt:s=>pct(s.work,s.n),   legend:'% of units answered or reached on an official number'},
+ {k:'after', label:'With candidates',    ramp:'cov',  val:s=>pctv(s.withc,s.n),  fmt:s=>pct(s.withc,s.n),  legend:'% of units with a working official number or a candidate'},
+ {k:'gain',  label:'Gain',               ramp:'gain', val:s=>pctv(s.cand,s.n),   fmt:s=>'+'+pct(s.cand,s.n), legend:'percentage points the candidates add, if they work'},
+ {k:'left',  label:'Still nothing',      ramp:'fail', val:s=>pctv(s.nothing,s.n),fmt:s=>pct(s.nothing,s.n),legend:'% of units with no working number and no candidate'}
+];
+let metric='after',pinView='after';
+const RAMPS={cov:['#edf2f3','#a9cdd3','#5a9aa8','#1f6677','#06323f'],
+ ans:['#edf3f0','#aad7c8','#57ad93','#1b7a60','#04402f'],
+ gain:['#eef2f8','#b6cbec','#6e98d9','#2a62b8','#0f2f66'],
+ fail:['#f9eeeb','#e8b4aa','#d4786a','#ac4036','#631c16'],
+ left:['#eff2f3','#c6d1d6','#8a9da7','#4d6873','#15303a']};
+function hex2rgb(h){return [parseInt(h.slice(1,3),16),parseInt(h.slice(3,5),16),parseInt(h.slice(5,7),16)]}
+function rampColor(key,t){
+ const stops=RAMPS[key],n=stops.length-1,p=Math.max(0,Math.min(1,t))*n,i=Math.min(n-1,Math.floor(p)),f=p-i;
+ const a=hex2rgb(stops[i]),b=hex2rgb(stops[i+1]);
+ return 'rgb('+a.map((v,j)=>Math.round(v+(b[j]-v)*f)).join(',')+')';
+}
+const lumOf=c=>{const m=c.match(/\d+/g).map(Number);return (0.2126*m[0]+0.7152*m[1]+0.0722*m[2])/255};
+
+const FULL=MAP.viewBox.split(' ').map(Number);
+let VB=FULL.slice(),vbRaf=null;
+function frameFor(uf){
+ if(!uf||!MAP.bbox[uf])return FULL.slice();
+ const [x,y,w,h]=MAP.bbox[uf],pad=Math.max(w,h)*0.12,ar=FULL[2]/FULL[3];
+ let bw=w+pad*2,bh=h+pad*2;if(bw/bh>ar)bh=bw/ar;else bw=bh*ar;
+ return [x+w/2-bw/2,y+h/2-bh/2,bw,bh];
+}
+function setFrame(target,animate){
+ const svg=$('mapHolder').querySelector('svg');if(!svg)return;
+ if(vbRaf)cancelAnimationFrame(vbRaf);
+ const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+ if(!animate||reduce){VB=target.slice();svg.setAttribute('viewBox',VB.join(' '));scaleChrome(svg);return}
+ const from=VB.slice(),t0=performance.now(),dur=460;
+ const step=now=>{const p=Math.min(1,(now-t0)/dur),e=p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+  VB=from.map((v,i)=>v+(target[i]-v)*e);svg.setAttribute('viewBox',VB.map(v=>v.toFixed(1)).join(' '));scaleChrome(svg);
+  if(p<1)vbRaf=requestAnimationFrame(step);else vbRaf=null};
+ vbRaf=requestAnimationFrame(step);
+}
+function scaleChrome(svg){
+ const k=VB[2]/FULL[2];
+ svg.querySelectorAll('[data-sz]').forEach(el=>{const base=+el.dataset.sz;
+  if(el.tagName==='text')el.setAttribute('font-size',(base*k).toFixed(2));
+  else if(el.tagName==='circle')el.setAttribute('r',(base*k).toFixed(2));
+  el.setAttribute('stroke-width',((+el.dataset.sw||0)*k).toFixed(2))});
+ svg.querySelectorAll('path.uf').forEach(p=>p.setAttribute('stroke-width',(2.2*k).toFixed(2)));
+ svg.querySelectorAll('polyline').forEach(p=>p.setAttribute('stroke-width',(1.8*k).toFixed(2)));
+}
+const PROJ=MAP.proj,project=(lat,lng)=>[(lng-PROJ.minx)*PROJ.sc,(PROJ.maxy-lat)*PROJ.sc];
+const pinStyle=k=>k==='none'?'fill:var(--panel);stroke:var(--noneink)':k==='nophone'?'fill:var(--panel);stroke:var(--nophone)':`fill:var(--${k});stroke:var(--panel)`;
+
+function buildMap(){
+ const f=F(),m=METRICS.find(x=>x.k===metric),S=byUF(f.src),sel=f.st,zoom=!!sel;
+ let svg=`<svg class="br" viewBox="${VB.join(' ')}" role="img" aria-label="${zoom?'Units in '+esc(UF[sel]||sel):'Map of Brazil by state'}">`;
+ const fillOf={};
+ for(const uf in MAP.paths){
+  const s=S[uf],v=m.val(s);
+  fillOf[uf]=v===null?'var(--line2)':rampColor(m.ramp,Math.sqrt(v/100));
+  const fill=zoom?(uf===sel?'var(--line2)':'var(--none)'):fillOf[uf];
+  const aria=zoom?(UF[uf]||uf):`${UF[uf]||uf}: ${m.fmt(s)}`;
+  svg+=`<path class="uf${uf===sel?' sel':''}${zoom&&uf!==sel?' ctx':''}" data-uf="${uf}" d="${MAP.paths[uf]}" fill="${fill}" tabindex="0" role="button" aria-label="${esc(aria)}"></path>`;
+ }
+ if(!zoom){
+  for(const uf in MAP.labels){const [x,y]=MAP.labels[uf],onDark=lumOf(fillOf[uf].startsWith('rgb')?fillOf[uf]:'rgb(232,237,238)')<0.5;
+   svg+=`<text data-sz="22" x="${x}" y="${y}" text-anchor="middle" fill="${onDark?'#ffffff':'#0b2026'}" stroke="${onDark?'rgba(4,18,22,.45)':'rgba(255,255,255,.6)'}">${uf}</text>`}
+  for(const uf in MAP.leaders){const o=MAP.leaders[uf];
+   svg+=`<polyline points="${o.a[0]},${o.a[1]} ${o.l[0]-9},${o.l[1]-7}"/><text data-sz="22" x="${o.l[0]}" y="${o.l[1]}" text-anchor="start">${uf}</text>`}
+ }
+ let pts=[];
+ if(zoom){
+  const kOf=u=>pinView==='after'?afterOf(u,f.src):u.before;
+  pts=U.filter(u=>u.uf===sel&&u.lat!=null&&(!f.situ||afterOf(u,f.src)===f.situ));
+  const draw=[...pts].sort((a,b)=>RANK[kOf(b)]-RANK[kOf(a)]);
+  svg+='<g id="pins">'+draw.map(u=>{const [x,y]=project(u.lat,u.lng),k=kOf(u);
+   return `<circle class="pin" data-sz="5.2" data-sw="1.6" data-i="${u.i}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5.2" style="${pinStyle(k)}" tabindex="0" role="button" aria-label="${esc(u.name+' — '+STATUS[k].label)}"></circle>`}).join('')+'</g>';
+ }
+ svg+='</svg>';
+ $('mapHolder').innerHTML=svg;
+ scaleChrome($('mapHolder').querySelector('svg'));
+ setFrame(frameFor(sel),true);
+
+ $('metrics').innerHTML=zoom
+  ? `<button class="chip" id="backBr">← All of Brazil</button><button class="chip" data-v="before" aria-pressed="${pinView==='before'}">Official only</button><button class="chip" data-v="after" aria-pressed="${pinView==='after'}">With candidates</button>`
+  : METRICS.map(x=>`<button class="chip" data-m="${x.k}" aria-pressed="${x.k===metric}">${x.label}</button>`).join('');
+ if(zoom){$('backBr').onclick=()=>pickState('');$('metrics').querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{pinView=b.dataset.v;buildMap()})}
+ else $('metrics').querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{metric=b.dataset.m;buildMap()});
+
+ if(zoom){
+  const ord=pinView==='after'?ORDER_A:ORDER_B,aprox=pts.filter(u=>u.tier>1).length;
+  $('ramp').innerHTML=ord.map(k=>`<span style="display:flex;align-items:center;gap:6px"><i style="width:11px;height:11px;border-radius:50%;display:block;${k==='none'?'border:2px solid var(--noneink)':k==='nophone'?'border:2px solid var(--nophone)':'background:var(--'+k+')'}"></i>${STATUS[k].short}</span>`).join('')
+   +`<span>${fmt(pts.length)} units on the map${aprox?' · '+fmt(aprox)+' placed at the town centre':''}</span>`;
+ }else{
+  const tick=v=>Math.round(v)+'%';
+  $('ramp').innerHTML=`<span>${esc(m.legend)}</span><span class="sw">${[0,25,50,75,100].map(v=>`<i style="background:${rampColor(m.ramp,Math.sqrt(v/100))}" title="${tick(v)}"></i>`).join('')}</span><span>0% → 100%</span>`;
+ }
+
+ $('inset').hidden=!zoom;
+ if(zoom){
+  $('inset').innerHTML=`<svg viewBox="${FULL.join(' ')}" aria-hidden="true">`+Object.keys(MAP.paths).map(uf=>`<path d="${MAP.paths[uf]}" fill="${uf===sel?'var(--ink)':'var(--line)'}"/>`).join('')+`</svg><span>Back to Brazil</span>`;
+  $('inset').onclick=()=>pickState('');$('inset').setAttribute('aria-label','Back to the map of all of Brazil');
+ }
+
+ const holder=$('mapHolder'),tipEl=$('tip');
+ const place=e=>{const r=holder.getBoundingClientRect();tipEl.style.opacity=1;
+  tipEl.style.left=Math.min(Math.max(8,e.clientX-r.left+14),r.width-tipEl.offsetWidth-8)+'px';
+  tipEl.style.top=Math.max(8,e.clientY-r.top-tipEl.offsetHeight-12)+'px'};
+ holder.querySelectorAll('path.uf').forEach(p=>{
+  const uf=p.dataset.uf,s=S[uf],go=()=>pickState(uf===sel?'':uf);
+  p.addEventListener('click',go);
+  p.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});
+  p.addEventListener('mousemove',e=>{
+   tipEl.innerHTML=`<b>${esc(UF[uf]||uf)}</b> · ${fmt(s.n)} units in the list<br>Number in the list: ${fmt(s.phone)} (${pct(s.phone,s.n)})<br>Official only: ${fmt(s.work)} (${pct(s.work,s.n)})<br>With candidates: ${fmt(s.withc)} (${pct(s.withc,s.n)})`;
+   place(e)});
+  p.addEventListener('mouseleave',()=>tipEl.style.opacity=0);
+ });
+ holder.querySelectorAll('circle.pin').forEach(c=>{
+  const u=U[+c.dataset.i],open=e=>{e.stopPropagation();openUnit(u)};
+  c.addEventListener('click',open);
+  c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openUnit(u)}});
+  c.addEventListener('mousemove',e=>{e.stopPropagation();
+   const b=u.before,a=afterOf(u,f.src),n=candsOf(u,f.src).length;
+   tipEl.innerHTML=`<b>${esc(u.name)}</b><br>${esc(u.city)}<br>${STATUS[b].g} ${esc(STATUS[b].label)}${a==='cand'?`<br>${STATUS.cand.g} ${n} candidate${n>1?'s':''}`:''}${u.tier>1?'<br><span style="opacity:.75">placed at the town centre</span>':''}`;
+   place(e)});
+  c.addEventListener('mouseleave',()=>tipEl.style.opacity=0);
+ });
+}
+function pickState(uf){$('state').value=uf;hfilter=null;$('hsearch').value='';render();if(uf)$('mapHolder').scrollIntoView({block:'nearest',behavior:'smooth'})}
+
+/* =======================================================================
+   STATE PANEL
+   ======================================================================= */
+let hfilter=null;
+const TILE_KEYS=['answer','reach','cand','nothing'];
+const TILE={answer:STATUS.answer,reach:STATUS.reach,cand:STATUS.cand,nothing:{g:'✕',short:'Nothing yet',label:'No working number and no candidate'}};
+const tileOf=u=>{const a=afterOf(u,F().src);return a==='fail'||a==='nophone'||a==='none'?'nothing':a};
+function meterHTML(s,order,after){
+ return order.map(k=>{const v=after?(k==='fail'||k==='nophone'||k==='none'?unc(s,k):s[k]):s[k];return `<span class="m-${k}" style="width:${s.n?100*v/s.n:0}%" title="${STATUS[k].label}: ${fmt(v)}"></span>`}).join('');
+}
+/* units still failed / without number after candidates */
+let UNC={};
+function unc(s,k){return UNC[k]||0}
+function renderState(){
+ const f=F(),list0=inScope(f.st),s=stats(list0,f.src);
+ UNC={fail:0,nophone:0,none:0};list0.forEach(u=>{const a=afterOf(u,f.src);if(a in UNC)UNC[a]++});
+ $('ufName').textContent=f.st?(UF[f.st]||f.st):'Brazil';
+ $('ufSub').textContent=`${fmt(s.n)} units in the Ministry list · ${fmt(s.phone)} with a number in it (${pct(s.phone,s.n)})`+(f.st?'':' · click a state on the map to focus');
+ $('ufBefore').innerHTML=meterHTML(s,ORDER_B,false);$('ufBeforePct').textContent=pct(s.work,s.n);
+ $('ufAfter').innerHTML=meterHTML(s,ORDER_A,true);$('ufAfterPct').textContent=pct(s.withc,s.n);
+ const tv={answer:s.answer,reach:s.reach,cand:s.cand,nothing:s.nothing};
+ $('ufTiles').innerHTML=TILE_KEYS.map(k=>`<button class="tile" data-k="${k}" aria-pressed="${hfilter===k}" title="${esc(TILE[k].label)}: click to filter the list"><div class="v num">${fmt(tv[k])}</div><div class="l"><span class="glyph g-${k==='nothing'?'fail':k}">${TILE[k].g}</span>${TILE[k].short}</div></button>`).join('');
+ $('ufTiles').querySelectorAll('.tile').forEach(b=>b.onclick=()=>{hfilter=hfilter===b.dataset.k?null:b.dataset.k;renderState()});
+
+ const q=$('hsearch').value.trim().toLowerCase();
+ let list=list0.filter(u=>!f.situ||afterOf(u,f.src)===f.situ);
+ if(hfilter)list=list.filter(u=>tileOf(u)===hfilter);
+ if(q)list=list.filter(u=>find(q,[u.name,u.city,u.cnes,u.phones,...u.c.map(c=>c.n)],[u.phones.replace(/\D/g,''),...u.c.map(c=>c.n.replace(/\D/g,''))]));
+ list.sort((a,b)=>RANK[afterOf(a,f.src)]-RANK[afterOf(b,f.src)]||a.name.localeCompare(b.name,'pt-BR'));
+ const cap=list.slice(0,400);
+ $('hlistNote').innerHTML=`<b>${fmt(list.length)}</b> unit${list.length===1?'':'s'}${hfilter?' · '+esc(TILE[hfilter].label.toLowerCase()):''}. Click one to compare its official numbers with its candidates.`;
+ $('hlist').innerHTML=cap.length?cap.map(u=>{const a=afterOf(u,f.src),n=candsOf(u,f.src).length,np=u.phones?u.phones.split(' | ').length:0;
+  const off=u.before==='nophone'?'no number in the list':`${np} official number${np>1?'s':''}: ${STATUS[u.before].short.toLowerCase()}${u.dead?' (carrier says it does not exist)':''}`;
+  return `<button class="hrow" data-i="${u.i}"><span class="glyph g-${a}" title="${esc(STATUS[a].label)}">${STATUS[a].g}</span>
+   <span><span class="nm">${esc(u.name)}</span><span class="ct">${esc(u.city)}${f.st?'':' · '+esc(u.uf)} · ${off}</span></span>
+   <span class="rt">${(a==='cand')?fmt(n)+' candidate'+(n>1?'s':''):a==='answer'||a==='reach'?'working':'—'}</span></button>`}).join('')
+  :`<div class="empty">No unit in this filter.</div>`;
+ $('hlist').querySelectorAll('.hrow').forEach(b=>b.onclick=()=>openUnit(U[+b.dataset.i]));
+ if(list.length>cap.length)$('hlist').insertAdjacentHTML('beforeend',`<div class="empty">Showing the first ${fmt(cap.length)} of ${fmt(list.length)}. Use the search to narrow.</div>`);
+}
+
+/* =======================================================================
+   COMPARISON BY STATE
+   ======================================================================= */
+let sortKey='gain',sortDir=-1;
+const COLS=[
+ {k:'uf',l:'State',v:r=>UF[r.uf]||r.uf},
+ {k:'n',l:'Units in the list',r:1,v:r=>r.s.n},
+ {k:'phone',l:'With a number in it',r:1,v:r=>pctv(r.s.phone,r.s.n)},
+ {k:'before',l:'Official only',r:1,v:r=>pctv(r.s.work,r.s.n)},
+ {k:'after',l:'With candidates',r:1,v:r=>pctv(r.s.withc,r.s.n)},
+ {k:'gain',l:'Gain',r:1,v:r=>pctv(r.s.cand,r.s.n)},
+ {k:'bar',l:'Official → with candidates'}
+];
+function renderCompare(){
+ const f=F(),S=byUF(f.src);
+ const rows=Object.keys(S).map(uf=>({uf,s:S[uf]}));
+ const tot=stats(U,f.src);
+ const col=COLS.find(c=>c.k===sortKey);
+ rows.sort((a,b)=>{const x=col.v(a),y=col.v(b);return (typeof x==='string'?x.localeCompare(y,'pt-BR'):x-y)*sortDir});
+ $('cmpHead').innerHTML=COLS.map(c=>`<th class="${c.r?'r':''}"${c.k===sortKey?` aria-sort="${sortDir>0?'ascending':'descending'}"`:''}>${c.k==='bar'?c.l:`<button data-k="${c.k}">${c.l}${c.k===sortKey?(sortDir>0?' ↑':' ↓'):''}</button>`}</th>`).join('');
+ $('cmpHead').querySelectorAll('button').forEach(b=>b.onclick=()=>{if(sortKey===b.dataset.k)sortDir*=-1;else{sortKey=b.dataset.k;sortDir=b.dataset.k==='uf'?1:-1}renderCompare()});
+ const line=(r,total)=>{const s=r.s,b=pctv(s.work,s.n)||0,a=pctv(s.withc,s.n)||0;
+  return `<tr class="${r.uf===f.st?'selrow':''}"${total?' style="font-weight:600"':''}>
+  <td>${total?'Brazil':`<button class="rowbtn" data-uf="${r.uf}">${esc(UF[r.uf]||r.uf)}</button> <span class="pp">${r.uf}</span>`}</td>
+  <td class="r num">${fmt(s.n)}</td>
+  <td class="r num">${pct(s.phone,s.n)} <span class="pp">${fmt(s.phone)}</span></td>
+  <td class="r num">${pct(s.work,s.n)} <span class="pp">${fmt(s.work)}</span></td>
+  <td class="r num">${pct(s.withc,s.n)} <span class="pp">${fmt(s.withc)}</span></td>
+  <td class="r num"><span class="pp${s.cand?' up':''}">+${(pctv(s.cand,s.n)||0).toFixed(1)} pp</span></td>
+  <td><div class="db" title="${pct(s.work,s.n)} → ${pct(s.withc,s.n)}"><div class="tr"></div><div class="gn" style="left:${b}%;width:${a-b}%"></div><div class="a" style="left:${b}%"></div><div class="b" style="left:${a}%"></div></div></td></tr>`};
+ $('cmp').innerHTML=line({uf:'',s:tot},true)+rows.map(r=>line(r,false)).join('');
+ $('cmp').querySelectorAll('[data-uf]').forEach(b=>b.onclick=()=>pickState(b.dataset.uf===f.st?'':b.dataset.uf));
+}
+
+/* =======================================================================
+   SOURCES, BOOK, LOOP, METHODS
+   ======================================================================= */
+function renderSources(){
+ const f=F(),list=inScope(f.st).filter(u=>u.before!=='answer'&&u.before!=='reach');
+ const need=list.length,rows=Object.keys(SRC).map(k=>{
+  const us=list.filter(u=>u.c.some(c=>c.src===k)),only=us.filter(u=>u.c.every(c=>c.src===k));
+  return {k,units:us.length,only:only.length,nums:list.reduce((t,u)=>t+u.c.filter(c=>c.src===k).length,0)}}).sort((a,b)=>b.units-a.units);
+ $('srcNote').textContent=`${fmt(need)} units without a working official number${f.st?' in '+(UF[f.st]||f.st):''}. Bar: units each source gives a candidate to; the darker part is units that only this source covers.`;
+ $('sources').innerHTML=rows.map(r=>`<div class="bar"><div>${esc(SRC[r.k])}${f.src===r.k?' <span class="pp up">selected</span>':''}<div class="t"><div class="f" style="width:${need?100*r.only/need:0}%;background:var(--cand)"></div><div class="f" style="width:${need?100*(r.units-r.only)/need:0}%;background:#9dbbe8"></div></div></div><div class="v num">${fmt(r.units)} units (${pct(r.units,need)})<br>${fmt(r.only)} only here · ${fmt(r.nums)} numbers</div></div>`).join('');
+}
+function renderBook(){
+ const f=F(),q=$('search').value.trim().toLowerCase(),d=$('dialled').value;
+ let rows=[];
+ inScope(f.st).forEach(u=>{if(f.situ&&afterOf(u,f.src)!==f.situ)return;candsOf(u,f.src).forEach(c=>rows.push({u,c}))});
+ if(d)rows=rows.filter(r=>d==='new'?!r.c.old:!!r.c.old);
+ if(q)rows=rows.filter(r=>find(q,[r.u.name,r.u.city,r.u.cnes,r.c.n],[r.c.n.replace(/\D/g,'')]));
+ const cap=rows.slice(0,400);
+ $('book').innerHTML=cap.length?cap.map(r=>`<tr><td><button class="rowbtn" data-i="${r.u.i}">${esc(r.u.name)}</button><div class="pp">${esc(r.u.city)} · ${esc(r.u.uf)}</div></td>
+  <td class="num" style="white-space:nowrap">${esc(r.c.n)}${r.c.old?`<div class="pp">dialled before: ${esc(CAT[r.c.old]||r.c.old)}</div>`:''}</td>
+  <td style="white-space:nowrap">${esc(SRC[r.c.src]||r.c.src)}</td><td class="pp">${esc(r.c.note)}</td></tr>`).join('')
+  :'<tr><td colspan="4"><div class="empty">No candidate in this filter.</div></td></tr>';
+ $('book').querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>openUnit(U[+b.dataset.i]));
+ $('rowCount').textContent=`${fmt(rows.length)} candidate numbers in this filter${rows.length>cap.length?`, showing the first ${fmt(cap.length)}`:''}.`;
+}
+function staticParts(){
+ const nUnits=U.filter(u=>u.c.length&&u.before!=='answer'&&u.before!=='reach').length;
+ $('loop').innerHTML=[
+  `The ${fmt(DATA.queued)} candidate numbers never dialled before were loaded on the Samsung on ${br(DATA.loaded)} and go ahead of everything else. Retries of rejected numbers are off.`,
+  `The run starts ${br(DATA.runFirst)} as day 1 and ends ${br(DATA.runLast)}: Vivo, ${DATA.perDay} calls a day, 09–12h and 14–18h.`,
+  `After the run, the phone export is imported and the call dashboard rebuilt. This page is rebuilt from it.`,
+  `A candidate counts as found only when a person answers and confirms the unit name. Carrier messages and voicemail do not count.`,
+  `<code>score_sources.py</code> rates each source and repair trick by the share of numbers a person answered.`,
+  `Confirmed numbers go to SoroJá later as a traceable correction on top of the Ministry data, with the call as evidence. Not before.`
+ ].map(t=>`<li>${t}</li>`).join('');
+ const S={};U.forEach(u=>u.c.forEach(c=>S[c.src]=(S[c.src]||0)+1));
+ const M=[
+  ['CNES registry phone','done',`${fmt(S.cnes||0)} candidates`,"The unit's own record in the Ministry's CNES open-data API. Different from the PESA list in most failed units."],
+  ['Old 7-digit numbers, fixed','done','inside the CNES count','Pre-2000s numbers like (98) 454-1094 get the leading 3 landlines gained; numbers without an area code get the town\'s code.'],
+  ['Earlier SoroJá versions','done',`${fmt(S.history||0)} candidates`,'Every number SoroJá published for the unit across its git history, from earlier Ministry lists.'],
+  ['OpenStreetMap','done',`${fmt(S.osm||0)} candidates`,'Health facilities with a phone tag within 1 km of the pin and a shared name word. Strongest in capitals.'],
+  ['Repair of dead numbers','done',`${fmt(S.repair||0)} candidates`,'When the carrier said a number does not exist: add the missing mobile 9, or swap in the town\'s area code.'],
+  ['Receita Federal CNPJ','done',`${fmt(S.cnpj||0)} candidates`,'Phones on the CNPJ that CNES lists for the unit. Often the town\'s or state\'s health office, which can give the direct line. Lines shared by 3+ units are marked.'],
+  ['Google Places','ask','paused','Ready in fetch_places.py (about US$ 50 for all units), but the Maps project has billing off. Paused by choice: enough numbers for this run.'],
+  ['Town hall and health department','idea','','Scrape the switchboard of each failed town\'s Prefeitura or Secretaria de Saúde and ask for the hospital\'s line.'],
+  ['Regional SAMU / regulation centres','ask','one call, many units','The regulation centre knows every receiving hospital\'s line. A person has to call, not the dialer.'],
+  ['State lists and CIATox','ask','','E-mail each state antivenom coordinator or CIATox with the dead and missing units, or file a LAI request.'],
+  ['Web and social search agent','idea','','Search news, Facebook and Instagram pages of the hospital or town hall, and phone directories, per unit.'],
+  ['Anatel prefix check','idea','a filter, not a source','Check that a prefix is assigned to that town before dialling, to drop impossible candidates.']
+ ];
+ $('methods').innerHTML=M.map(([t,s,y,d])=>`<div class="m"><h3>${t}<span class="st ${s}">${{done:'Run',ask:'Needs a yes',idea:'Idea'}[s]}</span></h3>${y?`<div class="y">${y}</div>`:''}<p>${d}</p></div>`).join('');
+ $('footer').textContent=`Data: SoroJá app/hospitals.json (${fmt(U.length)} units, Ministry PESA list of 03/07/2026), first-run call results up to ${br(DATA.calls)} 17:33, candidates built ${br(DATA.loaded)}. Rebuilt ${br(DATA.generated)} by reports/number-hunt-2026-11/build_page.py. ${fmt(nUnits)} units have at least one candidate. Private page: it does not change the public site.`;
+ $('updated').textContent=`Calls up to ${br(DATA.calls)} · candidates on the phone since ${br(DATA.loaded)}`;
+ $('state').innerHTML='<option value="">Brazil · all states</option>'+Object.keys(UF).filter(k=>U.some(u=>u.uf===k)).map(s=>`<option value="${s}">${s} · ${esc(UF[s])}</option>`).join('');
+ $('source').innerHTML='<option value="">All sources</option>'+Object.entries(SRC).map(([k,v])=>`<option value="${k}">${esc(v)} only</option>`).join('');
+ $('situ').innerHTML='<option value="">All units</option>'+ORDER_A.map(k=>`<option value="${k}">${esc(STATUS[k].label)}</option>`).join('');
+}
+
+/* ---------- drawer ---------- */
+function openUnit(u){
+ const f=F(),res={};(u.res||'').split('; ').filter(Boolean).forEach(p=>{const [n,c]=p.split(':');res[n]=c});
+ $('dTitle').textContent=u.name;
+ $('dSub').innerHTML=`${esc(u.city)} · ${esc(UF[u.uf]||u.uf)}${u.cnes?' · CNES '+esc(u.cnes):''}<br><span class="badge g-${afterOf(u,f.src)}"><span class="glyph">${STATUS[afterOf(u,f.src)].g}</span>${esc(STATUS[afterOf(u,f.src)].label)}</span>`;
+ const off=u.phones?u.phones.split(' | ').map(p=>{const d=p.replace(/\D/g,'').replace(/^0(?=\d{10,11}$)/,''),c=res[d]||'not_dialed',k=c==='human'?'answer':['ivr','voicemail','unclear'].includes(c)?'reach':c==='not_dialed'?'none':'fail';
+  return `<div class="crow"><span class="n num">${esc(p)}</span><span class="badge g-${k}"><span class="glyph">${STATUS[k].g}</span>${esc(CAT[c]||c)}</span></div>`}).join(''):'<p class="sub" style="margin:0">No number in the Ministry list.</p>';
+ const cs=u.c.length?u.c.map(c=>`<div class="crow"><span class="n num">${esc(c.n)}</span><span>${esc(SRC[c.src]||c.src)}${c.old?` · <span class="pp">dialled before: ${esc(CAT[c.old]||c.old)}</span>`:' · <span class="pp up">on the phone now</span>'}<div class="d">${esc(c.note)}</div></span></div>`).join(''):`<p class="sub" style="margin:0">${u.before==='answer'||u.before==='reach'?'Not needed: an official number already works.':'No candidate found yet.'}</p>`;
+ $('dBody').innerHTML=`<div class="att"><h3>Official numbers · first dialer run</h3>${off}</div><div class="att"><h3>Candidates</h3>${cs}</div>`;
+ lastFocus=document.activeElement;$('drawer').hidden=false;requestAnimationFrame(()=>{$('drawer').classList.add('on');$('scrim').classList.add('on');$('dClose').focus()});
+}
+let lastFocus=null;
+function closeDrawer(){$('drawer').classList.remove('on');$('scrim').classList.remove('on');setTimeout(()=>{$('drawer').hidden=true;$('dBody').innerHTML=''},250);if(lastFocus)lastFocus.focus()}
+$('dClose').onclick=closeDrawer;$('scrim').onclick=closeDrawer;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('drawer').hidden)closeDrawer()});
+
+/* =======================================================================
+   RENDER
+   ======================================================================= */
+function render(){
+ const f=F(),s=stats(inScope(f.st),f.src),where=f.st?UF[f.st]:'Brazil';
+ $('done').textContent=pct(s.withc,s.n);
+ $('ofLine').innerHTML=`of the units in ${esc(where)} would have a number to rely on with the candidates<br>against <b>${pct(s.work,s.n)}</b> on official numbers alone`;
+ $('pct').innerHTML=`+${(pctv(s.cand,s.n)||0).toFixed(1)}<small> pp</small>`;
+ $('pctNote').innerHTML=`<b style="color:#eef4f5">${fmt(s.cand)}</b> more units, if the candidates work`;
+ const unc0={fail:0,nophone:0,none:0};inScope(f.st).forEach(u=>{const a=afterOf(u,f.src);if(a in unc0)unc0[a]++});
+ $('mBefore').textContent=`${fmt(s.work)} of ${fmt(s.n)} units · ${pct(s.work,s.n)}`;
+ $('mAfter').textContent=`${fmt(s.withc)} of ${fmt(s.n)} units · ${pct(s.withc,s.n)}`;
+ $('meterBefore').innerHTML=ORDER_B.map(k=>`<span class="s-${k}" style="width:${s.n?100*s[k]/s.n:0}%" title="${STATUS[k].label}: ${fmt(s[k])}"></span>`).join('');
+ $('meterAfter').innerHTML=ORDER_A.map(k=>{const v=k in unc0?unc0[k]:s[k];return `<span class="s-${k}" style="width:${s.n?100*v/s.n:0}%" title="${STATUS[k].label}: ${fmt(v)}"></span>`}).join('');
+ // the failed and no-number counts shrink once candidates are added: show official → with candidates
+ $('key').innerHTML=ORDER_A.map(k=>`<li><i class="dot s-${k}"></i>${STATUS[k].label} <b>${fmt(s[k])}</b>${k in unc0&&unc0[k]!==s[k]?` <span style="font-size:12px">→ ${fmt(unc0[k])}</span>`:''}</li>`).join('');
+ // distinct numbers: a shared office line covers several units but is dialled once
+ const list=inScope(f.st),nums=new Set(list.flatMap(u=>candsOf(u,f.src).filter(c=>!c.old).map(c=>c.n.replace(/\D/g,'')))).size;
+ $('facts').innerHTML=[
+  [`<b>${fmt(s.n)}</b> units in the Ministry list`,`${fmt(s.phone)} with any number in it (${pct(s.phone,s.n)})`],
+  [`<b>${fmt(s.n-s.work)}</b> without a working official number`,`${fmt(s.fail)} failed · ${fmt(s.nophone)} no number · ${fmt(s.none)} not dialled`],
+  [`<b>${fmt(nums)}</b> new numbers to dial`,`on the phone since ${br(DATA.loaded)}`],
+  [`<b>${fmt(s.nothing)}</b> units still with nothing`,`no working number and no candidate`]
+ ].map(([a,b])=>`<span>${a}<br><span style="font-size:12px">${b}</span></span>`).join('');
+ $('scopeTxt').textContent=`${where} · ${f.src?SRC[f.src]+' only':'all candidate sources'}${f.situ?' · '+STATUS[f.situ].label.toLowerCase():''}`;
+ $('caveat').innerHTML='<strong>With candidates</strong> is a ceiling, not a result. A candidate is a number found in another registry; none of them has been confirmed yet. Many CNPJ numbers reach the town\'s or state\'s health office, not the unit itself. <strong>Official only</strong> counts a unit as working when a person answered or the call reached a menu, voicemail or an unclear connection on any of its official numbers.';
+ buildMap();renderState();renderCompare();renderSources();renderBook();
+}
+['state','source','situ'].forEach(id=>$(id).onchange=()=>{hfilter=null;render()});
+$('hsearch').oninput=renderState;
+$('search').oninput=renderBook;$('dialled').onchange=renderBook;
+$('reset').onclick=()=>{['state','source','situ','search','hsearch','dialled'].forEach(i=>$(i).value='');hfilter=null;render()};
+staticParts();render();
+</script>

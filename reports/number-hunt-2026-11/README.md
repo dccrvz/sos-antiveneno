@@ -15,7 +15,8 @@ The call results live outside the repo (Android pilot dashboard):
 4. `python3 fetch_osm.py` → `osm_raw.json` (gitignored; same for `places_raw.json`)
 5. `python3 harvest_history.py` → `history_phones.json`
 6. `python3 build_candidates.py $DASH/dashboard-data.json` → `candidates.csv`, `queue-candidates.json`
-7. `python3 build_page.py $DASH/brazil-map.json` → `page-data.js` for `number-hunt.html`
+7. `python3 build_page.py $DASH/brazil-map.json` → `number-hunt.html` (fills `hunt-template.html`, the call
+   dashboard's layout: per-state comparison of official numbers against official + candidates)
 8. After each phone export and dashboard rebuild: `python3 score_sources.py $DASH/dashboard-data.json`
    → `source_scores.md` / `.csv` (human-answer rate per source and per repair trick). Credit comes
    only from `loaded-queue-2026-11-15.json`, the frozen list of what was loaded on the phone with every
@@ -32,6 +33,7 @@ then rerun steps 6–7 and add the new numbers to the phone queue.
 - `candidates.csv`: one row per unit and candidate, with source, reason and any earlier call result.
 - `queue-candidates.json`: numbers never dialled before, each once, in the SoroJá Automático queue
   format (`unit, cnes, city, state, number, raw, extension, source, referenceOnly, incomplete`).
-- `number-hunt.html` + `page-data.js`: map and list, published as a private artifact.
+- `number-hunt.html`: self-contained dashboard (map with state zoom, before/after by state, candidate book),
+  published as a private artifact. Light theme only.
 
 Methods, findings and open decisions: Notion page "Number Hunt" under the SoroJá hub.
