@@ -3,6 +3,75 @@
 Dated log of every change, newest first. Each entry says what changed, why, which checks
 ran, whether it was deployed, and what is still open. Format: see `AGENTS.md`.
 
+## 2026-11-19 — Budget moved to one internal page; figures removed from materials (Edu + Claude Code)
+
+Edu asked for a single place that explains the budget, a critical look at the 09/11 figure and
+three routes, and for no outward material to carry any amount. New internal Notion page under
+"3 · Patrocínio institucional / ESG": "Orçamento SoroJá 2027 — análise crítica e três rotas
+(interno)". It has the history of the figure (30/10 to 19/11), the 09/11 budget line by line, the
+analysis and three routes (low, mid and high; amounts only on that page, since this repo is public). Findings: the arithmetic
+checks out and the order of magnitude is right for one full-time person, but the promise of all
+2,279 hospitals confirmed was never measured (my rough capacity estimate is ~2,300 hours against
+~1,540 available), Edu's fee is a third of the total, and the tax rate and salary were never checked
+with anyone. Recommendation: fix no figure before the number hunt ends on 02/12.
+Removed from materials: the one-pager artifact (ask box, annual budget, quotas; now "value and
+format agreed in conversation") and the Notion proposal draft (budget table, per-month and
+per-hospital lines, quotas, budget notes; the assumptions were moved to the budget page). The deck
+had no budget figures since 11/11; the status page and press pitch never had any.
+Checks: route totals recomputed by hand; one-pager rendered headless and still fits one A4 sheet;
+proposal draft re-fetched, no "R$" left. Deployed: no app change. Not done: decision logs (sponsorship
+page, task page, hub, older PROGRESS entries) keep the figures as internal history; the budget
+estimates have no quotes behind them and nothing was confirmed with the accountant.
+Notion: done (the budget page itself and the proposal draft).
+
+## 2026-11-19 — Status page images from the deck; press pitch draft (Edu + Claude Code)
+
+Edu found the status page's app image weak. Version 2 of the artifact
+(https://claude.ai/artifact/CGfvQw4mrvsqov5if9kXwF) now uses the sponsorship deck's images: the two
+real app screens, the night-road photo in a "4h+" card, six press logos and the top of the validation
+dashboard. Footer notes that the road photos are AI-generated and why the logos appear. Also drafted
+the press pitch in pt-BR as a Notion page under Outreach ("Pauta de imprensa — telefones oficiais dos
+hospitais de soro (rascunho)"), with decisions to make before sending and what not to use yet.
+Checks: headless render at 1280 and 400 px with the images in place, no horizontal overflow, no
+console errors. Deployed: no app change. Nothing sent to anyone. Unverified: the live artifact itself
+was not opened after publishing; the old `cover.jpg` and `app-list.png` remain as unused files in it.
+Open: Edu's review of the page and the pitch; who gets the story first and whether to warn the
+Ministry and secretariats beforehand. Notion: done (sponsorship task page; a "Situação do projeto —
+19/11/2026" section at the top of the SoroJá hub; a 19/11 entry in the decision log of
+"3 · Patrocínio institucional / ESG").
+
+## 2026-11-19 — Sendable project status page, no budget figure (Edu + Claude Code)
+
+Edu does not want an amount in any material yet; he wants one visual piece to send when someone asks,
+showing the work done. New private artifact "SoroJá: onde estamos" (pt-BR):
+https://claude.ai/artifact/CGfvQw4mrvsqov5if9kXwF. Sections: origin, the site today, 2026 timeline,
+"12 em cada 100", a Brazil map with one dot per hospital coloured by call result, SIH/SINAN/CNES
+findings, number hunt in progress, what is missing, ways to support (sponsorship with value agreed in
+conversation, support with one state in evidence while the project stays national, institutional
+support, introductions and press) and the independence rules. No budget, quotas or price per hospital.
+Edu also decided: a press story on the phone findings is worth doing; state-based support is acceptable.
+Checks: figures recomputed from `dashboard-data.json` (snapshot 15/11 17:33): 272 / 498 / 1,573 of 2,343
+numbers match the dashboard; map has 2,087 hospitals, 1,344 with no working number (dashboard header
+says 1,346 of 2,089, used in the text). Headless render at 1280 and 400 px: no horizontal overflow.
+Deployed: no app change; artifact is private until Edu shares it. Unverified: the two images were
+copied from the one-pager artifact and not seen in the local render. Open: Edu's review of the text,
+especially the SIH/SINAN/CNES box; the old one-pager still shows the 09/11 budget figure; no export since 15/11, so
+no number-hunt results yet; press pitch not drafted. Notion: done (sponsorship task page).
+
+## 2026-11-19 — Sponsorship proposal review: advice only (Claude Code)
+
+No app, data, deck or Notion change. Read the Notion proposal draft, sponsorship decisions, sponsor
+radar, outreach plan and number hunt page, plus the call dashboard data (snapshot 15/11 17:33), and
+gave Edu suggestions: per-state quotas priced per hospital, cold emails opened with the
+target's own numbers, name-matching the 272 human-answer recordings, an emergency sheet per site as
+counterpart, support letters from warm contacts, early source scoring of the number-hunt run.
+Commit e3666f1 named by the progress guard is from an earlier session, not this one.
+Checks: none needed (read-only). Deployed: no. Unverified: no export after 15/11 exists on this Mac,
+so the run started 16/11 was not seen; the "zero human answers in PA, AM, RO, RR, AC" cut may be a
+carrier artifact. Open: draft still says "about 2 thousand numbers" and links `educrvz`; the amount
+to ask; whether to allow state quotas. Next step: Edu's choice between the per-state packs and the
+name match. Notion: pending.
+
 ## 2026-11-15 — Number hunt run loaded on the Samsung; source scoring (Edu + Claude Code)
 
 On Edu's request the Android dialer (separate pilot, not in this repo) now calls number-hunt
@@ -31,6 +100,54 @@ Raw API dumps gitignored. Map: private artifact "SoroJá Number Hunt". Checks: s
 `git diff --check`. Deployed: no. Open: load the queue on the Samsung; Google Places (≈US$ 50);
 SAMU/state outreach; how confirmed numbers show on the site. Notion: done (page "Number Hunt —
 finding numbers for units with none that work" under the SoroJá hub).
+
+## 2026-11-15 — Analysis: SIH venom admissions vs the published list (Edu + Claude Code)
+
+Analysis only; no app, data or process change. Read 36 months of SIH-RD (2023-07 to 2026-06,
+972 files, 43.0M admissions), kept venom admissions only (T63.x / X20–X29; non-identifying
+fields; raw files deleted). 65,401 venom admissions, 387 in-hospital deaths; 82.5% in a listed
+unit (RS 59%, RJ 64% lowest). 180 listed hospitals admit patients but had zero bite admissions;
+19 unlisted CNES codes are listed units filing under another code; 69 hospitals with ≥10 bite
+admissions are in towns without a listed unit (towns matched by pin location + name, after name-only matching gave false gaps). Report: `reports/sih-admissions-2026-11/`.
+Checks: prettier, `git diff --check`, CSVs free of e-mail addresses. Deployed: no.
+Open: Edu's decisions on the Notion page. Notion: done ("SIH hospital admissions for venomous
+bites vs the published list — analysis (2026-11-15)" under "improve data quality").
+
+## 2026-11-15 — Analysis: open data sources and CNES pin cross-check (Edu + Claude Code)
+
+Analysis only; no app, data or process change. Reviewed the Brazil Open Data Index (144
+sources) for SoroJá: CNES, IBGE boundaries, SINAN and SIH are the useful ones. Pilot with a
+read-only `scripts/check_cnes_pins.py` (+ tests) in `reports/cnes-pin-check-2026-11/`: 1,764 of
+2,279 pins within 1 km of CNES; 200 more than 5 km off; 6 live pins outside their own town
+(worst: Barão de Grajaú/MA, 345 km, tier 1); 19 units carry another facility's CNES code.
+`.gitignore` covers the cached IBGE meshes. Checks: pytest suite (70 passed), prettier,
+`git diff --check`. Deployed: no. Open: Edu's decisions listed on the Notion page (pins, CNES
+codes, whether to adopt the checks). Notion: done (page "Open data sources and CNES pin
+cross-check — analysis (2026-11-15)" under "improve data quality").
+
+## 2026-11-15 — Sponsorship deck and one-pager: phone check at 100% (Edu + Claude Code)
+
+The call dashboard snapshot from 15/11 17:33 shows the whole dialer base done: 2,343 of 2,343
+numbers dialled (2,566 calls including retests, across 2,089 hospitals). Results: 272 (11.6%) answered
+by a person, 498 reached but not confirmed, 1,573 failed. In 1,346 of 2,089 hospitals, no number reached
+anyone. Updated the deck "SoroJá 2027 — Proposta de patrocínio": slide 7 now says all 2,343 numbers;
+slide 8 has a new dashboard screenshot and São Paulo map, SP 68/91/117, data to 15/11. Updated the
+"Resumo SoroJá 2027" one-pager: the call band and the source line. The "12 em cada 100" headline still
+holds. Checks: figures recomputed from `dashboard-data.json` match the dashboard header; the one-pager
+still fits one A4 sheet in a headless render. Deployed: no app change. On Edu's yes, validacao.soroja.com.br was
+republished with the 15/11 snapshot (Vercel `soroja-validacao`, dpl_9oUCwnWTuxTikuybLML5CU5h3E9f); live
+check: HTTP 200, noindex header, latestEvent 2026-11-15T17:33, audioPath null. Notion: pending.
+
+## 2026-11-15 — Research: what makes a PEA special, and better data sources (Edu + Claude Code)
+
+New `reports/hospital-value-2026-11/FINDINGS.md`. Read NT Conjunta 127/2026 (PEA definition,
+PEACA/PEASA, minimum requirements, states own the list). Profiled all 2,252 published CNES codes via
+the CNES API: 77% general hospitals, 88% 24h; 107 deactivated or missing. Compared SINAN 2024 microdata
+by municipality: 91% of antivenom cases fall in a listed municipality; 154 municipalities with ≥5 cases
+have no listed unit (incl. Bento Gonçalves/RS); 206 listed municipalities had zero. RJ state list
+(OuvERJ) matches federal 33/33. No app or data change. Checks: `git diff --check`.
+Deployed: no. Open: LAI request for SIES/SI-PNI per-unit data; re-verify the 107 CNES-inactive units.
+Notion: pending.
 
 ## 2026-11-14 — Repo transferred to dccrvz/sos-antiveneno (Edu + Claude Code)
 
