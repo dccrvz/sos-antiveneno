@@ -220,7 +220,7 @@ pt-BR and within the limits as of this writing.
 > [PREENCHER COM A EQUIPE REAL, ver GAPS] PR: Eduardo [sobrenome], sócio da D.C. Cruz, criador e
 > mantenedor do SoroJá desde abril de 2026: pipeline de dados, geocodificação, auditoria e app em
 > produção. PP: [cientista de dados ou epidemiologista, ≥24 h/semana]. Consultoria: [toxicologista
-> ou CIATox, até R$ 50 mil]. Bolsistas TT: verificação por telefone e curadoria. A D.C. Cruz
+> ou CIATox, dentro do teto de consultoria]. Bolsistas TT: verificação por telefone e curadoria. A D.C. Cruz
 > [descrever: atividade, sede ou unidade em SP, infraestrutura].
 
 **Budget (SAGe "R$/US$" tab, three headings):** capital, running costs and scholarships. See §4.10.
@@ -390,22 +390,12 @@ of customers and revenue or avoided cost; quantitative where possible.
 
 ### 4.10 Orçamento detalhado e justificado (≤2 pages)
 
-**Illustrative only (not a recommendation): a 12-month Jornada route, using scholarship values from
-01/08/2025.** Edu decides every line (GAPS §D).
-
-| Item                                                | Heading       | Basis                          | Estimate (R$) |
-| --------------------------------------------------- | ------------- | ------------------------------ | ------------: |
-| Bolsa PE (PP, data science/epidemiology)            | Scholarships  | PE-II 7,950 × 12               |        95,400 |
-| 2 × Bolsa TT (verification and curation)            | Scholarships  | TT-IV 4,520 × 12 × 2           |       108,480 |
-| Consultancy (clinical toxicology / epidemiology)    | Running costs | cap R$ 50k                     |        40,000 |
-| Road-network routing and geocoding APIs; cloud      | Running costs | quotes needed                  |        30,000 |
-| Telephony for verification calls                    | Running costs | quotes needed                  |         6,000 |
-| Travel and per diems (CIATox/SAMU field visits, SP) | Running costs | estimate                       |        15,000 |
-| Equipment (workstation)                             | Capital       | 3 quotes if > 10 minimum wages |        12,000 |
-| **Total requested**                                 |               |                                |  **≈306,880** |
-
-This total is below the Jornada cap (R$ 500k) but above the regular 9-month cap (R$ 300k). On the
-regular route, cut the months.
+**Outline:** one line per item under the three SAGe headings (capital, running costs,
+scholarships), each with its basis and a calculation: Bolsa PE for the PP, Bolsa TT for verification
+and curation, consultancy (clinical toxicology/epidemiology), routing/geocoding APIs and cloud,
+telephony for verification calls, travel to CIATox/SAMU in SP, and a workstation (three quotes above
+10 minimum wages). Amounts are not kept in this public repo: see the internal Notion budget page.
+Check the total against the route's cap (§1).
 
 ### 4.11 Cronograma físico-financeiro
 
