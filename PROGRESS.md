@@ -3,25 +3,29 @@
 Dated log of every change, newest first. Each entry says what changed, why, which checks
 ran, whether it was deployed, and what is still open. Format: see `AGENTS.md`.
 
+## 2026-11-19 — No budget figures in GitHub (Edu + Claude Code)
+
+Edu's rule: budget and funding figures may live locally and in Notion, never in GitHub. Checked every
+tracked file and the whole git history for the amounts: none found, in files or in any pushed commit.
+Trimmed the entry below so it no longer describes the budget's make-up, and added the rule to
+`AGENTS.md`. The earlier wording of that entry remains in commit e54dc29; it carries no amounts.
+Checks: `git grep` and `git log -S` for the figures, prettier, `git diff --check`. Deployed: no app
+change. Notion: pending.
+
 ## 2026-11-19 — Budget moved to one internal page; figures removed from materials (Edu + Claude Code)
 
 Edu asked for a single place that explains the budget, a critical look at the 09/11 figure and
 three routes, and for no outward material to carry any amount. New internal Notion page under
 "3 · Patrocínio institucional / ESG": "Orçamento SoroJá 2027 — análise crítica e três rotas
-(interno)". It has the history of the figure (30/10 to 19/11), the 09/11 budget line by line, the
-analysis and three routes (low, mid and high; amounts only on that page, since this repo is public). Findings: the arithmetic
-checks out and the order of magnitude is right for one full-time person, but the promise of all
-2,279 hospitals confirmed was never measured (my rough capacity estimate is ~2,300 hours against
-~1,540 available), Edu's fee is a third of the total, and the tax rate and salary were never checked
-with anyone. Recommendation: fix no figure before the number hunt ends on 02/12.
+(interno)". It holds the history, the analysis and three routes. Amounts and findings stay on that
+page only: this repo is public.
 Removed from materials: the one-pager artifact (ask box, annual budget, quotas; now "value and
 format agreed in conversation") and the Notion proposal draft (budget table, per-month and
 per-hospital lines, quotas, budget notes; the assumptions were moved to the budget page). The deck
 had no budget figures since 11/11; the status page and press pitch never had any.
 Checks: route totals recomputed by hand; one-pager rendered headless and still fits one A4 sheet;
 proposal draft re-fetched, no "R$" left. Deployed: no app change. Not done: decision logs (sponsorship
-page, task page, hub, older PROGRESS entries) keep the figures as internal history; the budget
-estimates have no quotes behind them and nothing was confirmed with the accountant.
+page, task page, hub) keep the figures as internal history in Notion; the estimates are unconfirmed.
 Notion: done (the budget page itself and the proposal draft).
 
 ## 2026-11-19 — Status page images from the deck; press pitch draft (Edu + Claude Code)

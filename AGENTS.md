@@ -136,6 +136,9 @@ If validation cannot be run, report the exact command and the blocker.
   git-ignored `.env`. If you need a new secret: add the key (no value) to `.env.example`,
   add a row to the secrets table in `docs/RUNBOOK.md`, and ask the human to store the value.
 - Never put real client or personal data in git, tests, fixtures, logs, screenshots or issues.
+- **Never commit budget or funding figures** (amounts, salaries, fees, quotas, price per
+  hospital), including in `PROGRESS.md`, commit messages, PRs and issues. They live in Notion
+  and local files only (Edu's rule, 2026-11-19). Refer to the Notion budget page instead.
 - **Check before every deploy:** `./scripts/check.sh` must pass. Never deploy a red check.
 - **Deploy and roll back only as `docs/RUNBOOK.md` describes.** Take a backup first when a
   change touches production data or the database schema.
