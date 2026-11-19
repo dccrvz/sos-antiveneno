@@ -3,15 +3,6 @@
 Dated log of every change, newest first. Each entry says what changed, why, which checks
 ran, whether it was deployed, and what is still open. Format: see `AGENTS.md`.
 
-## 2026-11-19 — No budget figures in GitHub (Edu + Claude Code)
-
-Edu's rule: budget and funding figures may live locally and in Notion, never in GitHub. Checked every
-tracked file and the whole git history for the amounts: none found, in files or in any pushed commit.
-Trimmed the entry below so it no longer describes the budget's make-up, and added the rule to
-`AGENTS.md`. The earlier wording of that entry remains in commit e54dc29; it carries no amounts.
-Checks: `git grep` and `git log -S` for the figures, prettier, `git diff --check`. Deployed: no app
-change. Notion: pending.
-
 ## 2026-11-19 — FAPESP PIPE branch: main merged, budget estimates removed (Claude Code)
 
 Merged main into PR #56 twice (PROGRESS.md conflicts only, both sides kept). To follow the new
@@ -20,6 +11,15 @@ estimate in `GAPS.md` D.1; they now point to the Notion budget page. FAPESP's pu
 and scholarship rates stay, with sources. Checks: prettier, `git diff --check`. Deployed: no.
 Open: the earlier PR commit 5d36545 still carries the removed estimates on the public PR branch;
 removing them needs a history rewrite, which is Edu's call. Notion: pending.
+
+## 2026-11-19 — No budget figures in GitHub (Edu + Claude Code)
+
+Edu's rule: budget and funding figures may live locally and in Notion, never in GitHub. Checked every
+tracked file and the whole git history for the amounts: none found, in files or in any pushed commit.
+Trimmed the entry below so it no longer describes the budget's make-up, and added the rule to
+`AGENTS.md`. The earlier wording of that entry remains in commit e54dc29; it carries no amounts.
+Checks: `git grep` and `git log -S` for the figures, prettier, `git diff --check`. Deployed: no app
+change. Notion: pending.
 
 ## 2026-11-19 — Budget moved to one internal page; figures removed from materials (Edu + Claude Code)
 
