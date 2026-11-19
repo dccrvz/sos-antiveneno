@@ -3,6 +3,10 @@
 Dated log of every change, newest first. Each entry says what changed, why, which checks
 ran, whether it was deployed, and what is still open. Format: see `AGENTS.md`.
 
+## 2026-11-19 — Merged main into the FAPESP PIPE branch (Claude Code)
+
+Routine: resolved a PROGRESS.md conflict on PR #56 by keeping both sides, newest first. Checks: prettier, `git diff --check`. Deployed: no. Notion: pending.
+
 ## 2026-11-19 — Budget moved to one internal page; figures removed from materials (Edu + Claude Code)
 
 Edu asked for a single place that explains the budget, a critical look at the 09/11 figure and
