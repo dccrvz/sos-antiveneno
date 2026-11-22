@@ -1,0 +1,14 @@
+{
+  "note": "Candidate numbers where a person answered but said it was another place (manual read of the recordings, 2026-11-22). They do not count as a working number for the unit.",
+  "numbers": {
+    "7420400001": "city hall",
+    "1833614423": "private company",
+    "3138474794": "accounting office",
+    "1638301262": "accounting office",
+    "3837226831": "health secretariat",
+    "6536135387": "state health secretariat",
+    "6635923200": "city hall",
+    "7531992280": "city hall",
+    "6436418785": "municipal ombudsman"
+  }
+}

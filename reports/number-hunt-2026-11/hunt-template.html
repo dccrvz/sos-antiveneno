@@ -4,7 +4,7 @@
 /* Same layout and tokens as the call dashboard (outputs/dashboard/template.html), light only. */
 :root{
  --ink:#0c2127;--ink2:#17323a;--bg:#eef1f2;--panel:#fff;--line:#d5dde0;--line2:#e8edee;--mute:#5e7076;
- --answer:#0e6e5e;--reach:#b5801a;--cand:#2a62b8;--fail:#b2453b;--nophone:#7a5aa6;--none:#c7d1d4;--noneink:#71848a;--focus:#1a6fa3;
+ --answer:#0e6e5e;--reach:#b5801a;--cand:#2a62b8;--found:#12305f;--fail:#b2453b;--nophone:#7a5aa6;--none:#c7d1d4;--noneink:#71848a;--focus:#1a6fa3;
  --pad:22px;--r:3px;--gutter:max(20px,calc((100vw - 1500px)/2));
  --sans:"Helvetica Neue",Helvetica,"Segoe UI",system-ui,Arial,sans-serif;
  color-scheme:light;
@@ -34,12 +34,12 @@ a{color:inherit}
 .mlabel b{color:#eef4f5;font-weight:600}
 .meter{display:flex;height:18px;background:#1d3b44;overflow:hidden;border-radius:2px}
 .meter span{display:block;min-width:0;transition:width .35s ease}
-.meter .s-answer{background:#1aa088}.meter .s-reach{background:#d8a33c}.meter .s-cand{background:#4f8fe8}.meter .s-fail{background:#cf5e52}.meter .s-nophone{background:#9a7cc6}.meter .s-none{background:transparent}
+.meter .s-answer{background:#1aa088}.meter .s-reach{background:#d8a33c}.meter .s-cand{background:#4f8fe8}.meter .s-found{background:#12305f}.meter .s-fail{background:#cf5e52}.meter .s-nophone{background:#9a7cc6}.meter .s-none{background:transparent}
 .key{display:flex;flex-wrap:wrap;gap:4px 22px;margin:12px 0 0;padding:0;list-style:none;font-size:13.5px;color:#c3d6db}
 .key li{display:flex;align-items:center;gap:7px}
 .key b{color:#fff;font-weight:600}
 .dot{width:11px;height:11px;flex:none;border-radius:50%;display:inline-block}
-.dot.s-answer{background:#1aa088}.dot.s-reach{background:#d8a33c}.dot.s-cand{background:#4f8fe8}.dot.s-fail{background:#cf5e52}.dot.s-nophone{background:#9a7cc6}.dot.s-none{background:none;box-shadow:inset 0 0 0 2px #7d969d}
+.dot.s-answer{background:#1aa088}.dot.s-reach{background:#d8a33c}.dot.s-cand{background:#4f8fe8}.dot.s-found{background:#12305f}.dot.s-fail{background:#cf5e52}.dot.s-nophone{background:#9a7cc6}.dot.s-none{background:none;box-shadow:inset 0 0 0 2px #7d969d}
 .facts{margin-top:16px;padding-top:14px;border-top:1px solid #1f4049;display:flex;flex-wrap:wrap;gap:10px 38px;font-size:13px;color:#9db6bd}
 .facts b{color:#eef4f5;font-weight:600;font-size:15px}
 
@@ -96,8 +96,8 @@ svg.br circle.pin:focus-visible{outline:none;stroke:var(--focus)}
 .mrow b{color:var(--ink);font-weight:600;text-align:right}
 .minimeter{display:flex;height:12px;background:var(--line2);border-radius:2px;overflow:hidden}
 .minimeter span{display:block}
-.m-answer{background:var(--answer)}.m-reach{background:var(--reach)}.m-cand{background:var(--cand)}.m-fail{background:var(--fail)}.m-nophone{background:var(--nophone)}.m-none{background:transparent}
-.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:14px 0}
+.m-answer{background:var(--answer)}.m-reach{background:var(--reach)}.m-cand{background:var(--cand)}.m-found{background:var(--found)}.m-fail{background:var(--fail)}.m-nophone{background:var(--nophone)}.m-none{background:transparent}
+.tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:14px 0}
 .tile{background:var(--panel);padding:11px 12px;text-align:left}
 .tile .v{font-size:23px;font-weight:700;letter-spacing:-.02em;line-height:1.15;color:var(--ink)}
 .tile .l{font-size:11.5px;color:var(--mute);display:flex;align-items:center;gap:6px;margin-top:3px}
@@ -110,7 +110,7 @@ svg.br circle.pin:focus-visible{outline:none;stroke:var(--focus)}
 .hrow .ct{display:block;font-size:12px;color:var(--mute);margin-top:3px}
 .hrow .rt{font-size:12px;color:var(--mute);text-align:right;white-space:nowrap}
 .glyph{font-size:13px;line-height:1.5;font-weight:700}
-.g-answer{color:var(--answer)}.g-reach{color:var(--reach)}.g-cand{color:var(--cand)}.g-fail{color:var(--fail)}.g-nophone{color:var(--nophone)}.g-none{color:var(--noneink)}
+.g-answer{color:var(--answer)}.g-reach{color:var(--reach)}.g-cand{color:var(--cand)}.g-found{color:var(--found)}.g-fail{color:var(--fail)}.g-nophone{color:var(--nophone)}.g-none{color:var(--noneink)}
 
 /* ---------- bars / tables ---------- */
 .bar{display:grid;grid-template-columns:1fr 150px;gap:12px;align-items:center;padding:7px 0;font-size:13px}
@@ -312,28 +312,34 @@ const UF={AC:'Acre',AL:'Alagoas',AM:'Amazonas',AP:'Amapá',BA:'Bahia',CE:'Ceará
 const STATUS={
  answer :{g:'●',label:'Answered by a person',short:'Answered'},
  reach  :{g:'◐',label:'Reached, not confirmed',short:'Reached'},
- cand   :{g:'◆',label:'Candidate number to dial',short:'Candidate'},
+ found  :{g:'★',label:'Person answered a candidate, unit not confirmed yet',short:'Answered, unconfirmed'},
+ cand   :{g:'◆',label:'Candidate still to dial or not confirmed',short:'Candidate'},
  fail   :{g:'✕',label:'Official numbers failed',short:'Failed'},
  nophone:{g:'▢',label:'No number in the list',short:'No number'},
  none   :{g:'○',label:'Not dialled yet',short:'Not dialled'}
 };
 const ORDER_B=['answer','reach','fail','nophone','none'];
-const ORDER_A=['answer','reach','cand','fail','nophone','none'];
-const RANK={answer:0,reach:1,cand:2,fail:3,nophone:4,none:5};
+const ORDER_A=['answer','reach','found','cand','fail','nophone','none'];
+const RANK={answer:0,reach:1,found:2,cand:3,fail:4,nophone:5,none:6};
 const SRC={cnes:'CNES registry',cnpj:'Receita Federal CNPJ',osm:'OpenStreetMap',history:'Earlier SoroJá versions',repair:'Repair of dead numbers'};
-const CAT={human:'person answered',ivr:'menu / queue',voicemail:'voicemail',unclear:'connected, unclear',incorrect:'carrier: number does not exist',cannot_complete:'carrier: cannot complete',blocked:'carrier: blocked',changed:'carrier: number changed',unavailable:'carrier: unavailable',carrier_restriction:'carrier: restricted',congestion:'network congestion',network:'network failure',technical:'app failure',incomplete:'incomplete attempt',not_dialed:'not dialled yet'};
+const CAT={human:'person answered',human_other:'person answered, but it is another place',ivr:'menu / queue',voicemail:'voicemail',unclear:'connected, unclear',incorrect:'carrier: number does not exist',cannot_complete:'carrier: cannot complete',blocked:'carrier: blocked',changed:'carrier: number changed',unavailable:'carrier: unavailable',carrier_restriction:'carrier: restricted',congestion:'network congestion',network:'network failure',technical:'app failure',incomplete:'incomplete attempt',not_dialed:'not dialled yet'};
 
-const U=DATA.units.map((r,i)=>{const o={i};DATA.fields.forEach((f,j)=>o[f]=r[j]);o.c=o.c.map(c=>({n:c[0],src:c[1],note:c[2],old:c[3]}));return o});
+const U=DATA.units.map((r,i)=>{const o={i};DATA.fields.forEach((f,j)=>o[f]=r[j]);o.c=o.c.map(c=>({n:c[0],src:c[1],note:c[2],old:c[3],res:c[4]||''}));return o});
 
 /* ---------- filters ---------- */
 function F(){return{st:$('state').value,src:$('source').value,situ:$('situ').value}}
 const candsOf=(u,src)=>src?u.c.filter(c=>c.src===src):u.c;
-function afterOf(u,src){return (u.before==='answer'||u.before==='reach')?u.before:(candsOf(u,src).length?'cand':u.before)}
+/* res = result of the hunt run's call to that candidate ('' = not dialled yet) */
+const REACHCAT=['ivr','voicemail','unclear'];
+function afterOf(u,src){if(u.before==='answer'||u.before==='reach')return u.before;const cs=candsOf(u,src);
+ if(cs.some(c=>c.res==='human'))return 'found';
+ if(cs.some(c=>!c.res||REACHCAT.includes(c.res)))return 'cand';
+ return u.before}
 function inScope(st){return st?U.filter(u=>u.uf===st):U}
 function stats(list,src){
- const s={n:list.length,phone:0,answer:0,reach:0,fail:0,nophone:0,none:0,cand:0,candNums:0};
- list.forEach(u=>{if(u.phones)s.phone++;s[u.before]++;if(afterOf(u,src)==='cand'){s.cand++;}s.candNums+=(u.before==='answer'||u.before==='reach')?0:candsOf(u,src).length});
- s.work=s.answer+s.reach;s.withc=s.work+s.cand;s.nothing=s.n-s.withc;
+ const s={n:list.length,phone:0,answer:0,reach:0,fail:0,nophone:0,none:0,cand:0,found:0,candNums:0};
+ list.forEach(u=>{if(u.phones)s.phone++;s[u.before]++;const a=afterOf(u,src);if(a==='cand')s.cand++;if(a==='found')s.found++;s.candNums+=(u.before==='answer'||u.before==='reach')?0:candsOf(u,src).length});
+ s.work=s.answer+s.reach;s.gain=s.cand+s.found;s.withc=s.work+s.gain;s.nothing=s.n-s.withc;
  return s;
 }
 const byUF=src=>{const m={};Object.keys(MAP.paths).forEach(uf=>m[uf]=stats(U.filter(u=>u.uf===uf),src));return m};
@@ -345,7 +351,7 @@ const METRICS=[
  {k:'pdf',   label:'Number in the list', ramp:'left', val:s=>pctv(s.phone,s.n),  fmt:s=>pct(s.phone,s.n),  legend:'% of units with any number in the Ministry list'},
  {k:'before',label:'Official only',      ramp:'ans',  val:s=>pctv(s.work,s.n),   fmt:s=>pct(s.work,s.n),   legend:'% of units answered or reached on an official number'},
  {k:'after', label:'With candidates',    ramp:'cov',  val:s=>pctv(s.withc,s.n),  fmt:s=>pct(s.withc,s.n),  legend:'% of units with a working official number or a candidate'},
- {k:'gain',  label:'Gain',               ramp:'gain', val:s=>pctv(s.cand,s.n),   fmt:s=>'+'+pct(s.cand,s.n), legend:'percentage points the candidates add, if they work'},
+ {k:'gain',  label:'Gain',               ramp:'gain', val:s=>pctv(s.gain,s.n),   fmt:s=>'+'+pct(s.gain,s.n), legend:'percentage points the candidates add, if they are confirmed'},
  {k:'left',  label:'Still nothing',      ramp:'fail', val:s=>pctv(s.nothing,s.n),fmt:s=>pct(s.nothing,s.n),legend:'% of units with no working number and no candidate'}
 ];
 let metric='after',pinView='after';
@@ -463,7 +469,7 @@ function buildMap(){
   c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openUnit(u)}});
   c.addEventListener('mousemove',e=>{e.stopPropagation();
    const b=u.before,a=afterOf(u,f.src),n=candsOf(u,f.src).length;
-   tipEl.innerHTML=`<b>${esc(u.name)}</b><br>${esc(u.city)}<br>${STATUS[b].g} ${esc(STATUS[b].label)}${a==='cand'?`<br>${STATUS.cand.g} ${n} candidate${n>1?'s':''}`:''}${u.tier>1?'<br><span style="opacity:.75">placed at the town centre</span>':''}`;
+   tipEl.innerHTML=`<b>${esc(u.name)}</b><br>${esc(u.city)}<br>${STATUS[b].g} ${esc(STATUS[b].label)}${a==='cand'||a==='found'?`<br>${STATUS[a].g} ${n} candidate${n>1?'s':''}`:''}${u.tier>1?'<br><span style="opacity:.75">placed at the town centre</span>':''}`;
    place(e)});
   c.addEventListener('mouseleave',()=>tipEl.style.opacity=0);
  });
@@ -474,8 +480,8 @@ function pickState(uf){$('state').value=uf;hfilter=null;$('hsearch').value='';re
    STATE PANEL
    ======================================================================= */
 let hfilter=null;
-const TILE_KEYS=['answer','reach','cand','nothing'];
-const TILE={answer:STATUS.answer,reach:STATUS.reach,cand:STATUS.cand,nothing:{g:'✕',short:'Nothing yet',label:'No working number and no candidate'}};
+const TILE_KEYS=['answer','reach','found','cand','nothing'];
+const TILE={answer:STATUS.answer,reach:STATUS.reach,found:STATUS.found,cand:STATUS.cand,nothing:{g:'✕',short:'Nothing yet',label:'No working number and no candidate'}};
 const tileOf=u=>{const a=afterOf(u,F().src);return a==='fail'||a==='nophone'||a==='none'?'nothing':a};
 function meterHTML(s,order,after){
  return order.map(k=>{const v=after?(k==='fail'||k==='nophone'||k==='none'?unc(s,k):s[k]):s[k];return `<span class="m-${k}" style="width:${s.n?100*v/s.n:0}%" title="${STATUS[k].label}: ${fmt(v)}"></span>`}).join('');
@@ -490,7 +496,7 @@ function renderState(){
  $('ufSub').textContent=`${fmt(s.n)} units in the Ministry list · ${fmt(s.phone)} with a number in it (${pct(s.phone,s.n)})`+(f.st?'':' · click a state on the map to focus');
  $('ufBefore').innerHTML=meterHTML(s,ORDER_B,false);$('ufBeforePct').textContent=pct(s.work,s.n);
  $('ufAfter').innerHTML=meterHTML(s,ORDER_A,true);$('ufAfterPct').textContent=pct(s.withc,s.n);
- const tv={answer:s.answer,reach:s.reach,cand:s.cand,nothing:s.nothing};
+ const tv={answer:s.answer,reach:s.reach,found:s.found,cand:s.cand,nothing:s.nothing};
  $('ufTiles').innerHTML=TILE_KEYS.map(k=>`<button class="tile" data-k="${k}" aria-pressed="${hfilter===k}" title="${esc(TILE[k].label)}: click to filter the list"><div class="v num">${fmt(tv[k])}</div><div class="l"><span class="glyph g-${k==='nothing'?'fail':k}">${TILE[k].g}</span>${TILE[k].short}</div></button>`).join('');
  $('ufTiles').querySelectorAll('.tile').forEach(b=>b.onclick=()=>{hfilter=hfilter===b.dataset.k?null:b.dataset.k;renderState()});
 
@@ -505,7 +511,7 @@ function renderState(){
   const off=u.before==='nophone'?'no number in the list':`${np} official number${np>1?'s':''}: ${STATUS[u.before].short.toLowerCase()}${u.dead?' (carrier says it does not exist)':''}`;
   return `<button class="hrow" data-i="${u.i}"><span class="glyph g-${a}" title="${esc(STATUS[a].label)}">${STATUS[a].g}</span>
    <span><span class="nm">${esc(u.name)}</span><span class="ct">${esc(u.city)}${f.st?'':' · '+esc(u.uf)} · ${off}</span></span>
-   <span class="rt">${(a==='cand')?fmt(n)+' candidate'+(n>1?'s':''):a==='answer'||a==='reach'?'working':'—'}</span></button>`}).join('')
+   <span class="rt">${a==='found'?'answered, unconfirmed':(a==='cand')?fmt(n)+' candidate'+(n>1?'s':''):a==='answer'||a==='reach'?'working':'—'}</span></button>`}).join('')
   :`<div class="empty">No unit in this filter.</div>`;
  $('hlist').querySelectorAll('.hrow').forEach(b=>b.onclick=()=>openUnit(U[+b.dataset.i]));
  if(list.length>cap.length)$('hlist').insertAdjacentHTML('beforeend',`<div class="empty">Showing the first ${fmt(cap.length)} of ${fmt(list.length)}. Use the search to narrow.</div>`);
@@ -521,7 +527,7 @@ const COLS=[
  {k:'phone',l:'With a number in it',r:1,v:r=>pctv(r.s.phone,r.s.n)},
  {k:'before',l:'Official only',r:1,v:r=>pctv(r.s.work,r.s.n)},
  {k:'after',l:'With candidates',r:1,v:r=>pctv(r.s.withc,r.s.n)},
- {k:'gain',l:'Gain',r:1,v:r=>pctv(r.s.cand,r.s.n)},
+ {k:'gain',l:'Gain',r:1,v:r=>pctv(r.s.gain,r.s.n)},
  {k:'bar',l:'Official → with candidates'}
 ];
 function renderCompare(){
@@ -539,7 +545,7 @@ function renderCompare(){
   <td class="r num">${pct(s.phone,s.n)} <span class="pp">${fmt(s.phone)}</span></td>
   <td class="r num">${pct(s.work,s.n)} <span class="pp">${fmt(s.work)}</span></td>
   <td class="r num">${pct(s.withc,s.n)} <span class="pp">${fmt(s.withc)}</span></td>
-  <td class="r num"><span class="pp${s.cand?' up':''}">+${(pctv(s.cand,s.n)||0).toFixed(1)} pp</span></td>
+  <td class="r num"><span class="pp${s.gain?' up':''}">+${(pctv(s.gain,s.n)||0).toFixed(1)} pp</span></td>
   <td><div class="db" title="${pct(s.work,s.n)} → ${pct(s.withc,s.n)}"><div class="tr"></div><div class="gn" style="left:${b}%;width:${a-b}%"></div><div class="a" style="left:${b}%"></div><div class="b" style="left:${a}%"></div></div></td></tr>`};
  $('cmp').innerHTML=line({uf:'',s:tot},true)+rows.map(r=>line(r,false)).join('');
  $('cmp').querySelectorAll('[data-uf]').forEach(b=>b.onclick=()=>pickState(b.dataset.uf===f.st?'':b.dataset.uf));
@@ -564,7 +570,7 @@ function renderBook(){
  if(q)rows=rows.filter(r=>find(q,[r.u.name,r.u.city,r.u.cnes,r.c.n],[r.c.n.replace(/\D/g,'')]));
  const cap=rows.slice(0,400);
  $('book').innerHTML=cap.length?cap.map(r=>`<tr><td><button class="rowbtn" data-i="${r.u.i}">${esc(r.u.name)}</button><div class="pp">${esc(r.u.city)} · ${esc(r.u.uf)}</div></td>
-  <td class="num" style="white-space:nowrap">${esc(r.c.n)}${r.c.old?`<div class="pp">dialled before: ${esc(CAT[r.c.old]||r.c.old)}</div>`:''}</td>
+  <td class="num" style="white-space:nowrap">${esc(r.c.n)}${r.c.old?`<div class="pp">dialled before: ${esc(CAT[r.c.old]||r.c.old)}</div>`:''}${r.c.res?`<div class="pp${r.c.res==='human'?' up':''}">hunt call: ${esc(CAT[r.c.res]||r.c.res)}</div>`:''}</td>
   <td style="white-space:nowrap">${esc(SRC[r.c.src]||r.c.src)}</td><td class="pp">${esc(r.c.note)}</td></tr>`).join('')
   :'<tr><td colspan="4"><div class="empty">No candidate in this filter.</div></td></tr>';
  $('book').querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>openUnit(U[+b.dataset.i]));
@@ -596,7 +602,7 @@ function staticParts(){
   ['Anatel prefix check','idea','a filter, not a source','Check that a prefix is assigned to that town before dialling, to drop impossible candidates.']
  ];
  $('methods').innerHTML=M.map(([t,s,y,d])=>`<div class="m"><h3>${t}<span class="st ${s}">${{done:'Run',ask:'Needs a yes',idea:'Idea'}[s]}</span></h3>${y?`<div class="y">${y}</div>`:''}<p>${d}</p></div>`).join('');
- $('footer').textContent=`Data: SoroJá app/hospitals.json (${fmt(U.length)} units, Ministry PESA list of 03/07/2026), first-run call results up to ${br(DATA.calls)} 17:33, candidates built ${br(DATA.loaded)}. Rebuilt ${br(DATA.generated)} by reports/number-hunt-2026-11/build_page.py. ${fmt(nUnits)} units have at least one candidate. Private page: it does not change the public site.`;
+ $('footer').textContent=`Data: SoroJá app/hospitals.json (${fmt(U.length)} units, Ministry PESA list of 03/07/2026), call results up to ${br(DATA.calls)} (${fmt(DATA.dialled)} of ${fmt(DATA.loadedNumbers)} candidate numbers dialled, ${fmt(DATA.humans)} answered by a person, plus ${fmt(DATA.elsewhere)} answered by another place and not counted; an answer is not yet a confirmed unit), candidates built ${br(DATA.loaded)}. Rebuilt ${br(DATA.generated)} by reports/number-hunt-2026-11/build_page.py. ${fmt(nUnits)} units have at least one candidate. Private page: it does not change the public site.`;
  $('updated').textContent=`Calls up to ${br(DATA.calls)} · candidates on the phone since ${br(DATA.loaded)}`;
  $('state').innerHTML='<option value="">Brazil · all states</option>'+Object.keys(UF).filter(k=>U.some(u=>u.uf===k)).map(s=>`<option value="${s}">${s} · ${esc(UF[s])}</option>`).join('');
  $('source').innerHTML='<option value="">All sources</option>'+Object.entries(SRC).map(([k,v])=>`<option value="${k}">${esc(v)} only</option>`).join('');
@@ -610,7 +616,7 @@ function openUnit(u){
  $('dSub').innerHTML=`${esc(u.city)} · ${esc(UF[u.uf]||u.uf)}${u.cnes?' · CNES '+esc(u.cnes):''}<br><span class="badge g-${afterOf(u,f.src)}"><span class="glyph">${STATUS[afterOf(u,f.src)].g}</span>${esc(STATUS[afterOf(u,f.src)].label)}</span>`;
  const off=u.phones?u.phones.split(' | ').map(p=>{const d=p.replace(/\D/g,'').replace(/^0(?=\d{10,11}$)/,''),c=res[d]||'not_dialed',k=c==='human'?'answer':['ivr','voicemail','unclear'].includes(c)?'reach':c==='not_dialed'?'none':'fail';
   return `<div class="crow"><span class="n num">${esc(p)}</span><span class="badge g-${k}"><span class="glyph">${STATUS[k].g}</span>${esc(CAT[c]||c)}</span></div>`}).join(''):'<p class="sub" style="margin:0">No number in the Ministry list.</p>';
- const cs=u.c.length?u.c.map(c=>`<div class="crow"><span class="n num">${esc(c.n)}</span><span>${esc(SRC[c.src]||c.src)}${c.old?` · <span class="pp">dialled before: ${esc(CAT[c.old]||c.old)}</span>`:' · <span class="pp up">on the phone now</span>'}<div class="d">${esc(c.note)}</div></span></div>`).join(''):`<p class="sub" style="margin:0">${u.before==='answer'||u.before==='reach'?'Not needed: an official number already works.':'No candidate found yet.'}</p>`;
+ const cs=u.c.length?u.c.map(c=>`<div class="crow"><span class="n num">${esc(c.n)}</span><span>${esc(SRC[c.src]||c.src)}${c.old?` · <span class="pp">dialled before: ${esc(CAT[c.old]||c.old)}</span>`:c.res?` · <span class="pp${c.res==='human'?' up':''}">hunt call: ${esc(CAT[c.res]||c.res)}</span>`:' · <span class="pp up">on the phone now</span>'}<div class="d">${esc(c.note)}</div></span></div>`).join(''):`<p class="sub" style="margin:0">${u.before==='answer'||u.before==='reach'?'Not needed: an official number already works.':'No candidate found yet.'}</p>`;
  $('dBody').innerHTML=`<div class="att"><h3>Official numbers · first dialer run</h3>${off}</div><div class="att"><h3>Candidates</h3>${cs}</div>`;
  lastFocus=document.activeElement;$('drawer').hidden=false;requestAnimationFrame(()=>{$('drawer').classList.add('on');$('scrim').classList.add('on');$('dClose').focus()});
 }
@@ -626,8 +632,8 @@ function render(){
  const f=F(),s=stats(inScope(f.st),f.src),where=f.st?UF[f.st]:'Brazil';
  $('done').textContent=pct(s.withc,s.n);
  $('ofLine').innerHTML=`of the units in ${esc(where)} would have a number to rely on with the candidates<br>against <b>${pct(s.work,s.n)}</b> on official numbers alone`;
- $('pct').innerHTML=`+${(pctv(s.cand,s.n)||0).toFixed(1)}<small> pp</small>`;
- $('pctNote').innerHTML=`<b style="color:#eef4f5">${fmt(s.cand)}</b> more units, if the candidates work`;
+ $('pct').innerHTML=`+${(pctv(s.gain,s.n)||0).toFixed(1)}<small> pp</small>`;
+ $('pctNote').innerHTML=`<b style="color:#eef4f5">${fmt(s.found)}</b> units where a person answered a candidate (to confirm by listening) · <b style="color:#eef4f5">${fmt(s.cand)}</b> more still to dial or confirm`;
  const unc0={fail:0,nophone:0,none:0};inScope(f.st).forEach(u=>{const a=afterOf(u,f.src);if(a in unc0)unc0[a]++});
  $('mBefore').textContent=`${fmt(s.work)} of ${fmt(s.n)} units · ${pct(s.work,s.n)}`;
  $('mAfter').textContent=`${fmt(s.withc)} of ${fmt(s.n)} units · ${pct(s.withc,s.n)}`;

@@ -15,8 +15,11 @@ The call results live outside the repo (Android pilot dashboard):
 4. `python3 fetch_osm.py` → `osm_raw.json` (gitignored; same for `places_raw.json`)
 5. `python3 harvest_history.py` → `history_phones.json`
 6. `python3 build_candidates.py $DASH/dashboard-data.json` → `candidates.csv`, `queue-candidates.json`
-7. `python3 build_page.py $DASH/brazil-map.json` → `number-hunt.html` (fills `hunt-template.html`, the call
-   dashboard's layout: per-state comparison of official numbers against official + candidates)
+7. `python3 build_page.py $DASH/brazil-map.json $DASH/dashboard-data.json` → `number-hunt.html` (fills `hunt-template.html`, the call
+   dashboard's layout: per-state comparison of official numbers against official + candidates; with the
+   dashboard data it also shows each candidate's own call result and marks units where a person answered,
+   still unconfirmed; numbers in `answered-elsewhere.json`, where the person said it was another place,
+   count as not working. Add to that file after reading each batch's recordings)
 8. After each phone export and dashboard rebuild: `python3 score_sources.py $DASH/dashboard-data.json`
    → `source_scores.md` / `.csv` (human-answer rate per source and per repair trick). Credit comes
    only from `loaded-queue-2026-11-15.json`, the frozen list of what was loaded on the phone with every
