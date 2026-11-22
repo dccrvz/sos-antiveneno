@@ -3,6 +3,27 @@
 Dated log of every change, newest first. Each entry says what changed, why, which checks
 ran, whether it was deployed, and what is still open. Format: see `AGENTS.md`.
 
+## 2026-11-22 — Number hunt: first results, page and scores updated (Edu + Claude Code)
+
+Edu plugged in the Samsung and asked for the new calls to be extracted and shown. Pulled the 594
+attempts of 16–21/11 over USB (99 a day, no technical errors, phone journal hash-checked), all of
+them number-hunt candidates. Transcribed locally and reviewed: 41 answered by a person (6.9%), in
+40 units; about 9 of those were another office (city hall, health secretariat, a company), so an
+answer is not a confirmed unit. By source: OpenStreetMap 6/36, CNES 20/249, CNPJ 16/308. 1,008
+candidates left; the window ends 02/12. In this repo: `source_scores.*` rerun; `build_page.py` now
+takes the dashboard data and `hunt-template.html` shows each candidate's call result, with a new
+"Found" state for units where a person answered. Outside the repo (dialer pilot): the call
+dashboard got an "Origem dos números" switch, so candidates show without changing the official
+totals (2,343 numbers, 272 answered: unchanged); a bug in the manual-review filter was fixed. It
+had been hiding connected calls with real speech from the reading list; 50 such calls in earlier
+batches were never read and may raise the 272.
+Checks: official totals recomputed from the rebuilt data match 15/11; both pages rendered headless
+(1280 px, origin switch, state filter, reset; no console errors, no overflow); prettier on the
+changed docs. Deployed: no. `app/hospitals.json` untouched; validacao.soroja.com.br and the private
+Number Hunt artifact not republished (waiting for Edu). Open: Edu's call on re-reading the 50
+skipped calls, on republishing, and on how a candidate becomes a published number. Notion: done
+(call diary, operations page, Number Hunt page, Call Center status page).
+
 ## 2026-11-19 — No budget figures in GitHub (Edu + Claude Code)
 
 Edu's rule: budget and funding figures may live locally and in Notion, never in GitHub. Checked every
