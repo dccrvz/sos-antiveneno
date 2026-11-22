@@ -3,6 +3,26 @@
 Dated log of every change, newest first. Each entry says what changed, why, which checks
 ran, whether it was deployed, and what is still open. Format: see `AGENTS.md`.
 
+## 2026-11-22 — Evening extraction, window reset on the phone, new radio hours (Edu + Claude Code)
+
+Second extraction of the day, on Edu's request: the 99 calls of 22/11 (all number-hunt candidates,
+no technical errors, 4 answered by a person). Hunt so far: 693 of 1,602 candidates dialled, 45
+answered (36 with no sign of being another place), 909 left. In this repo: `source_scores.*` and
+`number-hunt.html` rebuilt. Outside the repo, on the dialer phone, at Edu's request: the run window
+now starts 2026-11-23 (last day still 2026-12-02) so the app's per-day list starts fresh, with the
+queue and call journal untouched; airplane mode now runs 21:00-06:59 instead of 19:00-07:59; and an
+SMS "call me" from Edu's number, read by the Mac over the cable, starts a call of the separate
+Companion prototype during radio hours.
+Checks: official totals unchanged in the rebuilt data (2,343 numbers, 272 answered); on the phone,
+window values, foreground service and the exact alarm for 23/11 09:00 read back after the app
+restarted; night script on the phone identical to the Mac copy; real SMS inbox read over adb.
+Deployed: validacao.soroja.com.br republished on Edu's instruction to push the data (Vercel
+`soroja-validacao`; live check: HTTP 200, noindex header, latestEvent 2026-11-22T17:33, audioPath
+null); private Number Hunt artifact updated. Site `soroja.com.br` and `app/hospitals.json` untouched.
+Unverified: the app's home screen was not opened to see the empty list; the new airplane hours are
+only proven at the next 21:00 and 07:00. Open: Edu's call on re-reading the 50 skipped calls and on
+how a candidate becomes a published number. Notion: done (call diary, operations page, status page).
+
 ## 2026-11-22 — Number hunt: first results, page and scores updated (Edu + Claude Code)
 
 Edu plugged in the Samsung and asked for the new calls to be extracted and shown. Pulled the 594
