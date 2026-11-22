@@ -25,6 +25,9 @@ if len(sys.argv) > 2:
     for a in dash["attempts"]:
         if a.get("hunt") and (a["number"] not in hunt or a["at"] > hunt[a["number"]][0]):
             hunt[a["number"]] = (a["at"], a["category"])
+# A person answering somewhere else (city hall, a company) is not a working number for the unit.
+elsewhere = json.load(open(HERE / "answered-elsewhere.json"))["numbers"]
+hunt = {n: (at, "human_other" if cat == "human" and n in elsewhere else cat) for n, (at, cat) in hunt.items()}
 loaded = json.load(open(HERE / "loaded-queue-2026-11-15.json"))["numbers"]
 
 cands = {}
@@ -44,6 +47,7 @@ for r in csv.DictReader(open(HERE / "targets.csv")):
 data = {"generated": datetime.date.today().isoformat(), "calls": calls, "loaded": "2026-11-15",
         "loadedNumbers": len(loaded), "dialled": sum(n in hunt for n in loaded),
         "humans": sum(hunt[n][1] == "human" for n in loaded if n in hunt),
+        "elsewhere": sum(hunt[n][1] == "human_other" for n in loaded if n in hunt),
         "runFirst": "2026-11-16", "runLast": "2026-12-02", "perDay": 99,
         "queued": len(json.load(open(HERE / "queue-candidates.json"))["candidates"]),
         "fields": ["uf", "city", "name", "cnes", "phones", "before", "res", "dead", "lat", "lng", "tier", "c"],

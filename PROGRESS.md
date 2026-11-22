@@ -12,7 +12,9 @@ them number-hunt candidates. Transcribed locally and reviewed: 41 answered by a 
 answer is not a confirmed unit. By source: OpenStreetMap 6/36, CNES 20/249, CNPJ 16/308. 1,008
 candidates left; the window ends 02/12. In this repo: `source_scores.*` rerun; `build_page.py` now
 takes the dashboard data and `hunt-template.html` shows each candidate's call result, with a new
-"Found" state for units where a person answered. Outside the repo (dialer pilot): the call
+"Answered, unconfirmed" state for the 32 units where a person answered and did not say it was
+another place. The 9 numbers answered by another office are listed in `answered-elsewhere.json` and
+count as not working (a stop-time review caught that the first version counted all 41 as found). Outside the repo (dialer pilot): the call
 dashboard got an "Origem dos números" switch, so candidates show without changing the official
 totals (2,343 numbers, 272 answered: unchanged); a bug in the manual-review filter was fixed. It
 had been hiding connected calls with real speech from the reading list; 50 such calls in earlier

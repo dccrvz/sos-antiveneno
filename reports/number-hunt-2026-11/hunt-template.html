@@ -312,7 +312,7 @@ const UF={AC:'Acre',AL:'Alagoas',AM:'Amazonas',AP:'Amapá',BA:'Bahia',CE:'Ceará
 const STATUS={
  answer :{g:'●',label:'Answered by a person',short:'Answered'},
  reach  :{g:'◐',label:'Reached, not confirmed',short:'Reached'},
- found  :{g:'★',label:'Person answered on a candidate number',short:'Found'},
+ found  :{g:'★',label:'Person answered a candidate, unit not confirmed yet',short:'Answered, unconfirmed'},
  cand   :{g:'◆',label:'Candidate still to dial or not confirmed',short:'Candidate'},
  fail   :{g:'✕',label:'Official numbers failed',short:'Failed'},
  nophone:{g:'▢',label:'No number in the list',short:'No number'},
@@ -322,7 +322,7 @@ const ORDER_B=['answer','reach','fail','nophone','none'];
 const ORDER_A=['answer','reach','found','cand','fail','nophone','none'];
 const RANK={answer:0,reach:1,found:2,cand:3,fail:4,nophone:5,none:6};
 const SRC={cnes:'CNES registry',cnpj:'Receita Federal CNPJ',osm:'OpenStreetMap',history:'Earlier SoroJá versions',repair:'Repair of dead numbers'};
-const CAT={human:'person answered',ivr:'menu / queue',voicemail:'voicemail',unclear:'connected, unclear',incorrect:'carrier: number does not exist',cannot_complete:'carrier: cannot complete',blocked:'carrier: blocked',changed:'carrier: number changed',unavailable:'carrier: unavailable',carrier_restriction:'carrier: restricted',congestion:'network congestion',network:'network failure',technical:'app failure',incomplete:'incomplete attempt',not_dialed:'not dialled yet'};
+const CAT={human:'person answered',human_other:'person answered, but it is another place',ivr:'menu / queue',voicemail:'voicemail',unclear:'connected, unclear',incorrect:'carrier: number does not exist',cannot_complete:'carrier: cannot complete',blocked:'carrier: blocked',changed:'carrier: number changed',unavailable:'carrier: unavailable',carrier_restriction:'carrier: restricted',congestion:'network congestion',network:'network failure',technical:'app failure',incomplete:'incomplete attempt',not_dialed:'not dialled yet'};
 
 const U=DATA.units.map((r,i)=>{const o={i};DATA.fields.forEach((f,j)=>o[f]=r[j]);o.c=o.c.map(c=>({n:c[0],src:c[1],note:c[2],old:c[3],res:c[4]||''}));return o});
 
@@ -351,7 +351,7 @@ const METRICS=[
  {k:'pdf',   label:'Number in the list', ramp:'left', val:s=>pctv(s.phone,s.n),  fmt:s=>pct(s.phone,s.n),  legend:'% of units with any number in the Ministry list'},
  {k:'before',label:'Official only',      ramp:'ans',  val:s=>pctv(s.work,s.n),   fmt:s=>pct(s.work,s.n),   legend:'% of units answered or reached on an official number'},
  {k:'after', label:'With candidates',    ramp:'cov',  val:s=>pctv(s.withc,s.n),  fmt:s=>pct(s.withc,s.n),  legend:'% of units with a working official number or a candidate'},
- {k:'gain',  label:'Gain',               ramp:'gain', val:s=>pctv(s.gain,s.n),   fmt:s=>'+'+pct(s.gain,s.n), legend:'percentage points the candidates add (found + still to confirm)'},
+ {k:'gain',  label:'Gain',               ramp:'gain', val:s=>pctv(s.gain,s.n),   fmt:s=>'+'+pct(s.gain,s.n), legend:'percentage points the candidates add, if they are confirmed'},
  {k:'left',  label:'Still nothing',      ramp:'fail', val:s=>pctv(s.nothing,s.n),fmt:s=>pct(s.nothing,s.n),legend:'% of units with no working number and no candidate'}
 ];
 let metric='after',pinView='after';
@@ -511,7 +511,7 @@ function renderState(){
   const off=u.before==='nophone'?'no number in the list':`${np} official number${np>1?'s':''}: ${STATUS[u.before].short.toLowerCase()}${u.dead?' (carrier says it does not exist)':''}`;
   return `<button class="hrow" data-i="${u.i}"><span class="glyph g-${a}" title="${esc(STATUS[a].label)}">${STATUS[a].g}</span>
    <span><span class="nm">${esc(u.name)}</span><span class="ct">${esc(u.city)}${f.st?'':' · '+esc(u.uf)} · ${off}</span></span>
-   <span class="rt">${a==='found'?'person answered':(a==='cand')?fmt(n)+' candidate'+(n>1?'s':''):a==='answer'||a==='reach'?'working':'—'}</span></button>`}).join('')
+   <span class="rt">${a==='found'?'answered, unconfirmed':(a==='cand')?fmt(n)+' candidate'+(n>1?'s':''):a==='answer'||a==='reach'?'working':'—'}</span></button>`}).join('')
   :`<div class="empty">No unit in this filter.</div>`;
  $('hlist').querySelectorAll('.hrow').forEach(b=>b.onclick=()=>openUnit(U[+b.dataset.i]));
  if(list.length>cap.length)$('hlist').insertAdjacentHTML('beforeend',`<div class="empty">Showing the first ${fmt(cap.length)} of ${fmt(list.length)}. Use the search to narrow.</div>`);
@@ -602,7 +602,7 @@ function staticParts(){
   ['Anatel prefix check','idea','a filter, not a source','Check that a prefix is assigned to that town before dialling, to drop impossible candidates.']
  ];
  $('methods').innerHTML=M.map(([t,s,y,d])=>`<div class="m"><h3>${t}<span class="st ${s}">${{done:'Run',ask:'Needs a yes',idea:'Idea'}[s]}</span></h3>${y?`<div class="y">${y}</div>`:''}<p>${d}</p></div>`).join('');
- $('footer').textContent=`Data: SoroJá app/hospitals.json (${fmt(U.length)} units, Ministry PESA list of 03/07/2026), call results up to ${br(DATA.calls)} (${fmt(DATA.dialled)} of ${fmt(DATA.loadedNumbers)} candidate numbers dialled, ${fmt(DATA.humans)} answered by a person; an answer is not yet a confirmed unit), candidates built ${br(DATA.loaded)}. Rebuilt ${br(DATA.generated)} by reports/number-hunt-2026-11/build_page.py. ${fmt(nUnits)} units have at least one candidate. Private page: it does not change the public site.`;
+ $('footer').textContent=`Data: SoroJá app/hospitals.json (${fmt(U.length)} units, Ministry PESA list of 03/07/2026), call results up to ${br(DATA.calls)} (${fmt(DATA.dialled)} of ${fmt(DATA.loadedNumbers)} candidate numbers dialled, ${fmt(DATA.humans)} answered by a person, plus ${fmt(DATA.elsewhere)} answered by another place and not counted; an answer is not yet a confirmed unit), candidates built ${br(DATA.loaded)}. Rebuilt ${br(DATA.generated)} by reports/number-hunt-2026-11/build_page.py. ${fmt(nUnits)} units have at least one candidate. Private page: it does not change the public site.`;
  $('updated').textContent=`Calls up to ${br(DATA.calls)} · candidates on the phone since ${br(DATA.loaded)}`;
  $('state').innerHTML='<option value="">Brazil · all states</option>'+Object.keys(UF).filter(k=>U.some(u=>u.uf===k)).map(s=>`<option value="${s}">${s} · ${esc(UF[s])}</option>`).join('');
  $('source').innerHTML='<option value="">All sources</option>'+Object.entries(SRC).map(([k,v])=>`<option value="${k}">${esc(v)} only</option>`).join('');
@@ -633,7 +633,7 @@ function render(){
  $('done').textContent=pct(s.withc,s.n);
  $('ofLine').innerHTML=`of the units in ${esc(where)} would have a number to rely on with the candidates<br>against <b>${pct(s.work,s.n)}</b> on official numbers alone`;
  $('pct').innerHTML=`+${(pctv(s.gain,s.n)||0).toFixed(1)}<small> pp</small>`;
- $('pctNote').innerHTML=`<b style="color:#eef4f5">${fmt(s.found)}</b> units where a person answered a candidate · <b style="color:#eef4f5">${fmt(s.cand)}</b> more still to dial or confirm`;
+ $('pctNote').innerHTML=`<b style="color:#eef4f5">${fmt(s.found)}</b> units where a person answered a candidate (to confirm by listening) · <b style="color:#eef4f5">${fmt(s.cand)}</b> more still to dial or confirm`;
  const unc0={fail:0,nophone:0,none:0};inScope(f.st).forEach(u=>{const a=afterOf(u,f.src);if(a in unc0)unc0[a]++});
  $('mBefore').textContent=`${fmt(s.work)} of ${fmt(s.n)} units · ${pct(s.work,s.n)}`;
  $('mAfter').textContent=`${fmt(s.withc)} of ${fmt(s.n)} units · ${pct(s.withc,s.n)}`;
