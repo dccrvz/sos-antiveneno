@@ -3,6 +3,22 @@
 Dated log of every change, newest first. Each entry says what changed, why, which checks
 ran, whether it was deployed, and what is still open. Format: see `AGENTS.md`.
 
+## 2026-11-25 — Unlisted "onde estamos" page for sponsor conversations (Edu + Claude Code)
+
+Edu wants to send a link on the SoroJá domain instead of a PDF. New static page
+`app/onde-estamos.html` (images in `app/img/onde-estamos/`), copied as-is from the private overview
+artifact "SoroJá: onde estamos" (text, numbers, map and images; call data to 15/11, number hunt to
+22/11). It carries no budget figure and no amount asked: value is agreed in conversation. The page
+is unlisted: `noindex, nofollow` meta tag, no link from the app, no analytics script, and it is not
+in the service worker precache (so no `CACHE_NAME` bump). `vercel.json` untouched.
+Checks: `./scripts/check.sh` passed; page rendered headless at 1280 px and 375 px (10 images load,
+no console errors, no horizontal overflow, no script tags, no currency amounts in the text).
+Deployed: yes, by merging PR 58 to `main` on Edu's approval (25/11); Vercel publishes it at
+`https://soroja.com.br/onde-estamos`. Rollback: standard (revert the commit).
+Open: Edu to say who receives the link; nobody has been sent it. The
+noindex is a meta tag only (no `X-Robots-Tag` header), so the images themselves are not covered.
+Notion: done (task updated with the preview link).
+
 ## 2026-11-22 — Evening extraction, window reset on the phone, new radio hours (Edu + Claude Code)
 
 Second extraction of the day, on Edu's request: the 99 calls of 22/11 (all number-hunt candidates,
