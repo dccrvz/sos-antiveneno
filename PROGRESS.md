@@ -13,9 +13,9 @@ is unlisted: `noindex, nofollow` meta tag, no link from the app, no analytics sc
 in the service worker precache (so no `CACHE_NAME` bump). `vercel.json` untouched.
 Checks: `./scripts/check.sh` passed; page rendered headless at 1280 px and 375 px (10 images load,
 no console errors, no horizontal overflow, no script tags, no currency amounts in the text).
-Deployed: no. Branch `feat/onde-estamos-page`, Vercel preview on the PR. Production URL after
-merge: `https://soroja.com.br/onde-estamos`. Rollback: standard (revert the commit).
-Open: Edu to approve the preview and the path before merge; nobody has been sent the link. The
+Deployed: yes, by merging PR 58 to `main` on Edu's approval (25/11); Vercel publishes it at
+`https://soroja.com.br/onde-estamos`. Rollback: standard (revert the commit).
+Open: Edu to say who receives the link; nobody has been sent it. The
 noindex is a meta tag only (no `X-Robots-Tag` header), so the images themselves are not covered.
 Notion: done (task updated with the preview link).
 
