@@ -3,6 +3,28 @@
 Dated log of every change, newest first. Each entry says what changed, why, which checks
 ran, whether it was deployed, and what is still open. Format: see `AGENTS.md`.
 
+## 2026-11-25 — FAPESP PIPE branch: main merged again (Claude Code)
+
+Routine: resolved a PROGRESS.md conflict on PR #56, keeping both sides. Checks: prettier,
+`git diff --check`. Deployed: no. Open: merge PR #56 to stop these recurring conflicts; old PR
+commit 5d36545 still shows the removed budget estimates (Edu's call). Notion: pending.
+
+## 2026-11-25 — Unlisted "onde estamos" page for sponsor conversations (Edu + Claude Code)
+
+Edu wants to send a link on the SoroJá domain instead of a PDF. New static page
+`app/onde-estamos.html` (images in `app/img/onde-estamos/`), copied as-is from the private overview
+artifact "SoroJá: onde estamos" (text, numbers, map and images; call data to 15/11, number hunt to
+22/11). It carries no budget figure and no amount asked: value is agreed in conversation. The page
+is unlisted: `noindex, nofollow` meta tag, no link from the app, no analytics script, and it is not
+in the service worker precache (so no `CACHE_NAME` bump). `vercel.json` untouched.
+Checks: `./scripts/check.sh` passed; page rendered headless at 1280 px and 375 px (10 images load,
+no console errors, no horizontal overflow, no script tags, no currency amounts in the text).
+Deployed: yes, by merging PR 58 to `main` on Edu's approval (25/11); Vercel publishes it at
+`https://soroja.com.br/onde-estamos`. Rollback: standard (revert the commit).
+Open: Edu to say who receives the link; nobody has been sent it. The
+noindex is a meta tag only (no `X-Robots-Tag` header), so the images themselves are not covered.
+Notion: done (task updated with the preview link).
+
 ## 2026-11-22 — FAPESP PIPE branch: main merged again, twice (Claude Code)
 
 Routine: resolved PROGRESS.md conflicts on PR #56, keeping both sides. Checks: prettier,
