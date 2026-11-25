@@ -3,6 +3,12 @@
 Dated log of every change, newest first. Each entry says what changed, why, which checks
 ran, whether it was deployed, and what is still open. Format: see `AGENTS.md`.
 
+## 2026-11-25 — FAPESP PIPE branch: main merged again (Claude Code)
+
+Routine: resolved a PROGRESS.md conflict on PR #56, keeping both sides. Checks: prettier,
+`git diff --check`. Deployed: no. Open: merge PR #56 to stop these recurring conflicts; old PR
+commit 5d36545 still shows the removed budget estimates (Edu's call). Notion: pending.
+
 ## 2026-11-25 — Unlisted "onde estamos" page for sponsor conversations (Edu + Claude Code)
 
 Edu wants to send a link on the SoroJá domain instead of a PDF. New static page
@@ -18,6 +24,12 @@ Deployed: yes, by merging PR 58 to `main` on Edu's approval (25/11); Vercel publ
 Open: Edu to say who receives the link; nobody has been sent it. The
 noindex is a meta tag only (no `X-Robots-Tag` header), so the images themselves are not covered.
 Notion: done (task updated with the preview link).
+
+## 2026-11-22 — FAPESP PIPE branch: main merged again, twice (Claude Code)
+
+Routine: resolved PROGRESS.md conflicts on PR #56, keeping both sides. Checks: prettier,
+`git diff --check`. Deployed: no. Open: old PR commit 5d36545 still shows the removed budget
+estimates (Edu's call). Notion: pending.
 
 ## 2026-11-22 — Evening extraction, window reset on the phone, new radio hours (Edu + Claude Code)
 
@@ -61,6 +73,15 @@ changed docs. Deployed: no. `app/hospitals.json` untouched; validacao.soroja.com
 Number Hunt artifact not republished (waiting for Edu). Open: Edu's call on re-reading the 50
 skipped calls, on republishing, and on how a candidate becomes a published number. Notion: done
 (call diary, operations page, Number Hunt page, Call Center status page).
+
+## 2026-11-19 — FAPESP PIPE branch: main merged, budget estimates removed (Claude Code)
+
+Merged main into PR #56 twice (PROGRESS.md conflicts only, both sides kept). To follow the new
+no-budget-figures rule, removed the illustrative budget table from `OUTLINE.md` §4.10 and the
+estimate in `GAPS.md` D.1; they now point to the Notion budget page. FAPESP's published call caps
+and scholarship rates stay, with sources. Checks: prettier, `git diff --check`. Deployed: no.
+Open: the earlier PR commit 5d36545 still carries the removed estimates on the public PR branch;
+removing them needs a history rewrite, which is Edu's call. Notion: pending.
 
 ## 2026-11-19 — No budget figures in GitHub (Edu + Claude Code)
 
@@ -134,6 +155,26 @@ so the run started 16/11 was not seen; the "zero human answers in PA, AM, RO, RR
 carrier artifact. Open: draft still says "about 2 thousand numbers" and links `educrvz`; the amount
 to ask; whether to allow state quotas. Next step: Edu's choice between the per-state packs and the
 name match. Notion: pending.
+
+## 2026-11-15 — FAPESP PIPE Phase 1 outline and gaps (Claude Code)
+
+Added `docs/funding/fapesp-pipe/OUTLINE.md` and `GAPS.md`. The outline gives the deadline and
+checklist, the call rules with source URLs, a proposed research question (a per-unit reliability
+score plus accessibility by antivenom type), pre-proposal drafts within the SAGe character limits,
+and an outline with a draft paragraph for each of the 12 Anexo 1 sections. GAPS lists the company,
+team, letters, budget, research question and IP items, each marked blocking or nice-to-have.
+Main finding: the date 2026-11-16 is the launch of the **PIPE Jornada 8th call ("Geral")**, whose
+text is not published yet. Regular PIPE Phase 1 is continuous flow (9 months, ≤R$ 300k). The
+previous Jornada general call allowed 12 months and ≤R$ 500k.
+Sources: fapesp.br/pipe, /pipe/normas, /pipejornada, /pipe/jornada-tecnologica-2026-fase-1 and the
+Anexo 1 template. Gemini was not used: the inputs were small enough to read here.
+Checks: `git diff --check`, prettier on the new files.
+Deployed: no (docs only). Nothing was submitted and no one was contacted.
+Open items:
+
+- `reports/hospital-value-2026-11/` (cited) is still uncommitted in the main checkout.
+- The two deep-research files disagree on whether NT 127/2026 uses the terms PEACA/PEASA.
+- Notion: pending.
 
 ## 2026-11-15 — Number hunt run loaded on the Samsung; source scoring (Edu + Claude Code)
 
